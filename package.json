@@ -1,0 +1,9 @@
+{
+  "dependencies": {
+    "@nestjs/config": "^4.0.2",
+    "@supabase/supabase-js": "^2.94.0"
+  },
+  "devDependencies": {
+    "@types/multer": "^2.0.0"
+  }
+}

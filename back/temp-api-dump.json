@@ -1,0 +1,20 @@
+[
+  {
+    "id": "d3620eca-e68a-4c41-85a2-2a8a7106af87",
+    "name": "Campera",
+    "price": "7000.00",
+    "description": "Campera Luxor",
+    "stock": 4,
+    "image": "https://gbeaegtyvxncudslomvi.supabase.co/storage/v1/object/public/products/public/1770652920900-WhatsApp%20Image%202026-01-19%20at%2021.40.12.jpg",
+    "createdAt": "2026-02-09T19:02:00.989Z",
+    "updatedAt": "2026-02-09T19:02:00.989Z",
+    "category": {
+      "id": "3a304b45-d0ab-42e6-82b9-d76ea3ab6a5e",
+      "name": "Ropa",
+      "createdAt": "2026-02-09T17:34:18.523Z",
+      "updatedAt": "2026-02-09T17:34:18.523Z"
+    },
+    "categoryId": "3a304b45-d0ab-42e6-82b9-d76ea3ab6a5e",
+    "orderId": null
+  }
+]
