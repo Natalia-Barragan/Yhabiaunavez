@@ -20,15 +20,17 @@ import { SupabaseModule } from './supabase/supabase.module';
     TypeOrmModule.forRoot({
       type: 'postgres',
       host: process.env.DB_HOST,
-      port: 5432,
-      username: 'postgres', // Usuario por defecto en Supabase
+      // 1. CAMBIÁ EL PUERTO A 6543 (Fundamental para Render)
+      port: 6543,
+      // 2. CAMBIÁ EL USERNAME PARA INCLUIR TU ID DE PROYECTO
+      // Esto soluciona el error "Tenant or user not found"
+      username: 'postgres.gbeaegtyvxncudslomvi',
       password: process.env.DB_PASSWORD,
       database: 'postgres',
-      autoLoadEntities: true, // Carga automática de tus entidades
-      synchronize: true, // ¡Cuidado! Esto crea las tablas automáticamente (solo para desarrollo)
-      ssl: { rejectUnauthorized: false }, // Requerido por Supabase
+      autoLoadEntities: true,
+      synchronize: true,
+      ssl: { rejectUnauthorized: false },
     }),
-
     // 3. Tus módulos
     ProductsModule,
     CategoriesModule,
