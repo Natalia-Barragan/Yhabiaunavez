@@ -19,6 +19,7 @@ import { SupabaseModule } from './supabase/supabase.module';
     // 2. Conexión a la Base de Datos (Postgres en Supabase)
     TypeOrmModule.forRoot({
       type: 'postgres',
+      url: process.env.DATABASE_URL,
       host: process.env.DB_HOST,
       // 1. CAMBIÁ EL PUERTO A 6543 (Fundamental para Render)
       port: 6543,
