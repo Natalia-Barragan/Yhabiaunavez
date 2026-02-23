@@ -25,7 +25,7 @@ export class OrderItem {
     product: Product;
 
     @ApiProperty({ example: 'uuid-string', description: 'Product ID', required: false })
-    @Column({ nullable: true })
+    @Column({ name: 'productId', nullable: true, insert: false, update: false })
     productId: string | null;
 
     @ApiProperty({ example: 'S', description: 'Selected size' })

@@ -66,6 +66,7 @@ export class OrdersService {
 
       return savedOrder;
     } catch (err) {
+      console.error('CRITICAL: Order Creation Failed:', err);
       await queryRunner.rollbackTransaction();
       throw err;
     } finally {
