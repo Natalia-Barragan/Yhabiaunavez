@@ -22,7 +22,7 @@ export class OrdersService {
 
     try {
       let total = 0;
-      const orderItems: OrderItem[] = [];
+      const orderItems: Partial<OrderItem>[] = [];
 
       for (const item of dto.items) {
         const product = await queryRunner.manager.findOne(Product, { where: { id: item.productId } });
@@ -45,20 +45,23 @@ export class OrdersService {
         product.stock -= item.quantity;
         await queryRunner.manager.save(product);
 
-        const orderItem = new OrderItem();
-        orderItem.product = product;
-        orderItem.quantity = item.quantity;
-        orderItem.price = product.price;
-        orderItem.size = item.size ?? null;
-        total += product.price * item.quantity;
+        // Creamos el objeto del item de la orden
+        const orderItem: Partial<OrderItem> = {
+          product,
+          productId: product.id,
+          quantity: item.quantity,
+          price: product.price,
+          size: item.size ?? null,
+        };
 
+        total += product.price * item.quantity;
         orderItems.push(orderItem);
       }
 
       const order = this.orderRepo.create({
         customerId: dto.customerId,
         total,
-        items: orderItems,
+        items: orderItems as OrderItem[],
       });
 
       const savedOrder = await queryRunner.manager.save(order);

@@ -20,12 +20,12 @@ export class OrderItem {
     @ManyToOne(() => Order, (order) => order.items, { onDelete: 'CASCADE' })
     order: Order;
 
-    @ManyToOne(() => Product, (product) => product.orderItems, { onDelete: 'SET NULL' })
+    @ManyToOne(() => Product, (product) => product.orderItems, { onDelete: 'SET NULL', eager: false })
     @JoinColumn({ name: 'productId' })
     product: Product;
 
     @ApiProperty({ example: 'uuid-string', description: 'Product ID', required: false })
-    @Column({ name: 'productId', nullable: true, insert: false, update: false })
+    @Column({ nullable: true })
     productId: string | null;
 
     @ApiProperty({ example: 'S', description: 'Selected size' })
