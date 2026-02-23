@@ -1,7 +1,7 @@
 
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
-import { api } from "./api"; // Import API client
+import { api } from "./api";
 import type { Product, ProductVariant, Category, Order } from "./store";
 
 interface AdminStore {
@@ -13,7 +13,7 @@ interface AdminStore {
   fetchProducts: () => Promise<void>;
   fetchCategories: () => Promise<void>;
   fetchOrders: () => Promise<void>;
-  addProduct: (product: FormData) => Promise<void>; // Changed to receive FormData for image upload
+  addProduct: (product: FormData) => Promise<void>;
   updateProduct: (id: string, product: Partial<Product>) => Promise<void>;
   deleteProduct: (id: string) => Promise<void>;
   getProduct: (id: string) => Product | undefined;
@@ -23,9 +23,7 @@ interface AdminStore {
   updateOrderStatus: (id: string, status: string) => Promise<void>;
 }
 
-// Helper to transform Backend Product to Frontend Product
 const transformProduct = (backendProduct: any): Product => {
-  // Extract sizes robustly: handles arrays, strings, and comma-separated values within arrays
   let sizes: string[] = [];
   if (Array.isArray(backendProduct.sizes)) {
     sizes = backendProduct.sizes.flatMap((s: any) =>
@@ -35,13 +33,12 @@ const transformProduct = (backendProduct: any): Product => {
     sizes = backendProduct.sizes.split(",").map((s: string) => s.trim()).filter(Boolean);
   }
 
-  // If backend returns 'sizes' array and 'stockBySize' map
   const variants = sizes.length > 0
     ? sizes.map((size: string) => ({
       size,
       stock: backendProduct.stockBySize?.[size] ?? 0
     }))
-    : [{ size: "Único", stock: backendProduct.stock || 0 }]; // Fallback
+    : [{ size: "Único", stock: backendProduct.stock || 0 }];
 
   return {
     id: backendProduct.id,
@@ -79,9 +76,7 @@ export const useAdminStore = create<AdminStore>()(
         set({ isLoading: true, error: null });
         try {
           const data = await api.products.getAll();
-          console.log("Trace: API Products Data:", data); // DEBUG
           const products = data.map(transformProduct);
-          console.log("Trace: Transformed Products:", products); // DEBUG
           set({ products, isLoading: false });
         } catch (error: any) {
           console.error("Failed to fetch products:", error);
@@ -117,8 +112,6 @@ export const useAdminStore = create<AdminStore>()(
       },
 
       updateProduct: async (id, updates) => {
-        // Note: Full update implementation would require adapting frontend updates to backend PATCH
-        // For now, we update local state and basic backend fields if possible
         set({ isLoading: true });
         try {
           await api.products.update(id, updates);
@@ -231,7 +224,7 @@ export const useAdminStore = create<AdminStore>()(
     }),
     {
       name: "habia-una-vez-admin",
-      skipHydration: true, // Don't hydrate automatically to avoid conflicts with fresh fetch
+      skipHydration: true,
     }
   )
 );

@@ -45,7 +45,7 @@ export interface Order {
   createdAt: string;
   items: OrderItem[];
   customer?: any;
-  status: string; // Backend values: 'pending', 'pagado', 'enviado'
+  status: string;
 }
 
 interface CartStore {

@@ -8,7 +8,6 @@ import {
   LayoutDashboard,
   Package,
   ShoppingCart,
-  Settings,
   LogOut,
   Menu,
   X,
@@ -22,7 +21,6 @@ const navItems = [
   { href: "/admin/products", icon: Package, label: "Productos" },
   { href: "/admin/categories", icon: Tags, label: "Categorías" },
   { href: "/admin/orders", icon: ShoppingCart, label: "Pedidos" },
-  { href: "/admin/settings", icon: Settings, label: "Configuración" },
 ];
 
 export default function AdminLayout({
