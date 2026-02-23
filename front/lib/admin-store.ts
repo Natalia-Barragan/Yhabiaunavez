@@ -36,7 +36,7 @@ const transformProduct = (backendProduct: any): Product => {
   const variants = sizes.length > 0
     ? sizes.map((size: string) => ({
       size,
-      stock: backendProduct.stockBySize?.[size] ?? 0
+      stock: backendProduct.stockBySize?.[size] ?? (sizes.length === 1 ? backendProduct.stock : 0)
     }))
     : [{ size: "Único", stock: backendProduct.stock || 0 }];
 
