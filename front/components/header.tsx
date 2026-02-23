@@ -73,7 +73,7 @@ export function Header() {
                   <Button
                     variant="ghost"
                     onClick={() => setCartOpen(true)}
-                    className="flex items-center gap-2 hover:bg-transparent hover:text-primary hover:scale-110 transition-transform duration-200 p-0 mr-15"
+                    className="flex items-center gap-2 text-muted-foreground hover:bg-transparent hover:text-primary hover:scale-110 transition-transform duration-200 p-0 mr-15"
                   >
                     <ShoppingCart size={32} style={{ width: '32px', height: '32px' }} />
                     <span className="text-base font-medium uppercase tracking-wide">
@@ -143,7 +143,7 @@ export function Header() {
                 variant="ghost"
                 size="sm"
                 onClick={() => setCartOpen(true)}
-                className="relative flex items-center gap-2 hover:bg-accent"
+                className="relative flex items-center gap-2 text-muted-foreground hover:bg-accent"
               >
                 <ShoppingCart size={20} />
                 <span className="hidden sm:inline text-sm font-medium">

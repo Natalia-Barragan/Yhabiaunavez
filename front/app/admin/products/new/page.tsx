@@ -5,7 +5,7 @@ import React from "react"
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { useAdminStore, categories, defaultSizes } from "@/lib/admin-store";
+import { useAdminStore, defaultSizes } from "@/lib/admin-store";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -19,6 +19,7 @@ import {
 } from "@/components/ui/select";
 import { ArrowLeft, Plus, Trash2, ImagePlus } from "lucide-react";
 import { motion } from "framer-motion";
+import { useEffect } from "react";
 
 interface VariantInput {
   size: string;
@@ -27,16 +28,24 @@ interface VariantInput {
 
 export default function NewProductPage() {
   const router = useRouter();
-  const { addProduct } = useAdminStore();
+  const { addProduct, categories, fetchCategories } = useAdminStore();
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  useEffect(() => {
+    fetchCategories();
+  }, [fetchCategories]);
 
   const [formData, setFormData] = useState({
     name: "",
     price: "",
     description: "",
     category: "",
-    images: ["/images/product-1.jpg"],
   });
+
+  const [imageFile, setImageFile] = useState<File | null>(null);
+  const [imagePreview, setImagePreview] = useState<string | null>(null);
+
+  const fileInputRef = React.useRef<HTMLInputElement>(null);
 
   const [variants, setVariants] = useState<VariantInput[]>([
     { size: "0-3m", stock: 0 },
@@ -47,6 +56,18 @@ export default function NewProductPage() {
   ) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      setImageFile(file);
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setImagePreview(reader.result as string);
+      };
+      reader.readAsDataURL(file);
+    }
   };
 
   const handleCategoryChange = (value: string) => {
@@ -81,22 +102,38 @@ export default function NewProductPage() {
     e.preventDefault();
     setIsSubmitting(true);
 
-    const product = {
-      name: formData.name,
-      price: Number.parseFloat(formData.price),
-      description: formData.description,
-      category: formData.category,
-      images: formData.images,
-      variants: variants.map((v) => ({
-        size: v.size,
-        stock: Number(v.stock),
-      })),
-    };
+    try {
+      const formDataToSend = new FormData();
+      formDataToSend.append("name", formData.name);
+      formDataToSend.append("price", formData.price.toString());
+      formDataToSend.append("description", formData.description);
+      formDataToSend.append("categoryId", formData.category); // Note: frontend uses 'category' but backend expects 'categoryId' (usually UUID)
 
-    addProduct(product);
+      // Sizes as comma-separated string for the backend Transform to handle
+      const sizesArray = variants.map(v => v.size).join(",");
+      formDataToSend.append("sizes", sizesArray);
 
-    await new Promise((resolve) => setTimeout(resolve, 500));
-    router.push("/admin/products");
+      // Stock por talle (mapeamos el array de variantes a un objeto { talle: stock })
+      const stockBySize: Record<string, number> = {};
+      variants.forEach(v => {
+        stockBySize[v.size] = Number(v.stock);
+      });
+      formDataToSend.append("stockBySize", JSON.stringify(stockBySize));
+
+      // Stock general (calculado de la suma de talles)
+      const totalStock = variants.reduce((acc, v) => acc + Number(v.stock), 0);
+      formDataToSend.append("stock", totalStock.toString());
+
+      if (imageFile) {
+        formDataToSend.append("image", imageFile);
+      }
+
+      await addProduct(formDataToSend);
+      router.push("/admin/products");
+    } catch (error) {
+      console.error("Error submitting product:", error);
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -169,9 +206,9 @@ export default function NewProductPage() {
                   <SelectValue placeholder="Seleccionar categoría" />
                 </SelectTrigger>
                 <SelectContent>
-                  {categories.map((cat) => (
-                    <SelectItem key={cat} value={cat}>
-                      {cat}
+                  {categories.map((cat: any) => (
+                    <SelectItem key={cat.id} value={cat.id}>
+                      {cat.name}
                     </SelectItem>
                   ))}
                 </SelectContent>
@@ -199,36 +236,43 @@ export default function NewProductPage() {
           <h2 className="text-lg font-semibold text-foreground">Imágenes</h2>
 
           <div className="grid grid-cols-3 sm:grid-cols-4 gap-4">
-            {formData.images.map((img, index) => (
-              <div
-                key={img}
-                className="relative aspect-square rounded-xl bg-muted overflow-hidden group"
-              >
-                <img src={img || "/placeholder.svg"} alt="" className="w-full h-full object-cover" />
+            {imagePreview && (
+              <div className="relative aspect-square rounded-xl bg-muted overflow-hidden group">
+                <img src={imagePreview} alt="Vista previa" className="w-full h-full object-cover" />
                 <button
                   type="button"
-                  onClick={() =>
-                    setFormData((prev) => ({
-                      ...prev,
-                      images: prev.images.filter((_, i) => i !== index),
-                    }))
-                  }
+                  onClick={() => {
+                    setImageFile(null);
+                    setImagePreview(null);
+                  }}
                   className="absolute inset-0 bg-foreground/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center"
                 >
                   <Trash2 size={20} className="text-white" />
                 </button>
               </div>
-            ))}
-            <button
-              type="button"
-              className="aspect-square rounded-xl border-2 border-dashed border-border hover:border-primary hover:bg-primary/5 transition-colors flex flex-col items-center justify-center gap-2 text-muted-foreground hover:text-primary"
-            >
-              <ImagePlus size={24} />
-              <span className="text-xs">Agregar</span>
-            </button>
+            )}
+
+            <input
+              type="file"
+              ref={fileInputRef}
+              onChange={handleFileChange}
+              accept="image/*"
+              className="hidden"
+            />
+
+            {!imagePreview && (
+              <button
+                type="button"
+                onClick={() => fileInputRef.current?.click()}
+                className="aspect-square rounded-xl border-2 border-dashed border-border hover:border-primary hover:bg-primary/5 transition-colors flex flex-col items-center justify-center gap-2 text-muted-foreground hover:text-primary"
+              >
+                <ImagePlus size={24} />
+                <span className="text-xs">Seleccionar Imagen</span>
+              </button>
+            )}
           </div>
           <p className="text-xs text-muted-foreground">
-            Las imágenes se pueden agregar mediante URL o subir archivos
+            Sube una imagen representativa para el producto.
           </p>
         </div>
 

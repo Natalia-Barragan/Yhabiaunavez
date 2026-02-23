@@ -11,8 +11,10 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { ArrowLeft, Minus, Plus, Trash2, ShoppingBag } from "lucide-react";
+import { ArrowLeft, Minus, Plus, Trash2, ShoppingBag, MessageCircle } from "lucide-react";
 import { motion } from "framer-motion";
+
+import { api } from "@/lib/api";
 
 export default function CheckoutPage() {
   const router = useRouter();
@@ -26,7 +28,9 @@ export default function CheckoutPage() {
     telefono: "",
     direccion: "",
     ciudad: "",
+    provincia: "",
     codigoPostal: "",
+    pais: "",
     notas: "",
   });
 
@@ -49,20 +53,80 @@ export default function CheckoutPage() {
     e.preventDefault();
     setIsSubmitting(true);
 
-    // Simulate order processing
-    await new Promise((resolve) => setTimeout(resolve, 1500));
+    try {
+      // 1. Crear o buscar cliente (el backend maneja la lógica de upsert)
+      const customer = await api.customers.create({
+        name: `${formData.nombre} ${formData.apellido}`,
+        email: formData.email,
+        phone: formData.telefono,
+        address: formData.direccion,
+        city: formData.ciudad,
+        state: formData.provincia,
+        zipCode: formData.codigoPostal,
+        country: formData.pais,
+        notes: formData.notas,
+      });
 
-    // Store order details for success page
-    const orderDetails = {
-      items: items,
-      total: getTotalPrice(),
-      customer: formData,
-      orderId: `HUV-${Date.now().toString().slice(-6)}`,
-    };
-    sessionStorage.setItem("lastOrder", JSON.stringify(orderDetails));
+      if (!customer?.id) {
+        throw new Error("No se pudo obtener el ID del cliente");
+      }
 
-    clearCart();
-    router.push("/checkout/success");
+      // 2. Crear la orden (esto descuenta stock en el backend)
+      const orderData = {
+        customerId: customer.id,
+        items: items.map(item => ({
+          productId: item.product.id,
+          quantity: item.quantity,
+          size: item.size,
+        }))
+      };
+
+      const savedOrder = await api.orders.create(orderData);
+
+      // 3. Generar mensaje de WhatsApp
+      const businessPhone = "542215043666";
+      const orderNumber = savedOrder.id.slice(-6).toUpperCase();
+
+      let message = `¡Hola! Acabo de realizar un pedido en la tienda online.\n\n`;
+      message += `*Pedido #HUV-${orderNumber}*\n`;
+      message += `*Cliente:* ${formData.nombre} ${formData.apellido}\n`;
+      message += `*Email:* ${formData.email}\n`;
+      message += `*Dirección:* ${formData.direccion}, ${formData.ciudad} (${formData.codigoPostal}), ${formData.provincia}\n\n`;
+      message += `*Productos:*\n`;
+
+      items.forEach(item => {
+        message += `- ${item.product.name} (Talle: ${item.size}) x ${item.quantity}: ${formatPrice(Number(item.product.price) * item.quantity)}\n`;
+      });
+
+      message += `\n*TOTAL: ${formatPrice(getTotalPrice())}*\n\n`;
+      if (formData.notas) message += `*Notas:* ${formData.notas}\n\n`;
+      message += `Quedo a la espera para coordinar el pago y el envío. ¡Gracias!`;
+
+      const whatsappUrl = `https://wa.me/${businessPhone}?text=${encodeURIComponent(message)}`;
+
+      // 4. Guardar detalles para la página de éxito
+      const orderDetails = {
+        items: items,
+        total: getTotalPrice(),
+        customer: formData,
+        orderId: `HUV-${orderNumber}`,
+        whatsappUrl: whatsappUrl
+      };
+      sessionStorage.setItem("lastOrder", JSON.stringify(orderDetails));
+
+      // 5. Limpiar carrito y redirigir
+      clearCart();
+
+      // Abrir WhatsApp en una nueva pestaña
+      window.open(whatsappUrl, '_blank');
+
+      router.push("/checkout/success");
+    } catch (error: any) {
+      console.error("Error al procesar el pedido:", error);
+      alert(error.message || "Hubo un error al procesar tu pedido. Por favor intentá de nuevo.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   if (items.length === 0) {
@@ -235,6 +299,33 @@ export default function CheckoutPage() {
                     </div>
                   </div>
 
+                  <div className="grid sm:grid-cols-2 gap-4">
+                    <div className="space-y-2">
+                      <Label htmlFor="provincia">Provincia</Label>
+                      <Input
+                        id="provincia"
+                        name="provincia"
+                        value={formData.provincia}
+                        onChange={handleInputChange}
+                        required
+                        className="rounded-xl"
+                        placeholder="Provincia"
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="pais">País</Label>
+                      <Input
+                        id="pais"
+                        name="pais"
+                        value={formData.pais}
+                        onChange={handleInputChange}
+                        required
+                        className="rounded-xl"
+                        placeholder="País"
+                      />
+                    </div>
+                  </div>
+
                   <div className="space-y-2">
                     <Label htmlFor="notas">Notas adicionales (opcional)</Label>
                     <Textarea
@@ -253,12 +344,17 @@ export default function CheckoutPage() {
               <Button
                 type="submit"
                 size="lg"
-                className="w-full rounded-full h-14 text-base font-semibold"
+                className="w-full rounded-full h-14 text-base font-semibold bg-[#25D366] hover:bg-[#128C7E] text-white border-none"
                 disabled={isSubmitting}
               >
                 {isSubmitting
                   ? "Procesando..."
-                  : "Finalizar Pedido y Coordinar Pago"}
+                  : (
+                    <span className="flex items-center justify-center">
+                      Finalizar Compra por WhatsApp
+                      <MessageCircle size={20} className="ml-2" />
+                    </span>
+                  )}
               </Button>
 
               <p className="text-sm text-center text-muted-foreground">
@@ -287,7 +383,7 @@ export default function CheckoutPage() {
                   >
                     <div className="relative w-20 h-20 rounded-xl overflow-hidden bg-muted flex-shrink-0">
                       <Image
-                        src={item.product.images[0] || "/placeholder.svg"}
+                        src={(item.product.images && item.product.images[0]) || "/placeholder.svg"}
                         alt={item.product.name}
                         fill
                         className="object-cover"
@@ -301,7 +397,7 @@ export default function CheckoutPage() {
                         Talle: {item.size}
                       </p>
                       <p className="text-primary font-semibold text-sm mt-1">
-                        {formatPrice(item.product.price)}
+                        {formatPrice(Number(item.product.price) * item.quantity)}
                       </p>
                     </div>
                     <div className="flex flex-col items-end justify-between">

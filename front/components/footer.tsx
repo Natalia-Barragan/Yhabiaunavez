@@ -5,6 +5,8 @@ import Image from "next/image";
 import { Instagram, Facebook, Mail, Phone, MapPin } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { AboutUsModal } from "./about-us-modal";
+import { FaqModal } from "./faq-modal";
 
 export function Footer() {
   return (
@@ -26,7 +28,7 @@ export function Footer() {
             </div>
             <p className="text-primary-foreground/80 leading-relaxed mb-6">
               Vistiendo sueños y creando recuerdos para los más pequeños desde
-              2017.
+              2013.
             </p>
             <div className="flex gap-3">
               <a
@@ -35,12 +37,12 @@ export function Footer() {
               >
                 <Instagram size={20} />
               </a>
-              <a
+              {/* <a
                 href="#"
                 className="p-2 bg-primary-foreground/10 rounded-full hover:bg-primary-foreground/20 transition-colors"
               >
                 <Facebook size={20} />
-              </a>
+              </a> */}
             </div>
           </div>
 
@@ -65,20 +67,10 @@ export function Footer() {
                 </Link>
               </li>
               <li>
-                <Link
-                  href="#"
-                  className="text-primary-foreground/80 hover:text-primary-foreground transition-colors"
-                >
-                  Sobre Nosotros
-                </Link>
+                <AboutUsModal />
               </li>
               <li>
-                <Link
-                  href="#"
-                  className="text-primary-foreground/80 hover:text-primary-foreground transition-colors"
-                >
-                  Preguntas Frecuentes
-                </Link>
+                <FaqModal />
               </li>
             </ul>
           </div>
@@ -89,7 +81,7 @@ export function Footer() {
             <ul className="space-y-3">
               <li className="flex items-center gap-3 text-primary-foreground/80">
                 <Phone size={18} />
-                <span>+54 11 1234-5678</span>
+                <span>+54 221 554-7170</span>
               </li>
               <li className="flex items-center gap-3 text-primary-foreground/80">
                 <Mail size={18} />
@@ -124,7 +116,7 @@ export function Footer() {
         </div>
 
         <div className="border-t border-primary-foreground/20 mt-12 pt-8 text-center text-primary-foreground/60 text-sm">
-          <p>&copy; 2026 Yhabiaunavez. Todos los derechos reservados.</p>
+          <p>&copy; 2026 Yhabiaunavez. Creada por <a href="https://nbdigital.lat/" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors font-medium">NBDigital</a>.</p>
         </div>
       </div>
     </footer>

@@ -2,7 +2,7 @@
 
 import { useCartStore } from "@/lib/store";
 import { Button } from "@/components/ui/button";
-import { X, Minus, Plus, ShoppingBag } from "lucide-react";
+import { X, Minus, Plus, ShoppingBag, MessageCircle } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import Image from "next/image";
@@ -153,7 +153,7 @@ export function CartDrawer() {
                 </div>
                 <Link href="/checkout" onClick={() => setCartOpen(false)}>
                   <Button className="w-full rounded-full h-12 text-base font-semibold">
-                    Finalizar Compra
+                    Finalizar Pedido <MessageCircle size={18} className="ml-2" />
                   </Button>
                 </Link>
                 <p className="text-xs text-center text-muted-foreground">

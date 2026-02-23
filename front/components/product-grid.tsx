@@ -75,7 +75,7 @@ export function ProductGrid() {
             viewport={{ once: true }}
             className="inline-block text-primary-foreground font-medium tracking-widest text-sm mb-4 uppercase"
           >
-            Ropa y juguetes para bebé. Para jugar, descubrir y moverse cómodxs
+            Ropa y juguetes para bebé. Para jugar, descubrir y moverse cómodxs.
           </motion.span>
         </div>
 
@@ -124,16 +124,25 @@ export function ProductGrid() {
                   Categoría
                 </h4>
                 <div className="flex flex-wrap gap-2">
-                  {categories.map((cat: string) => (
+                  <button
+                    onClick={() => setSelectedCategory("Todos")}
+                    className={`px-4 py-2 rounded-xl text-sm transition-all ${selectedCategory === "Todos"
+                      ? "bg-primary text-primary-foreground font-medium"
+                      : "text-foreground hover:bg-accent border border-border"
+                      }`}
+                  >
+                    Todos
+                  </button>
+                  {categories.map((cat: any) => (
                     <button
-                      key={cat}
-                      onClick={() => setSelectedCategory(cat)}
-                      className={`px-4 py-2 rounded-xl text-sm transition-all ${selectedCategory === cat
+                      key={cat.id}
+                      onClick={() => setSelectedCategory(cat.name)}
+                      className={`px-4 py-2 rounded-xl text-sm transition-all ${selectedCategory === cat.name
                         ? "bg-primary text-primary-foreground font-medium"
                         : "text-foreground hover:bg-accent border border-border"
                         }`}
                     >
-                      {cat}
+                      {cat.name}
                     </button>
                   ))}
                 </div>

@@ -5,7 +5,8 @@ import React from "react"
 import { useState, useEffect, use } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { useAdminStore, categories, defaultSizes } from "@/lib/admin-store";
+import { useAdminStore, defaultSizes } from "@/lib/admin-store";
+import { api } from "@/lib/api";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -32,17 +33,25 @@ export default function EditProductPage({
 }) {
   const { id } = use(params);
   const router = useRouter();
-  const { getProduct, updateProduct } = useAdminStore();
+  const { getProduct, updateProduct, categories, fetchCategories } = useAdminStore();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [notFound, setNotFound] = useState(false);
+
+  useEffect(() => {
+    fetchCategories();
+  }, [fetchCategories]);
 
   const [formData, setFormData] = useState({
     name: "",
     price: "",
     description: "",
     category: "",
-    images: [""],
   });
+
+  const [imageFile, setImageFile] = useState<File | null>(null);
+  const [imagePreview, setImagePreview] = useState<string | null>(null);
+
+  const fileInputRef = React.useRef<HTMLInputElement>(null);
 
   const [variants, setVariants] = useState<VariantInput[]>([]);
 
@@ -53,10 +62,12 @@ export default function EditProductPage({
         name: product.name,
         price: product.price.toString(),
         description: product.description,
-        category: product.category,
-        images: product.images,
+        category: product.categoryId || "",
       });
-      setVariants(product.variants);
+      setVariants(product.variants || []);
+      if (product.images && product.images.length > 0) {
+        setImagePreview(product.images[0]);
+      }
     } else {
       setNotFound(true);
     }
@@ -69,9 +80,22 @@ export default function EditProductPage({
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      setImageFile(file);
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setImagePreview(reader.result as string);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
   const handleCategoryChange = (value: string) => {
     setFormData((prev) => ({ ...prev, category: value }));
   };
+
 
   const addVariant = () => {
     const usedSizes = variants.map((v) => v.size);
@@ -101,22 +125,40 @@ export default function EditProductPage({
     e.preventDefault();
     setIsSubmitting(true);
 
-    const updates = {
-      name: formData.name,
-      price: Number.parseFloat(formData.price),
-      description: formData.description,
-      category: formData.category,
-      images: formData.images,
-      variants: variants.map((v) => ({
-        size: v.size,
-        stock: Number(v.stock),
-      })),
-    };
+    try {
+      // Because our api.update currently only supports JSON, we'll use a local fetch if we have an image,
+      // or we can update admin-store.ts to support FormData in updateProduct too.
+      // For now, let's prioritize consistency and use the existing api calls.
 
-    updateProduct(id, updates);
+      const stockBySize: Record<string, number> = {};
+      variants.forEach(v => {
+        stockBySize[v.size] = Number(v.stock);
+      });
 
-    await new Promise((resolve) => setTimeout(resolve, 500));
-    router.push("/admin/products");
+      const updates = {
+        name: formData.name,
+        price: Number.parseFloat(formData.price),
+        description: formData.description,
+        categoryId: formData.category,
+        stock: variants.reduce((acc, v) => acc + Number(v.stock), 0),
+        sizes: variants.map(v => v.size),
+        stockBySize: stockBySize
+      };
+
+      await updateProduct(id, updates);
+
+      // If there's a new image file, upload it separately using updateImage
+      if (imageFile) {
+        const imageFormData = new FormData();
+        imageFormData.append("image", imageFile);
+        await api.products.updateImage(id, imageFormData);
+      }
+
+      router.push("/admin/products");
+    } catch (error) {
+      console.error("Error updating product:", error);
+      setIsSubmitting(false);
+    }
   };
 
   if (notFound) {
@@ -203,9 +245,9 @@ export default function EditProductPage({
                   <SelectValue placeholder="Seleccionar categoría" />
                 </SelectTrigger>
                 <SelectContent>
-                  {categories.map((cat) => (
-                    <SelectItem key={cat} value={cat}>
-                      {cat}
+                  {categories.map((cat: any) => (
+                    <SelectItem key={cat.id} value={cat.id}>
+                      {cat.name}
                     </SelectItem>
                   ))}
                 </SelectContent>
@@ -229,37 +271,47 @@ export default function EditProductPage({
 
         {/* Images */}
         <div className="bg-card rounded-2xl p-6 border border-border/50 space-y-4">
-          <h2 className="text-lg font-semibold text-foreground">Imágenes</h2>
+          <h2 className="text-lg font-semibold text-foreground">Imagen del Producto</h2>
 
           <div className="grid grid-cols-3 sm:grid-cols-4 gap-4">
-            {formData.images.map((img, index) => (
-              <div
-                key={`img-${index}`}
-                className="relative aspect-square rounded-xl bg-muted overflow-hidden group"
-              >
-                <img src={img || "/placeholder.svg"} alt="" className="w-full h-full object-cover" />
+            {imagePreview && (
+              <div className="relative aspect-square rounded-xl bg-muted overflow-hidden group">
+                <img src={imagePreview} alt="Vista previa" className="w-full h-full object-cover" />
                 <button
                   type="button"
-                  onClick={() =>
-                    setFormData((prev) => ({
-                      ...prev,
-                      images: prev.images.filter((_, i) => i !== index),
-                    }))
-                  }
+                  onClick={() => {
+                    setImageFile(null);
+                    setImagePreview(null);
+                  }}
                   className="absolute inset-0 bg-foreground/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center"
                 >
                   <Trash2 size={20} className="text-white" />
                 </button>
               </div>
-            ))}
-            <button
-              type="button"
-              className="aspect-square rounded-xl border-2 border-dashed border-border hover:border-primary hover:bg-primary/5 transition-colors flex flex-col items-center justify-center gap-2 text-muted-foreground hover:text-primary"
-            >
-              <ImagePlus size={24} />
-              <span className="text-xs">Agregar</span>
-            </button>
+            )}
+
+            <input
+              type="file"
+              ref={fileInputRef}
+              onChange={handleFileChange}
+              accept="image/*"
+              className="hidden"
+            />
+
+            {!imagePreview && (
+              <button
+                type="button"
+                onClick={() => fileInputRef.current?.click()}
+                className="aspect-square rounded-xl border-2 border-dashed border-border hover:border-primary hover:bg-primary/5 transition-colors flex flex-col items-center justify-center gap-2 text-muted-foreground hover:text-primary"
+              >
+                <ImagePlus size={24} />
+                <span className="text-xs">Seleccionar Imagen</span>
+              </button>
+            )}
           </div>
+          <p className="text-xs text-muted-foreground">
+            Sube una nueva foto para actualizar la imagen del producto.
+          </p>
         </div>
 
         {/* Variants */}

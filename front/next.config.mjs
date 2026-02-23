@@ -7,11 +7,15 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: 'https',
-        // Cambiá esto por el dominio real de tu proyecto de Supabase
-        hostname: 'xxxxxxxxx.supabase.co',
+        hostname: 'gbeaegtyvxncudslomvi.supabase.co',
         port: '',
-        // Esta es la ruta estándar donde Supabase guarda los archivos públicos
         pathname: '/storage/v1/object/public/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'images.unsplash.com',
+        port: '',
+        pathname: '/**',
       },
     ],
   },

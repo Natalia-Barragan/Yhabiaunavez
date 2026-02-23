@@ -34,6 +34,8 @@ export default function ProductsPage() {
   const { products, deleteProduct } = useAdminStore();
   const [searchQuery, setSearchQuery] = useState("");
   const [deleteId, setDeleteId] = useState<string | null>(null);
+  const [isClearDialogOpen, setIsClearDialogOpen] = useState(false);
+  const { clearSoldOut, isLoading } = useAdminStore();
 
   const filteredProducts = products.filter(
     (product) =>
@@ -70,12 +72,23 @@ export default function ProductsPage() {
               Gestiona tu catálogo de productos
             </p>
           </div>
-          <Link href="/admin/products/new">
-            <Button className="rounded-full gap-2">
-              <Plus size={18} />
-              Nuevo Producto
+          <div className="flex gap-2">
+            <Button
+              variant="outline"
+              onClick={() => setIsClearDialogOpen(true)}
+              className="rounded-full gap-2 border-destructive text-destructive hover:bg-destructive hover:text-white"
+              disabled={products.filter(p => (p.variants || []).reduce((acc, v) => acc + v.stock, 0) === 0).length === 0}
+            >
+              <Trash2 size={18} />
+              Limpiar Agotados
             </Button>
-          </Link>
+            <Link href="/admin/products/new">
+              <Button className="rounded-full gap-2">
+                <Plus size={18} />
+                Nuevo Producto
+              </Button>
+            </Link>
+          </div>
         </div>
 
         {/* Search */}
@@ -129,7 +142,7 @@ export default function ProductsPage() {
                 </TableHeader>
                 <TableBody>
                   {filteredProducts.map((product) => {
-                    const totalStock = getTotalStock(product.variants);
+                    const totalStock = getTotalStock(product.variants || []);
                     const isLowStock = totalStock > 0 && totalStock <= 5;
                     const isOutOfStock = totalStock === 0;
 
@@ -138,7 +151,7 @@ export default function ProductsPage() {
                         <TableCell>
                           <div className="relative w-14 h-14 rounded-xl overflow-hidden bg-muted">
                             <Image
-                              src={product.images[0] || "/placeholder.svg"}
+                              src={(product.images && product.images[0]) || "/placeholder.svg"}
                               alt={product.name}
                               fill
                               className="object-cover"
@@ -161,17 +174,16 @@ export default function ProductsPage() {
                           </span>
                         </TableCell>
                         <TableCell className="text-right font-medium">
-                          {formatPrice(product.price)}
+                          {formatPrice(Number(product.price))}
                         </TableCell>
                         <TableCell className="text-right hidden sm:table-cell">
                           <span
-                            className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${
-                              isOutOfStock
-                                ? "bg-destructive/10 text-destructive"
-                                : isLowStock
+                            className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${isOutOfStock
+                              ? "bg-destructive/10 text-destructive"
+                              : isLowStock
                                 ? "bg-orange-500/10 text-orange-600"
                                 : "bg-green-500/10 text-green-600"
-                            }`}
+                              }`}
                           >
                             {totalStock} uds
                           </span>
@@ -223,6 +235,32 @@ export default function ProductsPage() {
                 className="rounded-full bg-destructive hover:bg-destructive/90"
               >
                 Eliminar
+              </AlertDialogAction>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
+
+        {/* Bulk cleanup confirmation dialog */}
+        <AlertDialog open={isClearDialogOpen} onOpenChange={setIsClearDialogOpen}>
+          <AlertDialogContent className="rounded-2xl">
+            <AlertDialogHeader>
+              <AlertDialogTitle>¿Confirmar limpieza masiva?</AlertDialogTitle>
+              <AlertDialogDescription>
+                Se eliminarán permanentemente todos los productos que tengan 0 stock
+                en todos sus talles. Esta acción no se puede deshacer.
+              </AlertDialogDescription>
+            </AlertDialogHeader>
+            <AlertDialogFooter>
+              <AlertDialogCancel className="rounded-full">Cancelar</AlertDialogCancel>
+              <AlertDialogAction
+                onClick={async () => {
+                  await clearSoldOut();
+                  setIsClearDialogOpen(false);
+                }}
+                className="rounded-full bg-destructive hover:bg-destructive/90"
+                disabled={isLoading}
+              >
+                {isLoading ? "Limpiando..." : "Sí, limpiar todo"}
               </AlertDialogAction>
             </AlertDialogFooter>
           </AlertDialogContent>

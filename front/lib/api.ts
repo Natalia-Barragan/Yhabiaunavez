@@ -2,17 +2,21 @@
 const API_URL = process.env.NEXT_PUBLIC_API_URL || 'https://yhabiaunavez.onrender.com';
 
 async function fetchAPI(endpoint: string, options: RequestInit = {}) {
+  const token = typeof window !== 'undefined' ? localStorage.getItem('admin_token') : null;
+  const headers = {
+    'Content-Type': 'application/json',
+    ...(token && { 'Authorization': `Bearer ${token}` }),
+    ...options.headers,
+  };
+
   const res = await fetch(`${API_URL}${endpoint}`, {
     ...options,
-    headers: {
-      'Content-Type': 'application/json',
-      ...options.headers,
-    },
+    headers,
   });
 
   if (!res.ok) {
-    const errorBody = await res.json().catch(() => ({}));
-    throw new Error(errorBody.message || 'API Error');
+    const error = await res.json().catch(() => ({ message: 'An error occurred' }));
+    throw new Error(error.message || 'API request failed');
   }
 
   // Handle 204 No Content
@@ -22,9 +26,13 @@ async function fetchAPI(endpoint: string, options: RequestInit = {}) {
 }
 
 async function fetchFormData(endpoint: string, data: FormData, method: string = 'POST') {
+  const token = typeof window !== 'undefined' ? localStorage.getItem('admin_token') : null;
   const res = await fetch(`${API_URL}${endpoint}`, {
     method,
     body: data,
+    headers: {
+      ...(token && { 'Authorization': `Bearer ${token}` }),
+    }
   });
 
   if (!res.ok) {
@@ -38,6 +46,9 @@ async function fetchFormData(endpoint: string, data: FormData, method: string = 
 
 
 export const api = {
+  auth: {
+    login: (credentials: any) => fetchAPI('/auth/login', { method: 'POST', body: JSON.stringify(credentials) }),
+  },
   products: {
     getAll: () => fetchAPI('/products'),
     getOne: (id: string) => fetchAPI(`/products/${id}`),
@@ -53,6 +64,13 @@ export const api = {
     delete: (id: string) => fetchAPI(`/categories/${id}`, { method: 'DELETE' }),
   },
   orders: {
+    getAll: () => fetchAPI('/orders'),
     create: (data: any) => fetchAPI('/orders', { method: 'POST', body: JSON.stringify(data) }),
+    updateStatus: (id: string, status: string) =>
+      fetchAPI(`/orders/${id}/status`, { method: 'PATCH', body: JSON.stringify({ status }) }),
+  },
+  customers: {
+    create: (data: any) => fetchAPI('/customers', { method: 'POST', body: JSON.stringify(data) }),
+    getByEmail: (email: string) => fetchAPI(`/customers/email/${email}`),
   }
 };

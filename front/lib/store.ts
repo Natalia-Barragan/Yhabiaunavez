@@ -1,6 +1,11 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
+export interface Category {
+  id: string;
+  name: string;
+}
+
 export interface ProductVariant {
   size: string;
   stock: number;
@@ -11,7 +16,8 @@ export interface Product {
   name: string;
   price: number | string; // Supabase a veces lo manda como string ("8000.00")
   description: string;
-  category?: any; // Para que no rompa si Supabase manda categoryId en vez del objeto
+  category?: any;
+  categoryId?: string;
   image?: string; // Para la foto única que manda Supabase hoy
   images?: string[]; // Para las múltiples fotos que vas a tener mañana
   stock?: number; // Para el stock general de Supabase
@@ -23,6 +29,23 @@ export interface CartItem {
   product: Product;
   size: string;
   quantity: number;
+}
+
+export interface OrderItem {
+  id: string;
+  quantity: number;
+  price: number;
+  size: string | null;
+  product?: Product;
+}
+
+export interface Order {
+  id: string;
+  total: number;
+  createdAt: string;
+  items: OrderItem[];
+  customer?: any;
+  status: string; // Backend values: 'pending', 'pagado', 'enviado'
 }
 
 interface CartStore {
@@ -101,7 +124,7 @@ export const useCartStore = create<CartStore>()(
 
       getTotalPrice: () => {
         return get().items.reduce(
-          (total, item) => total + item.product.price * item.quantity,
+          (total, item) => total + Number(item.product.price) * item.quantity,
           0
         );
       },

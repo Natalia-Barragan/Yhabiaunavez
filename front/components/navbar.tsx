@@ -9,8 +9,6 @@ export function Navbar() {
     const navLinks = [
         { href: "/", label: "INICIO" },
         { href: "/#contacto", label: "CONTACTO" },
-        { href: "/register", label: "CREAR CUENTA" },
-        { href: "/login", label: "INICIAR SESION" },
     ];
 
     return (

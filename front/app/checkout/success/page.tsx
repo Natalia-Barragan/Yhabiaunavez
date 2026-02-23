@@ -15,6 +15,7 @@ interface OrderDetails {
     email: string;
     telefono: string;
   };
+  whatsappUrl?: string;
 }
 
 export default function SuccessPage() {
@@ -138,6 +139,15 @@ export default function SuccessPage() {
                 </div>
               </div>
             </div>
+
+            {order?.whatsappUrl && (
+              <a href={order.whatsappUrl} target="_blank" rel="noopener noreferrer">
+                <Button variant="secondary" className="w-full rounded-full h-12 font-semibold mb-4 bg-[#25D366] hover:bg-[#128C7E] text-white border-none">
+                  <MessageCircle size={20} className="mr-2" />
+                  Enviar WhatsApp de nuevo
+                </Button>
+              </a>
+            )}
 
             <Link href="/">
               <Button className="w-full rounded-full h-12 font-semibold group">

@@ -60,7 +60,7 @@ export function ProductCard({ product, onSelect, index }: ProductCardProps) {
         <div className="p-4">
           <div className="flex justify-between items-start mb-1">
             <span className="text-[10px] font-medium text-primary tracking-wider uppercase">
-              {product.category?.name || "General"}
+              {product.category || "General"}
             </span>
           </div>
 
