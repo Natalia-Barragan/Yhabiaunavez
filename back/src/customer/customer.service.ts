@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException, ConflictException } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Customer } from './entities/customer.entity';
@@ -13,10 +13,14 @@ export class CustomersService {
   ) { }
 
   async create(dto: CreateCustomerDto) {
-    // Verificamos si el email ya existe para evitar errores de duplicados
+    // Verificamos si el email ya existe
     const existing = await this.customerRepository.findOne({ where: { email: dto.email } });
+
     if (existing) {
-      throw new ConflictException('El correo electrónico ya está registrado');
+      // Si el cliente ya existe, actualizamos su información (upsert)
+      // Esto evita el error "correo ya registrado" y mantiene los datos al día
+      Object.assign(existing, dto);
+      return await this.customerRepository.save(existing);
     }
 
     const customer = this.customerRepository.create(dto);
@@ -25,6 +29,10 @@ export class CustomersService {
 
   async findAll() {
     return await this.customerRepository.find();
+  }
+
+  async findByEmail(email: string) {
+    return await this.customerRepository.findOne({ where: { email } });
   }
 
   async findOne(id: string) {

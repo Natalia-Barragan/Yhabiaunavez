@@ -21,6 +21,12 @@ export class CustomersController {
     return this.customersService.findAll();
   }
 
+  @ApiOperation({ summary: 'Get a customer by email' })
+  @Get('email/:email')
+  findByEmail(@Param('email') email: string) {
+    return this.customersService.findByEmail(email);
+  }
+
   @ApiOperation({ summary: 'Get a customer by ID' })
   @Get(':id')
   findOne(@Param('id', ParseUUIDPipe) id: string) {

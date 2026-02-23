@@ -5,6 +5,7 @@ import {
     IsNumber,
     IsOptional,
     IsPositive,
+    IsString,
     IsUUID,
     ValidateNested
 } from "class-validator";
@@ -22,14 +23,17 @@ export class CreateOrderItemDto {
     @IsPositive()
     quantity: number;
 
+    @ApiProperty({ example: 'S', description: 'Selected size' })
+    @IsString()
+    @IsOptional()
+    size?: string;
 }
 
 export enum OrderStatus {
-    PENDING = 'pending',
-    PROCESSING = 'processing',
-    SHIPPED = 'shipped',
-    DELIVERED = 'delivered',
-    CANCELLED = 'cancelled'
+    PENDING = 'pendiente',
+    PAGADO = 'pagado',
+    ENVIADO = 'enviado',
+    CANCELLED = 'cancelado'
 }
 
 export class CreateOrderDto {

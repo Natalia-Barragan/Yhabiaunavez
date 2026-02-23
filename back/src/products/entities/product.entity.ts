@@ -40,8 +40,15 @@ export class Product {
     description: string;
 
     @ApiProperty({ example: 50, description: 'Stock Quantity' })
-    @Column({ type: 'int' })
+    @Column({ type: 'int', default: 0 })
     stock: number;
+
+    @ApiProperty({
+        example: { '0-3m': 10, '3-6m': 5 },
+        description: 'Stock por talle'
+    })
+    @Column('jsonb', { default: {} })
+    stockBySize: Record<string, number>;
 
     @ApiProperty({ example: 'https://example.com/image.jpg', description: 'Product Image URL' })
     @Column()
@@ -56,7 +63,7 @@ export class Product {
     updatedAt: Date;
 
     // Relaciones
-    @ManyToOne(() => Category, (category) => category.products)
+    @ManyToOne(() => Category, (category) => category.products, { onDelete: 'SET NULL' })
     @JoinColumn({ name: 'categoryId' })
     category: Category;
 

@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn } from 'typeorm';
 import { Order } from './order.entity';
 import { Product } from '../../products/entities/product.entity';
 import { ApiProperty } from '@nestjs/swagger';
@@ -20,10 +20,15 @@ export class OrderItem {
     @ManyToOne(() => Order, (order) => order.items, { onDelete: 'CASCADE' })
     order: Order;
 
-    @ManyToOne(() => Product)
+    @ManyToOne(() => Product, (product) => product.orderItems, { onDelete: 'SET NULL' })
+    @JoinColumn({ name: 'productId' })
     product: Product;
 
-    @ApiProperty({ example: 'uuid-string', description: 'Product ID' })
-    @Column()
-    productId: string;
+    @ApiProperty({ example: 'uuid-string', description: 'Product ID', required: false })
+    @Column({ nullable: true })
+    productId: string | null;
+
+    @ApiProperty({ example: 'S', description: 'Selected size' })
+    @Column({ type: 'varchar', nullable: true })
+    size: string | null;
 }

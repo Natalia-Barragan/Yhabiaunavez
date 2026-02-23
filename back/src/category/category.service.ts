@@ -13,8 +13,16 @@ export class CategoriesService {
   ) { }
 
   async create(dto: CreateCategoryDto) {
-    const category = this.categoryRepository.create(dto);
-    return await this.categoryRepository.save(category);
+    console.log('Creando categoría:', dto);
+    try {
+      const category = this.categoryRepository.create(dto);
+      const saved = await this.categoryRepository.save(category);
+      console.log('Categoría guardada:', saved);
+      return saved;
+    } catch (error) {
+      console.error('Error al crear categoría:', error);
+      throw error;
+    }
   }
 
   async findAll() {
@@ -44,8 +52,12 @@ export class CategoriesService {
   }
 
   async remove(id: string) {
-    const category = await this.findOne(id);
-    await this.categoryRepository.remove(category);
-    return { message: `Categoría ${id} eliminada correctamente`, deleted: true };
+    try {
+      const category = await this.findOne(id);
+      await this.categoryRepository.remove(category);
+      return { message: `Categoría ${id} eliminada correctamente`, deleted: true };
+    } catch (error: any) {
+      throw error;
+    }
   }
 }

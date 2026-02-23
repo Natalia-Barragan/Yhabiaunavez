@@ -33,11 +33,10 @@ export class CreateProductDto {
     @IsArray({ message: 'Los talles deben ser un arreglo' })
     @IsString({ each: true })
     @Transform(({ value }) => {
-        // Si llega como un solo string (común en multipart), lo metemos en un array
         if (typeof value === 'string') {
-            return [value];
+            // Split by comma and trim each size
+            return value.split(',').map(s => s.trim()).filter(s => s.length > 0);
         }
-        // Si Swagger manda múltiples campos, ya llega como array, así que lo dejamos pasar
         return value;
     })
     sizes?: string[];
@@ -63,4 +62,22 @@ export class CreateProductDto {
     @IsUUID() // Importante: debe coincidir con el tipo de ID de tu entidad Category
     @IsNotEmpty()
     categoryId: string;
+
+    @ApiProperty({
+        example: { '0-3m': 10, '3-6m': 5 },
+        description: 'Stock por talle',
+        required: false
+    })
+    @IsOptional()
+    @Transform(({ value }) => {
+        if (typeof value === 'string') {
+            try {
+                return JSON.parse(value);
+            } catch {
+                return value;
+            }
+        }
+        return value;
+    })
+    stockBySize?: Record<string, number>;
 }

@@ -1,43 +1,53 @@
 import { Module } from '@nestjs/common';
-import { ConfigModule } from '@nestjs/config';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 
-// Importamos tus módulos
+// Feature Modules
 import { ProductsModule } from './products/products.module';
 import { CategoriesModule } from './category/category.module';
 import { CustomerModule } from './customer/customer.module';
 import { OrdersModule } from './orders/orders.module';
 import { SupabaseModule } from './supabase/supabase.module';
+import { UsersModule } from './users/users.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
-    // 1. Configuración para leer el archivo .env
+    // 1. Load environment variables
     ConfigModule.forRoot({ isGlobal: true }),
 
-    // 2. Conexión a la Base de Datos (Postgres en Supabase)
-    TypeOrmModule.forRoot({
-      type: 'postgres',
-      url: process.env.DATABASE_URL,
-      host: process.env.DB_HOST,
-      // 1. CAMBIÁ EL PUERTO A 6543 (Fundamental para Render)
-      port: 6543,
-      // 2. CAMBIÁ EL USERNAME PARA INCLUIR TU ID DE PROYECTO
-      // Esto soluciona el error "Tenant or user not found"
-      username: 'postgres.gbeaegtyvxncudslomvi',
-      password: process.env.DB_PASSWORD,
-      database: 'postgres',
-      autoLoadEntities: true,
-      synchronize: true,
-      ssl: { rejectUnauthorized: false },
+    // 2. Database Connection (Postgres on Supabase)
+    TypeOrmModule.forRootAsync({
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      useFactory: (configService: ConfigService) => {
+        const host = configService.get<string>('DB_HOST');
+        const port = configService.get<number>('DB_PORT');
+        console.log(`Intentando conectar a DB en ${host}:${port}`);
+        return {
+          type: 'postgres' as const,
+          host: host || 'localhost',
+          port: Number(port) || 5432,
+          username: configService.get<string>('DB_USERNAME') || 'postgres',
+          password: configService.get<string>('DB_PASSWORD') || '',
+          database: configService.get<string>('DB_NAME') || 'postgres',
+          autoLoadEntities: true,
+          synchronize: false, // Desactivado para evitar pérdida accidental de datos
+          ssl: { rejectUnauthorized: false },
+        };
+      },
     }),
-    // 3. Tus módulos
+
+    // 3. Feature Modules
     ProductsModule,
     CategoriesModule,
     CustomerModule,
     OrdersModule,
     SupabaseModule,
+    UsersModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],

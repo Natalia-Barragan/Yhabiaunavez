@@ -26,9 +26,16 @@ export class ProductsService {
                 console.log('Image uploaded to Supabase:', imageUrl);
             }
 
+            // Si se proporciona stockBySize, sincronizamos el stock total
+            let totalStock = dto.stock;
+            if (dto.stockBySize) {
+                totalStock = Object.values(dto.stockBySize).reduce((acc, val) => acc + val, 0);
+            }
+
             const product = this.productRepository.create({
                 ...dto,
-                image: imageUrl, // Aquí ya no marcará error de 'void'
+                stock: totalStock,
+                image: imageUrl,
             });
 
             const savedProduct = await this.productRepository.save(product);
@@ -50,6 +57,12 @@ export class ProductsService {
         }
 
         Object.assign(product, dto);
+
+        // Si se actualizó stockBySize, sincronizamos el stock total
+        if (dto.stockBySize) {
+            product.stock = Object.values(dto.stockBySize).reduce((acc: number, val: number) => acc + val, 0);
+        }
+
         return await this.productRepository.save(product);
     }
 
