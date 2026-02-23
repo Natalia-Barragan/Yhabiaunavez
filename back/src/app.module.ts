@@ -23,9 +23,24 @@ import { AuthModule } from './auth/auth.module';
       imports: [ConfigModule],
       inject: [ConfigService],
       useFactory: (configService: ConfigService) => {
+        const databaseUrl = configService.get<string>('DATABASE_URL');
+
+        if (databaseUrl) {
+          // Producción (Render): usamos DATABASE_URL directamente
+          console.log('Conectando via DATABASE_URL');
+          return {
+            type: 'postgres' as const,
+            url: databaseUrl,
+            autoLoadEntities: true,
+            synchronize: false,
+            ssl: { rejectUnauthorized: false },
+          };
+        }
+
+        // Desarrollo local: usamos variables individuales
         const host = configService.get<string>('DB_HOST');
         const port = configService.get<number>('DB_PORT');
-        console.log(`Intentando conectar a DB en ${host}:${port}`);
+        console.log(`Conectando a DB en ${host}:${port}`);
         return {
           type: 'postgres' as const,
           host: host || 'localhost',
@@ -34,7 +49,7 @@ import { AuthModule } from './auth/auth.module';
           password: configService.get<string>('DB_PASSWORD') || '',
           database: configService.get<string>('DB_NAME') || 'postgres',
           autoLoadEntities: true,
-          synchronize: false, // Desactivado para evitar pérdida accidental de datos
+          synchronize: false,
           ssl: { rejectUnauthorized: false },
         };
       },
