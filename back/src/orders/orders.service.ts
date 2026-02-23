@@ -12,7 +12,7 @@ export class OrdersService {
   constructor(
     @InjectRepository(Order) private orderRepo: Repository<Order>,
     @InjectRepository(Product) private productRepo: Repository<Product>,
-    private dataSource: DataSource, // Para usar transacciones
+    private dataSource: DataSource,
   ) { }
 
   async create(dto: CreateOrderDto) {
@@ -22,7 +22,7 @@ export class OrdersService {
 
     try {
       let total = 0;
-      const orderItems: OrderItem[] = []; // Tipo corregido con O mayúscula
+      const orderItems: OrderItem[] = [];
 
       for (const item of dto.items) {
         const product = await queryRunner.manager.findOne(Product, { where: { id: item.productId } });
@@ -31,32 +31,25 @@ export class OrdersService {
           throw new BadRequestException(`Producto no encontrado: ${item.productId}`);
         }
 
-        // Validación de stock global
         if (product.stock < item.quantity) {
           throw new BadRequestException(`Stock total insuficiente para ${product.name}`);
         }
 
-        // Validación de stock por talle (si el producto tiene talles y se especificó uno)
         if (item.size && product.stockBySize && product.stockBySize[item.size] !== undefined) {
           if (product.stockBySize[item.size] < item.quantity) {
             throw new BadRequestException(`Stock insuficiente para el talle ${item.size} de ${product.name}`);
           }
-          // Descontamos del talle específico
           product.stockBySize[item.size] -= item.quantity;
         }
 
-        // Descontamos stock total
         product.stock -= item.quantity;
-
-        // Guardamos cambios en el producto (esto actualiza tanto stock total como stockBySize si es JSONB)
         await queryRunner.manager.save(product);
 
-        // Creamos el item de la orden con el precio actual y el talle seleccionado
         const orderItem = new OrderItem();
         orderItem.product = product;
         orderItem.quantity = item.quantity;
         orderItem.price = product.price;
-        orderItem.size = item.size ?? null; // Guardamos el talle en la orden
+        orderItem.size = item.size ?? null;
         total += product.price * item.quantity;
 
         orderItems.push(orderItem);
@@ -73,7 +66,6 @@ export class OrdersService {
 
       return savedOrder;
     } catch (err) {
-
       await queryRunner.rollbackTransaction();
       throw err;
     } finally {

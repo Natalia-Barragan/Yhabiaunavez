@@ -4,7 +4,6 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 
-// Feature Modules
 import { ProductsModule } from './products/products.module';
 import { CategoriesModule } from './category/category.module';
 import { CustomerModule } from './customer/customer.module';
@@ -15,10 +14,8 @@ import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
-    // 1. Load environment variables
     ConfigModule.forRoot({ isGlobal: true }),
 
-    // 2. Database Connection (Postgres on Supabase)
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
       inject: [ConfigService],
@@ -26,36 +23,33 @@ import { AuthModule } from './auth/auth.module';
         const databaseUrl = configService.get<string>('DATABASE_URL');
 
         if (databaseUrl) {
-          // Producción (Render): usamos DATABASE_URL directamente
-          console.log('Conectando via DATABASE_URL');
           return {
             type: 'postgres' as const,
             url: databaseUrl,
             autoLoadEntities: true,
             synchronize: false,
             ssl: { rejectUnauthorized: false },
+            extra: { family: 4 },
           };
         }
 
-        // Desarrollo local: usamos variables individuales
-        const host = configService.get<string>('DB_HOST');
-        const port = configService.get<number>('DB_PORT');
-        console.log(`Conectando a DB en ${host}:${port}`);
+        const host = configService.get<string>('DB_HOST') || 'localhost';
+        const port = configService.get<number>('DB_PORT') || 5432;
         return {
           type: 'postgres' as const,
-          host: host || 'localhost',
-          port: Number(port) || 5432,
+          host,
+          port: Number(port),
           username: configService.get<string>('DB_USERNAME') || 'postgres',
           password: configService.get<string>('DB_PASSWORD') || '',
           database: configService.get<string>('DB_NAME') || 'postgres',
           autoLoadEntities: true,
           synchronize: false,
           ssl: { rejectUnauthorized: false },
+          extra: { family: 4 },
         };
       },
     }),
 
-    // 3. Feature Modules
     ProductsModule,
     CategoriesModule,
     CustomerModule,

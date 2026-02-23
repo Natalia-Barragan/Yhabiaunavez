@@ -44,15 +44,12 @@ export class Customer {
     @Column({ type: 'text', nullable: true })
     notes: string;
 
-    @ApiProperty({ example: '2023-10-25T10:00:00Z', description: 'Creation date' })
     @CreateDateColumn()
     createdAt: Date;
 
-    @ApiProperty({ example: '2023-10-25T10:00:00Z', description: 'Last update date' })
     @UpdateDateColumn()
     updatedAt: Date;
 
-    // CORRECCIÓN: Apuntamos a la propiedad 'customer' de la entidad Order
     @OneToMany(() => Order, (order) => order.customer)
     orders: Order[];
 }

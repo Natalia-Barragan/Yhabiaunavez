@@ -1191,3 +1191,958 @@ Conectando a DB en db.gbeaegtyvxncudslomvi.supabase.co:5432
 [32m[Nest] 45120  - [39m23/02/2026, 12:29:44 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mConfigModule dependencies initialized[39m[38;5;3m +1ms[39m
 [32m[Nest] 45120  - [39m23/02/2026, 12:29:44 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mConfigModule dependencies initialized[39m[38;5;3m +0ms[39m
 [32m[Nest] 45120  - [39m23/02/2026, 12:29:44 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mJwtModule dependencies initialized[39m[38;5;3m +45ms[39m
+[32m[Nest] 45120  - [39m23/02/2026, 12:29:46 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mTypeOrmCoreModule dependencies initialized[39m[38;5;3m +1707ms[39m
+[32m[Nest] 45120  - [39m23/02/2026, 12:29:46 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mTypeOrmModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 45120  - [39m23/02/2026, 12:29:46 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mTypeOrmModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 45120  - [39m23/02/2026, 12:29:46 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mTypeOrmModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 45120  - [39m23/02/2026, 12:29:46 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mTypeOrmModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 45120  - [39m23/02/2026, 12:29:46 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mTypeOrmModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 45120  - [39m23/02/2026, 12:29:46 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mUsersModule dependencies initialized[39m[38;5;3m +1ms[39m
+[32m[Nest] 45120  - [39m23/02/2026, 12:29:46 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mAppModule dependencies initialized[39m[38;5;3m +1ms[39m
+[32m[Nest] 45120  - [39m23/02/2026, 12:29:46 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mAuthModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 45120  - [39m23/02/2026, 12:29:46 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mProductsModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 45120  - [39m23/02/2026, 12:29:46 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mCategoriesModule dependencies initialized[39m[38;5;3m +1ms[39m
+[32m[Nest] 45120  - [39m23/02/2026, 12:29:46 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mCustomerModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 45120  - [39m23/02/2026, 12:29:46 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mOrdersModule dependencies initialized[39m[38;5;3m +0ms[39m
+Backend iniciando...
+[32m[Nest] 45120  - [39m23/02/2026, 12:29:46 [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mAppController {/}:[39m[38;5;3m +23ms[39m
+[32m[Nest] 45120  - [39m23/02/2026, 12:29:46 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/, GET} route[39m[38;5;3m +3ms[39m
+[32m[Nest] 45120  - [39m23/02/2026, 12:29:46 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/seed, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 45120  - [39m23/02/2026, 12:29:46 [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mProductsController {/products}:[39m[38;5;3m +0ms[39m
+[32m[Nest] 45120  - [39m23/02/2026, 12:29:46 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/products, POST} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 45120  - [39m23/02/2026, 12:29:46 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/products, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 45120  - [39m23/02/2026, 12:29:46 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/products/:id, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 45120  - [39m23/02/2026, 12:29:46 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/products/:id, PATCH} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 45120  - [39m23/02/2026, 12:29:46 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/products/:id, DELETE} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 45120  - [39m23/02/2026, 12:29:46 [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mCategoriesController {/categories}:[39m[38;5;3m +0ms[39m
+[32m[Nest] 45120  - [39m23/02/2026, 12:29:46 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/categories, POST} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 45120  - [39m23/02/2026, 12:29:46 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/categories, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 45120  - [39m23/02/2026, 12:29:46 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/categories/:id, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 45120  - [39m23/02/2026, 12:29:46 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/categories/:id, PATCH} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 45120  - [39m23/02/2026, 12:29:46 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/categories/:id, DELETE} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 45120  - [39m23/02/2026, 12:29:46 [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mCustomersController {/customers}:[39m[38;5;3m +0ms[39m
+[32m[Nest] 45120  - [39m23/02/2026, 12:29:46 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/customers, POST} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 45120  - [39m23/02/2026, 12:29:46 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/customers, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 45120  - [39m23/02/2026, 12:29:46 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/customers/email/:email, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 45120  - [39m23/02/2026, 12:29:46 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/customers/:id, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 45120  - [39m23/02/2026, 12:29:46 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/customers/:id, PATCH} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 45120  - [39m23/02/2026, 12:29:46 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/customers/:id, DELETE} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 45120  - [39m23/02/2026, 12:29:46 [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mOrdersController {/orders}:[39m[38;5;3m +0ms[39m
+[32m[Nest] 45120  - [39m23/02/2026, 12:29:46 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/orders, POST} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 45120  - [39m23/02/2026, 12:29:46 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/orders, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 45120  - [39m23/02/2026, 12:29:46 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/orders/:id, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 45120  - [39m23/02/2026, 12:29:46 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/orders/:id/status, PATCH} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 45120  - [39m23/02/2026, 12:29:46 [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mAuthController {/auth}:[39m[38;5;3m +0ms[39m
+[32m[Nest] 45120  - [39m23/02/2026, 12:29:46 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/auth/login, POST} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 45120  - [39m23/02/2026, 12:29:46 [32m    LOG[39m [38;5;3m[SupabaseService] [39m[32mÔ£à Supabase client initialized successfully[39m
+[32m[Nest] 45120  - [39m23/02/2026, 12:29:46 [32m    LOG[39m [38;5;3m[NestApplication] [39m[32mNest application successfully started[39m[38;5;3m +3ms[39m
+[2J[3J[H[[90m03:33:46[0m] File change detected. Starting incremental compilation...
+
+[[90m03:33:48[0m] Found 0 errors. Watching for file changes.
+
+[2J[3J[H[[90m03:33:49[0m] File change detected. Starting incremental compilation...
+
+[[90m03:33:52[0m] Found 0 errors. Watching for file changes.
+
+[2J[3J[H[[90m03:33:52[0m] File change detected. Starting incremental compilation...
+
+[[90m03:33:53[0m] Found 0 errors. Watching for file changes.
+
+[2J[3J[H[[90m03:33:55[0m] File change detected. Starting incremental compilation...
+
+[[90m03:33:56[0m] Found 0 errors. Watching for file changes.
+
+[2J[3J[H[[90m03:33:56[0m] File change detected. Starting incremental compilation...
+
+[[90m03:33:57[0m] Found 0 errors. Watching for file changes.
+
+[2J[3J[H[[90m03:33:59[0m] File change detected. Starting incremental compilation...
+
+[32m[Nest] 3992  - [39m23/02/2026, 03:33:59 [32m    LOG[39m [38;5;3m[NestFactory] [39m[32mStarting Nest application...[39m
+[32m[Nest] 3992  - [39m23/02/2026, 03:33:59 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mTypeOrmModule dependencies initialized[39m[38;5;3m +19ms[39m
+[32m[Nest] 3992  - [39m23/02/2026, 03:33:59 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mSupabaseModule dependencies initialized[39m[38;5;3m +1ms[39m
+[32m[Nest] 3992  - [39m23/02/2026, 03:33:59 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mPassportModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 3992  - [39m23/02/2026, 03:33:59 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mConfigHostModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 3992  - [39m23/02/2026, 03:33:59 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mConfigModule dependencies initialized[39m[38;5;3m +1ms[39m
+[32m[Nest] 3992  - [39m23/02/2026, 03:33:59 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mConfigModule dependencies initialized[39m[38;5;3m +1ms[39m
+[32m[Nest] 3992  - [39m23/02/2026, 03:33:59 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mJwtModule dependencies initialized[39m[38;5;3m +76ms[39m
+[[90m03:34:00[0m] Found 0 errors. Watching for file changes.
+
+[2J[3J[H[[90m03:34:00[0m] File change detected. Starting incremental compilation...
+
+[[90m03:34:01[0m] Found 0 errors. Watching for file changes.
+
+[32m[Nest] 51528  - [39m23/02/2026, 03:34:03 [32m    LOG[39m [38;5;3m[NestFactory] [39m[32mStarting Nest application...[39m
+[32m[Nest] 51528  - [39m23/02/2026, 03:34:03 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mTypeOrmModule dependencies initialized[39m[38;5;3m +14ms[39m
+[32m[Nest] 51528  - [39m23/02/2026, 03:34:03 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mSupabaseModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 51528  - [39m23/02/2026, 03:34:03 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mPassportModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 51528  - [39m23/02/2026, 03:34:03 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mConfigHostModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 51528  - [39m23/02/2026, 03:34:03 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mConfigModule dependencies initialized[39m[38;5;3m +1ms[39m
+[32m[Nest] 51528  - [39m23/02/2026, 03:34:03 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mConfigModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 51528  - [39m23/02/2026, 03:34:03 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mJwtModule dependencies initialized[39m[38;5;3m +45ms[39m
+[32m[Nest] 51528  - [39m23/02/2026, 03:34:05 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mTypeOrmCoreModule dependencies initialized[39m[38;5;3m +1693ms[39m
+[32m[Nest] 51528  - [39m23/02/2026, 03:34:05 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mTypeOrmModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 51528  - [39m23/02/2026, 03:34:05 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mTypeOrmModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 51528  - [39m23/02/2026, 03:34:05 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mTypeOrmModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 51528  - [39m23/02/2026, 03:34:05 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mTypeOrmModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 51528  - [39m23/02/2026, 03:34:05 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mTypeOrmModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 51528  - [39m23/02/2026, 03:34:05 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mUsersModule dependencies initialized[39m[38;5;3m +1ms[39m
+[32m[Nest] 51528  - [39m23/02/2026, 03:34:05 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mAppModule dependencies initialized[39m[38;5;3m +2ms[39m
+[32m[Nest] 51528  - [39m23/02/2026, 03:34:05 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mAuthModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 51528  - [39m23/02/2026, 03:34:05 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mProductsModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 51528  - [39m23/02/2026, 03:34:05 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mCategoriesModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 51528  - [39m23/02/2026, 03:34:05 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mCustomerModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 51528  - [39m23/02/2026, 03:34:05 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mOrdersModule dependencies initialized[39m[38;5;3m +0ms[39m
+Backend iniciando...
+[32m[Nest] 51528  - [39m23/02/2026, 03:34:05 [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mAppController {/}:[39m[38;5;3m +34ms[39m
+[32m[Nest] 51528  - [39m23/02/2026, 03:34:05 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/, GET} route[39m[38;5;3m +3ms[39m
+[32m[Nest] 51528  - [39m23/02/2026, 03:34:05 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/seed, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 51528  - [39m23/02/2026, 03:34:05 [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mProductsController {/products}:[39m[38;5;3m +0ms[39m
+[32m[Nest] 51528  - [39m23/02/2026, 03:34:05 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/products, POST} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 51528  - [39m23/02/2026, 03:34:05 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/products, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 51528  - [39m23/02/2026, 03:34:05 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/products/:id, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 51528  - [39m23/02/2026, 03:34:05 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/products/:id, PATCH} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 51528  - [39m23/02/2026, 03:34:05 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/products/:id, DELETE} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 51528  - [39m23/02/2026, 03:34:05 [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mCategoriesController {/categories}:[39m[38;5;3m +0ms[39m
+[32m[Nest] 51528  - [39m23/02/2026, 03:34:05 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/categories, POST} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 51528  - [39m23/02/2026, 03:34:05 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/categories, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 51528  - [39m23/02/2026, 03:34:05 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/categories/:id, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 51528  - [39m23/02/2026, 03:34:05 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/categories/:id, PATCH} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 51528  - [39m23/02/2026, 03:34:05 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/categories/:id, DELETE} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 51528  - [39m23/02/2026, 03:34:05 [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mCustomersController {/customers}:[39m[38;5;3m +0ms[39m
+[32m[Nest] 51528  - [39m23/02/2026, 03:34:05 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/customers, POST} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 51528  - [39m23/02/2026, 03:34:05 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/customers, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 51528  - [39m23/02/2026, 03:34:05 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/customers/email/:email, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 51528  - [39m23/02/2026, 03:34:05 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/customers/:id, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 51528  - [39m23/02/2026, 03:34:05 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/customers/:id, PATCH} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 51528  - [39m23/02/2026, 03:34:05 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/customers/:id, DELETE} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 51528  - [39m23/02/2026, 03:34:05 [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mOrdersController {/orders}:[39m[38;5;3m +0ms[39m
+[32m[Nest] 51528  - [39m23/02/2026, 03:34:05 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/orders, POST} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 51528  - [39m23/02/2026, 03:34:05 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/orders, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 51528  - [39m23/02/2026, 03:34:05 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/orders/:id, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 51528  - [39m23/02/2026, 03:34:05 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/orders/:id/status, PATCH} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 51528  - [39m23/02/2026, 03:34:05 [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mAuthController {/auth}:[39m[38;5;3m +0ms[39m
+[32m[Nest] 51528  - [39m23/02/2026, 03:34:05 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/auth/login, POST} route[39m[38;5;3m +11ms[39m
+[32m[Nest] 51528  - [39m23/02/2026, 03:34:05 [32m    LOG[39m [38;5;3m[SupabaseService] [39m[32mÔ£à Supabase client initialized successfully[39m
+[32m[Nest] 51528  - [39m23/02/2026, 03:34:05 [32m    LOG[39m [38;5;3m[NestApplication] [39m[32mNest application successfully started[39m[38;5;3m +3ms[39m
+[2J[3J[H[[90m03:34:14[0m] File change detected. Starting incremental compilation...
+
+[[90m03:34:15[0m] Found 0 errors. Watching for file changes.
+
+[2J[3J[H[[90m03:34:16[0m] File change detected. Starting incremental compilation...
+
+[[90m03:34:17[0m] Found 0 errors. Watching for file changes.
+
+[32m[Nest] 29876  - [39m23/02/2026, 03:34:19 [32m    LOG[39m [38;5;3m[NestFactory] [39m[32mStarting Nest application...[39m
+[32m[Nest] 29876  - [39m23/02/2026, 03:34:19 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mTypeOrmModule dependencies initialized[39m[38;5;3m +14ms[39m
+[32m[Nest] 29876  - [39m23/02/2026, 03:34:19 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mSupabaseModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 29876  - [39m23/02/2026, 03:34:19 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mPassportModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 29876  - [39m23/02/2026, 03:34:19 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mConfigHostModule dependencies initialized[39m[38;5;3m +1ms[39m
+[32m[Nest] 29876  - [39m23/02/2026, 03:34:19 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mConfigModule dependencies initialized[39m[38;5;3m +1ms[39m
+[32m[Nest] 29876  - [39m23/02/2026, 03:34:19 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mConfigModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 29876  - [39m23/02/2026, 03:34:19 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mJwtModule dependencies initialized[39m[38;5;3m +50ms[39m
+[32m[Nest] 29876  - [39m23/02/2026, 03:34:21 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mTypeOrmCoreModule dependencies initialized[39m[38;5;3m +1751ms[39m
+[32m[Nest] 29876  - [39m23/02/2026, 03:34:21 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mTypeOrmModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 29876  - [39m23/02/2026, 03:34:21 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mTypeOrmModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 29876  - [39m23/02/2026, 03:34:21 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mTypeOrmModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 29876  - [39m23/02/2026, 03:34:21 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mTypeOrmModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 29876  - [39m23/02/2026, 03:34:21 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mTypeOrmModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 29876  - [39m23/02/2026, 03:34:21 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mUsersModule dependencies initialized[39m[38;5;3m +1ms[39m
+[32m[Nest] 29876  - [39m23/02/2026, 03:34:21 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mAppModule dependencies initialized[39m[38;5;3m +1ms[39m
+[32m[Nest] 29876  - [39m23/02/2026, 03:34:21 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mAuthModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 29876  - [39m23/02/2026, 03:34:21 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mProductsModule dependencies initialized[39m[38;5;3m +1ms[39m
+[32m[Nest] 29876  - [39m23/02/2026, 03:34:21 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mCategoriesModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 29876  - [39m23/02/2026, 03:34:21 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mCustomerModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 29876  - [39m23/02/2026, 03:34:21 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mOrdersModule dependencies initialized[39m[38;5;3m +0ms[39m
+Backend iniciando...
+[32m[Nest] 29876  - [39m23/02/2026, 03:34:21 [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mAppController {/}:[39m[38;5;3m +22ms[39m
+[32m[Nest] 29876  - [39m23/02/2026, 03:34:21 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/, GET} route[39m[38;5;3m +2ms[39m
+[32m[Nest] 29876  - [39m23/02/2026, 03:34:21 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/seed, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 29876  - [39m23/02/2026, 03:34:21 [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mProductsController {/products}:[39m[38;5;3m +0ms[39m
+[32m[Nest] 29876  - [39m23/02/2026, 03:34:21 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/products, POST} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 29876  - [39m23/02/2026, 03:34:21 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/products, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 29876  - [39m23/02/2026, 03:34:21 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/products/:id, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 29876  - [39m23/02/2026, 03:34:21 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/products/:id, PATCH} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 29876  - [39m23/02/2026, 03:34:21 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/products/:id, DELETE} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 29876  - [39m23/02/2026, 03:34:21 [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mCategoriesController {/categories}:[39m[38;5;3m +0ms[39m
+[32m[Nest] 29876  - [39m23/02/2026, 03:34:21 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/categories, POST} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 29876  - [39m23/02/2026, 03:34:21 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/categories, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 29876  - [39m23/02/2026, 03:34:21 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/categories/:id, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 29876  - [39m23/02/2026, 03:34:21 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/categories/:id, PATCH} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 29876  - [39m23/02/2026, 03:34:21 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/categories/:id, DELETE} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 29876  - [39m23/02/2026, 03:34:21 [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mCustomersController {/customers}:[39m[38;5;3m +0ms[39m
+[32m[Nest] 29876  - [39m23/02/2026, 03:34:21 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/customers, POST} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 29876  - [39m23/02/2026, 03:34:21 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/customers, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 29876  - [39m23/02/2026, 03:34:21 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/customers/email/:email, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 29876  - [39m23/02/2026, 03:34:21 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/customers/:id, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 29876  - [39m23/02/2026, 03:34:21 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/customers/:id, PATCH} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 29876  - [39m23/02/2026, 03:34:21 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/customers/:id, DELETE} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 29876  - [39m23/02/2026, 03:34:21 [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mOrdersController {/orders}:[39m[38;5;3m +0ms[39m
+[32m[Nest] 29876  - [39m23/02/2026, 03:34:21 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/orders, POST} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 29876  - [39m23/02/2026, 03:34:21 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/orders, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 29876  - [39m23/02/2026, 03:34:21 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/orders/:id, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 29876  - [39m23/02/2026, 03:34:21 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/orders/:id/status, PATCH} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 29876  - [39m23/02/2026, 03:34:21 [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mAuthController {/auth}:[39m[38;5;3m +0ms[39m
+[32m[Nest] 29876  - [39m23/02/2026, 03:34:21 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/auth/login, POST} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 29876  - [39m23/02/2026, 03:34:21 [32m    LOG[39m [38;5;3m[SupabaseService] [39m[32mÔ£à Supabase client initialized successfully[39m
+[32m[Nest] 29876  - [39m23/02/2026, 03:34:21 [32m    LOG[39m [38;5;3m[NestApplication] [39m[32mNest application successfully started[39m[38;5;3m +2ms[39m
+[2J[3J[H[[90m03:34:46[0m] File change detected. Starting incremental compilation...
+
+[2J[3J[H[[90m03:34:57[0m] File change detected. Starting incremental compilation...
+
+[[90m03:34:59[0m] Found 0 errors. Watching for file changes.
+
+[32m[Nest] 51204  - [39m23/02/2026, 03:35:03 [32m    LOG[39m [38;5;3m[NestFactory] [39m[32mStarting Nest application...[39m
+[32m[Nest] 51204  - [39m23/02/2026, 03:35:03 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mTypeOrmModule dependencies initialized[39m[38;5;3m +17ms[39m
+[32m[Nest] 51204  - [39m23/02/2026, 03:35:03 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mSupabaseModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 51204  - [39m23/02/2026, 03:35:03 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mPassportModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 51204  - [39m23/02/2026, 03:35:03 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mConfigHostModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 51204  - [39m23/02/2026, 03:35:03 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mConfigModule dependencies initialized[39m[38;5;3m +1ms[39m
+[32m[Nest] 51204  - [39m23/02/2026, 03:35:03 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mConfigModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 51204  - [39m23/02/2026, 03:35:03 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mJwtModule dependencies initialized[39m[38;5;3m +73ms[39m
+[32m[Nest] 51204  - [39m23/02/2026, 03:35:05 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mTypeOrmCoreModule dependencies initialized[39m[38;5;3m +1759ms[39m
+[32m[Nest] 51204  - [39m23/02/2026, 03:35:05 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mTypeOrmModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 51204  - [39m23/02/2026, 03:35:05 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mTypeOrmModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 51204  - [39m23/02/2026, 03:35:05 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mTypeOrmModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 51204  - [39m23/02/2026, 03:35:05 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mTypeOrmModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 51204  - [39m23/02/2026, 03:35:05 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mTypeOrmModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 51204  - [39m23/02/2026, 03:35:05 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mUsersModule dependencies initialized[39m[38;5;3m +1ms[39m
+[32m[Nest] 51204  - [39m23/02/2026, 03:35:05 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mAppModule dependencies initialized[39m[38;5;3m +2ms[39m
+[32m[Nest] 51204  - [39m23/02/2026, 03:35:05 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mAuthModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 51204  - [39m23/02/2026, 03:35:05 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mProductsModule dependencies initialized[39m[38;5;3m +1ms[39m
+[32m[Nest] 51204  - [39m23/02/2026, 03:35:05 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mCategoriesModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 51204  - [39m23/02/2026, 03:35:05 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mCustomerModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 51204  - [39m23/02/2026, 03:35:05 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mOrdersModule dependencies initialized[39m[38;5;3m +0ms[39m
+Backend iniciando...
+[32m[Nest] 51204  - [39m23/02/2026, 03:35:05 [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mAppController {/}:[39m[38;5;3m +39ms[39m
+[32m[Nest] 51204  - [39m23/02/2026, 03:35:05 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/, GET} route[39m[38;5;3m +3ms[39m
+[32m[Nest] 51204  - [39m23/02/2026, 03:35:05 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/seed, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 51204  - [39m23/02/2026, 03:35:05 [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mProductsController {/products}:[39m[38;5;3m +0ms[39m
+[32m[Nest] 51204  - [39m23/02/2026, 03:35:05 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/products, POST} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 51204  - [39m23/02/2026, 03:35:05 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/products, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 51204  - [39m23/02/2026, 03:35:05 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/products/:id, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 51204  - [39m23/02/2026, 03:35:05 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/products/:id, PATCH} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 51204  - [39m23/02/2026, 03:35:05 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/products/:id, DELETE} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 51204  - [39m23/02/2026, 03:35:05 [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mCategoriesController {/categories}:[39m[38;5;3m +0ms[39m
+[32m[Nest] 51204  - [39m23/02/2026, 03:35:05 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/categories, POST} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 51204  - [39m23/02/2026, 03:35:05 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/categories, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 51204  - [39m23/02/2026, 03:35:05 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/categories/:id, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 51204  - [39m23/02/2026, 03:35:05 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/categories/:id, PATCH} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 51204  - [39m23/02/2026, 03:35:05 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/categories/:id, DELETE} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 51204  - [39m23/02/2026, 03:35:05 [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mCustomersController {/customers}:[39m[38;5;3m +0ms[39m
+[32m[Nest] 51204  - [39m23/02/2026, 03:35:05 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/customers, POST} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 51204  - [39m23/02/2026, 03:35:05 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/customers, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 51204  - [39m23/02/2026, 03:35:05 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/customers/email/:email, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 51204  - [39m23/02/2026, 03:35:05 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/customers/:id, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 51204  - [39m23/02/2026, 03:35:05 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/customers/:id, PATCH} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 51204  - [39m23/02/2026, 03:35:05 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/customers/:id, DELETE} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 51204  - [39m23/02/2026, 03:35:05 [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mOrdersController {/orders}:[39m[38;5;3m +0ms[39m
+[32m[Nest] 51204  - [39m23/02/2026, 03:35:05 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/orders, POST} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 51204  - [39m23/02/2026, 03:35:05 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/orders, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 51204  - [39m23/02/2026, 03:35:05 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/orders/:id, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 51204  - [39m23/02/2026, 03:35:05 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/orders/:id/status, PATCH} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 51204  - [39m23/02/2026, 03:35:05 [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mAuthController {/auth}:[39m[38;5;3m +0ms[39m
+[32m[Nest] 51204  - [39m23/02/2026, 03:35:05 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/auth/login, POST} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 51204  - [39m23/02/2026, 03:35:05 [32m    LOG[39m [38;5;3m[SupabaseService] [39m[32mÔ£à Supabase client initialized successfully[39m
+[32m[Nest] 51204  - [39m23/02/2026, 03:35:05 [32m    LOG[39m [38;5;3m[NestApplication] [39m[32mNest application successfully started[39m[38;5;3m +3ms[39m
+[Nest] 51204  - 23/02/2026, 03:35:06   ERROR [ExceptionsHandler] QueryFailedError: column Product.stockBySize does not exist
+    at PostgresQueryRunner.query (C:\Users\Natalia\Documents\Yhabiaunavez\back\node_modules\typeorm\driver\src\driver\postgres\PostgresQueryRunner.ts:325:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async SelectQueryBuilder.loadRawResults (C:\Users\Natalia\Documents\Yhabiaunavez\back\node_modules\typeorm\query-builder\src\query-builder\SelectQueryBuilder.ts:3868:25)
+    at async SelectQueryBuilder.executeEntitiesAndRawResults (C:\Users\Natalia\Documents\Yhabiaunavez\back\node_modules\typeorm\query-builder\src\query-builder\SelectQueryBuilder.ts:3614:26)
+    at async SelectQueryBuilder.getRawAndEntities (C:\Users\Natalia\Documents\Yhabiaunavez\back\node_modules\typeorm\query-builder\src\query-builder\SelectQueryBuilder.ts:1671:29)
+    at async SelectQueryBuilder.getMany (C:\Users\Natalia\Documents\Yhabiaunavez\back\node_modules\typeorm\query-builder\src\query-builder\SelectQueryBuilder.ts:1761:25)
+    at async ProductsService.findAll (C:\Users\Natalia\Documents\Yhabiaunavez\back\src\products\products.service.ts:70:16)
+    at async C:\Users\Natalia\Documents\Yhabiaunavez\back\node_modules\@nestjs\core\router\router-execution-context.js:46:28
+    at async C:\Users\Natalia\Documents\Yhabiaunavez\back\node_modules\@nestjs\core\router\router-proxy.js:9:17 {
+  query: 'SELECT "Product"."id" AS "Product_id", "Product"."name" AS "Product_name", "Product"."sizes" AS "Product_sizes", "Product"."price" AS "Product_price", "Product"."description" AS "Product_description", "Product"."stock" AS "Product_stock", "Product"."stockBySize" AS "Product_stockBySize", "Product"."image" AS "Product_image", "Product"."createdAt" AS "Product_createdAt", "Product"."updatedAt" AS "Product_updatedAt", "Product"."categoryId" AS "Product_categoryId", "Product"."orderId" AS "Product_orderId", "Product__Product_category"."id" AS "Product__Product_category_id", "Product__Product_category"."name" AS "Product__Product_category_name", "Product__Product_category"."createdAt" AS "Product__Product_category_createdAt", "Product__Product_category"."updatedAt" AS "Product__Product_category_updatedAt" FROM "products" "Product" LEFT JOIN "categories" "Product__Product_category" ON "Product__Product_category"."id"="Product"."categoryId"',
+  parameters: [],
+  driverError: error: column Product.stockBySize does not exist
+      at C:\Users\Natalia\Documents\Yhabiaunavez\back\node_modules\pg\lib\client.js:624:17
+      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+      at async PostgresQueryRunner.query (C:\Users\Natalia\Documents\Yhabiaunavez\back\node_modules\typeorm\driver\src\driver\postgres\PostgresQueryRunner.ts:254:25)
+      at async SelectQueryBuilder.loadRawResults (C:\Users\Natalia\Documents\Yhabiaunavez\back\node_modules\typeorm\query-builder\src\query-builder\SelectQueryBuilder.ts:3868:25)
+      at async SelectQueryBuilder.executeEntitiesAndRawResults (C:\Users\Natalia\Documents\Yhabiaunavez\back\node_modules\typeorm\query-builder\src\query-builder\SelectQueryBuilder.ts:3614:26)
+      at async SelectQueryBuilder.getRawAndEntities (C:\Users\Natalia\Documents\Yhabiaunavez\back\node_modules\typeorm\query-builder\src\query-builder\SelectQueryBuilder.ts:1671:29)
+      at async SelectQueryBuilder.getMany (C:\Users\Natalia\Documents\Yhabiaunavez\back\node_modules\typeorm\query-builder\src\query-builder\SelectQueryBuilder.ts:1761:25)
+      at async ProductsService.findAll (C:\Users\Natalia\Documents\Yhabiaunavez\back\src\products\products.service.ts:70:16)
+      at async C:\Users\Natalia\Documents\Yhabiaunavez\back\node_modules\@nestjs\core\router\router-execution-context.js:46:28
+      at async C:\Users\Natalia\Documents\Yhabiaunavez\back\node_modules\@nestjs\core\router\router-proxy.js:9:17 {
+    length: 118,
+    severity: 'ERROR',
+    code: '42703',
+    detail: undefined,
+    hint: undefined,
+    position: '240',
+    internalPosition: undefined,
+    internalQuery: undefined,
+    where: undefined,
+    schema: undefined,
+    table: undefined,
+    column: undefined,
+    dataType: undefined,
+    constraint: undefined,
+    file: 'parse_relation.c',
+    line: '3716',
+    routine: 'errorMissingColumn'
+  },
+  length: 118,
+  severity: 'ERROR',
+  code: '42703',
+  detail: undefined,
+  hint: undefined,
+  position: '240',
+  internalPosition: undefined,
+  internalQuery: undefined,
+  where: undefined,
+  schema: undefined,
+  table: undefined,
+  column: undefined,
+  dataType: undefined,
+  constraint: undefined,
+  file: 'parse_relation.c',
+  line: '3716',
+  routine: 'errorMissingColumn'
+}
+[Nest] 51204  - 23/02/2026, 03:35:06   ERROR [ExceptionsHandler] QueryFailedError: column Product.stockBySize does not exist
+    at PostgresQueryRunner.query (C:\Users\Natalia\Documents\Yhabiaunavez\back\node_modules\typeorm\driver\src\driver\postgres\PostgresQueryRunner.ts:325:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async SelectQueryBuilder.loadRawResults (C:\Users\Natalia\Documents\Yhabiaunavez\back\node_modules\typeorm\query-builder\src\query-builder\SelectQueryBuilder.ts:3868:25)
+    at async SelectQueryBuilder.executeEntitiesAndRawResults (C:\Users\Natalia\Documents\Yhabiaunavez\back\node_modules\typeorm\query-builder\src\query-builder\SelectQueryBuilder.ts:3614:26)
+    at async SelectQueryBuilder.getRawAndEntities (C:\Users\Natalia\Documents\Yhabiaunavez\back\node_modules\typeorm\query-builder\src\query-builder\SelectQueryBuilder.ts:1671:29)
+    at async SelectQueryBuilder.getMany (C:\Users\Natalia\Documents\Yhabiaunavez\back\node_modules\typeorm\query-builder\src\query-builder\SelectQueryBuilder.ts:1761:25)
+    at async ProductsService.findAll (C:\Users\Natalia\Documents\Yhabiaunavez\back\src\products\products.service.ts:70:16)
+    at async C:\Users\Natalia\Documents\Yhabiaunavez\back\node_modules\@nestjs\core\router\router-execution-context.js:46:28
+    at async C:\Users\Natalia\Documents\Yhabiaunavez\back\node_modules\@nestjs\core\router\router-proxy.js:9:17 {
+  query: 'SELECT "Product"."id" AS "Product_id", "Product"."name" AS "Product_name", "Product"."sizes" AS "Product_sizes", "Product"."price" AS "Product_price", "Product"."description" AS "Product_description", "Product"."stock" AS "Product_stock", "Product"."stockBySize" AS "Product_stockBySize", "Product"."image" AS "Product_image", "Product"."createdAt" AS "Product_createdAt", "Product"."updatedAt" AS "Product_updatedAt", "Product"."categoryId" AS "Product_categoryId", "Product"."orderId" AS "Product_orderId", "Product__Product_category"."id" AS "Product__Product_category_id", "Product__Product_category"."name" AS "Product__Product_category_name", "Product__Product_category"."createdAt" AS "Product__Product_category_createdAt", "Product__Product_category"."updatedAt" AS "Product__Product_category_updatedAt" FROM "products" "Product" LEFT JOIN "categories" "Product__Product_category" ON "Product__Product_category"."id"="Product"."categoryId"',
+  parameters: [],
+  driverError: error: column Product.stockBySize does not exist
+      at C:\Users\Natalia\Documents\Yhabiaunavez\back\node_modules\pg\lib\client.js:624:17
+      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+      at async PostgresQueryRunner.query (C:\Users\Natalia\Documents\Yhabiaunavez\back\node_modules\typeorm\driver\src\driver\postgres\PostgresQueryRunner.ts:254:25)
+      at async SelectQueryBuilder.loadRawResults (C:\Users\Natalia\Documents\Yhabiaunavez\back\node_modules\typeorm\query-builder\src\query-builder\SelectQueryBuilder.ts:3868:25)
+      at async SelectQueryBuilder.executeEntitiesAndRawResults (C:\Users\Natalia\Documents\Yhabiaunavez\back\node_modules\typeorm\query-builder\src\query-builder\SelectQueryBuilder.ts:3614:26)
+      at async SelectQueryBuilder.getRawAndEntities (C:\Users\Natalia\Documents\Yhabiaunavez\back\node_modules\typeorm\query-builder\src\query-builder\SelectQueryBuilder.ts:1671:29)
+      at async SelectQueryBuilder.getMany (C:\Users\Natalia\Documents\Yhabiaunavez\back\node_modules\typeorm\query-builder\src\query-builder\SelectQueryBuilder.ts:1761:25)
+      at async ProductsService.findAll (C:\Users\Natalia\Documents\Yhabiaunavez\back\src\products\products.service.ts:70:16)
+      at async C:\Users\Natalia\Documents\Yhabiaunavez\back\node_modules\@nestjs\core\router\router-execution-context.js:46:28
+      at async C:\Users\Natalia\Documents\Yhabiaunavez\back\node_modules\@nestjs\core\router\router-proxy.js:9:17 {
+    length: 118,
+    severity: 'ERROR',
+    code: '42703',
+    detail: undefined,
+    hint: undefined,
+    position: '240',
+    internalPosition: undefined,
+    internalQuery: undefined,
+    where: undefined,
+    schema: undefined,
+    table: undefined,
+    column: undefined,
+    dataType: undefined,
+    constraint: undefined,
+    file: 'parse_relation.c',
+    line: '3716',
+    routine: 'errorMissingColumn'
+  },
+  length: 118,
+  severity: 'ERROR',
+  code: '42703',
+  detail: undefined,
+  hint: undefined,
+  position: '240',
+  internalPosition: undefined,
+  internalQuery: undefined,
+  where: undefined,
+  schema: undefined,
+  table: undefined,
+  column: undefined,
+  dataType: undefined,
+  constraint: undefined,
+  file: 'parse_relation.c',
+  line: '3716',
+  routine: 'errorMissingColumn'
+}
+[Nest] 51204  - 23/02/2026, 03:35:07   ERROR [ExceptionsHandler] QueryFailedError: column Category__Category_products.stockBySize does not exist
+    at PostgresQueryRunner.query (C:\Users\Natalia\Documents\Yhabiaunavez\back\node_modules\typeorm\driver\src\driver\postgres\PostgresQueryRunner.ts:325:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async SelectQueryBuilder.loadRawResults (C:\Users\Natalia\Documents\Yhabiaunavez\back\node_modules\typeorm\query-builder\src\query-builder\SelectQueryBuilder.ts:3868:25)
+    at async SelectQueryBuilder.executeEntitiesAndRawResults (C:\Users\Natalia\Documents\Yhabiaunavez\back\node_modules\typeorm\query-builder\src\query-builder\SelectQueryBuilder.ts:3614:26)
+    at async SelectQueryBuilder.getRawAndEntities (C:\Users\Natalia\Documents\Yhabiaunavez\back\node_modules\typeorm\query-builder\src\query-builder\SelectQueryBuilder.ts:1671:29)
+    at async SelectQueryBuilder.getMany (C:\Users\Natalia\Documents\Yhabiaunavez\back\node_modules\typeorm\query-builder\src\query-builder\SelectQueryBuilder.ts:1761:25)
+    at async CategoriesService.findAll (C:\Users\Natalia\Documents\Yhabiaunavez\back\src\category\category.service.ts:30:12)
+    at async C:\Users\Natalia\Documents\Yhabiaunavez\back\node_modules\@nestjs\core\router\router-execution-context.js:46:28
+    at async C:\Users\Natalia\Documents\Yhabiaunavez\back\node_modules\@nestjs\core\router\router-proxy.js:9:17 {
+  query: 'SELECT "Category"."id" AS "Category_id", "Category"."name" AS "Category_name", "Category"."createdAt" AS "Category_createdAt", "Category"."updatedAt" AS "Category_updatedAt", "Category__Category_products"."id" AS "Category__Category_products_id", "Category__Category_products"."name" AS "Category__Category_products_name", "Category__Category_products"."sizes" AS "Category__Category_products_sizes", "Category__Category_products"."price" AS "Category__Category_products_price", "Category__Category_products"."description" AS "Category__Category_products_description", "Category__Category_products"."stock" AS "Category__Category_products_stock", "Category__Category_products"."stockBySize" AS "Category__Category_products_stockBySize", "Category__Category_products"."image" AS "Category__Category_products_image", "Category__Category_products"."createdAt" AS "Category__Category_products_createdAt", "Category__Category_products"."updatedAt" AS "Category__Category_products_updatedAt", "Category__Category_products"."categoryId" AS "Category__Category_products_categoryId", "Category__Category_products"."orderId" AS "Category__Category_products_orderId" FROM "categories" "Category" LEFT JOIN "products" "Category__Category_products" ON "Category__Category_products"."categoryId"="Category"."id"',
+  parameters: [],
+  driverError: error: column Category__Category_products.stockBySize does not exist
+      at C:\Users\Natalia\Documents\Yhabiaunavez\back\node_modules\pg\lib\client.js:624:17
+      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+      at async PostgresQueryRunner.query (C:\Users\Natalia\Documents\Yhabiaunavez\back\node_modules\typeorm\driver\src\driver\postgres\PostgresQueryRunner.ts:254:25)
+      at async SelectQueryBuilder.loadRawResults (C:\Users\Natalia\Documents\Yhabiaunavez\back\node_modules\typeorm\query-builder\src\query-builder\SelectQueryBuilder.ts:3868:25)
+      at async SelectQueryBuilder.executeEntitiesAndRawResults (C:\Users\Natalia\Documents\Yhabiaunavez\back\node_modules\typeorm\query-builder\src\query-builder\SelectQueryBuilder.ts:3614:26)
+      at async SelectQueryBuilder.getRawAndEntities (C:\Users\Natalia\Documents\Yhabiaunavez\back\node_modules\typeorm\query-builder\src\query-builder\SelectQueryBuilder.ts:1671:29)
+      at async SelectQueryBuilder.getMany (C:\Users\Natalia\Documents\Yhabiaunavez\back\node_modules\typeorm\query-builder\src\query-builder\SelectQueryBuilder.ts:1761:25)
+      at async CategoriesService.findAll (C:\Users\Natalia\Documents\Yhabiaunavez\back\src\category\category.service.ts:30:12)
+      at async C:\Users\Natalia\Documents\Yhabiaunavez\back\node_modules\@nestjs\core\router\router-execution-context.js:46:28
+      at async C:\Users\Natalia\Documents\Yhabiaunavez\back\node_modules\@nestjs\core\router\router-proxy.js:9:17 {
+    length: 138,
+    severity: 'ERROR',
+    code: '42703',
+    detail: undefined,
+    hint: undefined,
+    position: '648',
+    internalPosition: undefined,
+    internalQuery: undefined,
+    where: undefined,
+    schema: undefined,
+    table: undefined,
+    column: undefined,
+    dataType: undefined,
+    constraint: undefined,
+    file: 'parse_relation.c',
+    line: '3716',
+    routine: 'errorMissingColumn'
+  },
+  length: 138,
+  severity: 'ERROR',
+  code: '42703',
+  detail: undefined,
+  hint: undefined,
+  position: '648',
+  internalPosition: undefined,
+  internalQuery: undefined,
+  where: undefined,
+  schema: undefined,
+  table: undefined,
+  column: undefined,
+  dataType: undefined,
+  constraint: undefined,
+  file: 'parse_relation.c',
+  line: '3716',
+  routine: 'errorMissingColumn'
+}
+[Nest] 51204  - 23/02/2026, 03:35:07   ERROR [ExceptionsHandler] QueryFailedError: column Category__Category_products.stockBySize does not exist
+    at PostgresQueryRunner.query (C:\Users\Natalia\Documents\Yhabiaunavez\back\node_modules\typeorm\driver\src\driver\postgres\PostgresQueryRunner.ts:325:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async SelectQueryBuilder.loadRawResults (C:\Users\Natalia\Documents\Yhabiaunavez\back\node_modules\typeorm\query-builder\src\query-builder\SelectQueryBuilder.ts:3868:25)
+    at async SelectQueryBuilder.executeEntitiesAndRawResults (C:\Users\Natalia\Documents\Yhabiaunavez\back\node_modules\typeorm\query-builder\src\query-builder\SelectQueryBuilder.ts:3614:26)
+    at async SelectQueryBuilder.getRawAndEntities (C:\Users\Natalia\Documents\Yhabiaunavez\back\node_modules\typeorm\query-builder\src\query-builder\SelectQueryBuilder.ts:1671:29)
+    at async SelectQueryBuilder.getMany (C:\Users\Natalia\Documents\Yhabiaunavez\back\node_modules\typeorm\query-builder\src\query-builder\SelectQueryBuilder.ts:1761:25)
+    at async CategoriesService.findAll (C:\Users\Natalia\Documents\Yhabiaunavez\back\src\category\category.service.ts:30:12)
+    at async C:\Users\Natalia\Documents\Yhabiaunavez\back\node_modules\@nestjs\core\router\router-execution-context.js:46:28
+    at async C:\Users\Natalia\Documents\Yhabiaunavez\back\node_modules\@nestjs\core\router\router-proxy.js:9:17 {
+  query: 'SELECT "Category"."id" AS "Category_id", "Category"."name" AS "Category_name", "Category"."createdAt" AS "Category_createdAt", "Category"."updatedAt" AS "Category_updatedAt", "Category__Category_products"."id" AS "Category__Category_products_id", "Category__Category_products"."name" AS "Category__Category_products_name", "Category__Category_products"."sizes" AS "Category__Category_products_sizes", "Category__Category_products"."price" AS "Category__Category_products_price", "Category__Category_products"."description" AS "Category__Category_products_description", "Category__Category_products"."stock" AS "Category__Category_products_stock", "Category__Category_products"."stockBySize" AS "Category__Category_products_stockBySize", "Category__Category_products"."image" AS "Category__Category_products_image", "Category__Category_products"."createdAt" AS "Category__Category_products_createdAt", "Category__Category_products"."updatedAt" AS "Category__Category_products_updatedAt", "Category__Category_products"."categoryId" AS "Category__Category_products_categoryId", "Category__Category_products"."orderId" AS "Category__Category_products_orderId" FROM "categories" "Category" LEFT JOIN "products" "Category__Category_products" ON "Category__Category_products"."categoryId"="Category"."id"',
+  parameters: [],
+  driverError: error: column Category__Category_products.stockBySize does not exist
+      at C:\Users\Natalia\Documents\Yhabiaunavez\back\node_modules\pg\lib\client.js:624:17
+      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+      at async PostgresQueryRunner.query (C:\Users\Natalia\Documents\Yhabiaunavez\back\node_modules\typeorm\driver\src\driver\postgres\PostgresQueryRunner.ts:254:25)
+      at async SelectQueryBuilder.loadRawResults (C:\Users\Natalia\Documents\Yhabiaunavez\back\node_modules\typeorm\query-builder\src\query-builder\SelectQueryBuilder.ts:3868:25)
+      at async SelectQueryBuilder.executeEntitiesAndRawResults (C:\Users\Natalia\Documents\Yhabiaunavez\back\node_modules\typeorm\query-builder\src\query-builder\SelectQueryBuilder.ts:3614:26)
+      at async SelectQueryBuilder.getRawAndEntities (C:\Users\Natalia\Documents\Yhabiaunavez\back\node_modules\typeorm\query-builder\src\query-builder\SelectQueryBuilder.ts:1671:29)
+      at async SelectQueryBuilder.getMany (C:\Users\Natalia\Documents\Yhabiaunavez\back\node_modules\typeorm\query-builder\src\query-builder\SelectQueryBuilder.ts:1761:25)
+      at async CategoriesService.findAll (C:\Users\Natalia\Documents\Yhabiaunavez\back\src\category\category.service.ts:30:12)
+      at async C:\Users\Natalia\Documents\Yhabiaunavez\back\node_modules\@nestjs\core\router\router-execution-context.js:46:28
+      at async C:\Users\Natalia\Documents\Yhabiaunavez\back\node_modules\@nestjs\core\router\router-proxy.js:9:17 {
+    length: 138,
+    severity: 'ERROR',
+    code: '42703',
+    detail: undefined,
+    hint: undefined,
+    position: '648',
+    internalPosition: undefined,
+    internalQuery: undefined,
+    where: undefined,
+    schema: undefined,
+    table: undefined,
+    column: undefined,
+    dataType: undefined,
+    constraint: undefined,
+    file: 'parse_relation.c',
+    line: '3716',
+    routine: 'errorMissingColumn'
+  },
+  length: 138,
+  severity: 'ERROR',
+  code: '42703',
+  detail: undefined,
+  hint: undefined,
+  position: '648',
+  internalPosition: undefined,
+  internalQuery: undefined,
+  where: undefined,
+  schema: undefined,
+  table: undefined,
+  column: undefined,
+  dataType: undefined,
+  constraint: undefined,
+  file: 'parse_relation.c',
+  line: '3716',
+  routine: 'errorMissingColumn'
+}
+[Nest] 51204  - 23/02/2026, 03:35:49   ERROR [ExceptionsHandler] QueryFailedError: column Category__Category_products.stockBySize does not exist
+    at PostgresQueryRunner.query (C:\Users\Natalia\Documents\Yhabiaunavez\back\node_modules\typeorm\driver\src\driver\postgres\PostgresQueryRunner.ts:325:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async SelectQueryBuilder.loadRawResults (C:\Users\Natalia\Documents\Yhabiaunavez\back\node_modules\typeorm\query-builder\src\query-builder\SelectQueryBuilder.ts:3868:25)
+    at async SelectQueryBuilder.executeEntitiesAndRawResults (C:\Users\Natalia\Documents\Yhabiaunavez\back\node_modules\typeorm\query-builder\src\query-builder\SelectQueryBuilder.ts:3614:26)
+    at async SelectQueryBuilder.getRawAndEntities (C:\Users\Natalia\Documents\Yhabiaunavez\back\node_modules\typeorm\query-builder\src\query-builder\SelectQueryBuilder.ts:1671:29)
+    at async SelectQueryBuilder.getMany (C:\Users\Natalia\Documents\Yhabiaunavez\back\node_modules\typeorm\query-builder\src\query-builder\SelectQueryBuilder.ts:1761:25)
+    at async CategoriesService.findAll (C:\Users\Natalia\Documents\Yhabiaunavez\back\src\category\category.service.ts:30:12)
+    at async C:\Users\Natalia\Documents\Yhabiaunavez\back\node_modules\@nestjs\core\router\router-execution-context.js:46:28
+    at async C:\Users\Natalia\Documents\Yhabiaunavez\back\node_modules\@nestjs\core\router\router-proxy.js:9:17 {
+  query: 'SELECT "Category"."id" AS "Category_id", "Category"."name" AS "Category_name", "Category"."createdAt" AS "Category_createdAt", "Category"."updatedAt" AS "Category_updatedAt", "Category__Category_products"."id" AS "Category__Category_products_id", "Category__Category_products"."name" AS "Category__Category_products_name", "Category__Category_products"."sizes" AS "Category__Category_products_sizes", "Category__Category_products"."price" AS "Category__Category_products_price", "Category__Category_products"."description" AS "Category__Category_products_description", "Category__Category_products"."stock" AS "Category__Category_products_stock", "Category__Category_products"."stockBySize" AS "Category__Category_products_stockBySize", "Category__Category_products"."image" AS "Category__Category_products_image", "Category__Category_products"."createdAt" AS "Category__Category_products_createdAt", "Category__Category_products"."updatedAt" AS "Category__Category_products_updatedAt", "Category__Category_products"."categoryId" AS "Category__Category_products_categoryId", "Category__Category_products"."orderId" AS "Category__Category_products_orderId" FROM "categories" "Category" LEFT JOIN "products" "Category__Category_products" ON "Category__Category_products"."categoryId"="Category"."id"',
+  parameters: [],
+  driverError: error: column Category__Category_products.stockBySize does not exist
+      at C:\Users\Natalia\Documents\Yhabiaunavez\back\node_modules\pg\lib\client.js:624:17
+      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+      at async PostgresQueryRunner.query (C:\Users\Natalia\Documents\Yhabiaunavez\back\node_modules\typeorm\driver\src\driver\postgres\PostgresQueryRunner.ts:254:25)
+      at async SelectQueryBuilder.loadRawResults (C:\Users\Natalia\Documents\Yhabiaunavez\back\node_modules\typeorm\query-builder\src\query-builder\SelectQueryBuilder.ts:3868:25)
+      at async SelectQueryBuilder.executeEntitiesAndRawResults (C:\Users\Natalia\Documents\Yhabiaunavez\back\node_modules\typeorm\query-builder\src\query-builder\SelectQueryBuilder.ts:3614:26)
+      at async SelectQueryBuilder.getRawAndEntities (C:\Users\Natalia\Documents\Yhabiaunavez\back\node_modules\typeorm\query-builder\src\query-builder\SelectQueryBuilder.ts:1671:29)
+      at async SelectQueryBuilder.getMany (C:\Users\Natalia\Documents\Yhabiaunavez\back\node_modules\typeorm\query-builder\src\query-builder\SelectQueryBuilder.ts:1761:25)
+      at async CategoriesService.findAll (C:\Users\Natalia\Documents\Yhabiaunavez\back\src\category\category.service.ts:30:12)
+      at async C:\Users\Natalia\Documents\Yhabiaunavez\back\node_modules\@nestjs\core\router\router-execution-context.js:46:28
+      at async C:\Users\Natalia\Documents\Yhabiaunavez\back\node_modules\@nestjs\core\router\router-proxy.js:9:17 {
+    length: 138,
+    severity: 'ERROR',
+    code: '42703',
+    detail: undefined,
+    hint: undefined,
+    position: '648',
+    internalPosition: undefined,
+    internalQuery: undefined,
+    where: undefined,
+    schema: undefined,
+    table: undefined,
+    column: undefined,
+    dataType: undefined,
+    constraint: undefined,
+    file: 'parse_relation.c',
+    line: '3716',
+    routine: 'errorMissingColumn'
+  },
+  length: 138,
+  severity: 'ERROR',
+  code: '42703',
+  detail: undefined,
+  hint: undefined,
+  position: '648',
+  internalPosition: undefined,
+  internalQuery: undefined,
+  where: undefined,
+  schema: undefined,
+  table: undefined,
+  column: undefined,
+  dataType: undefined,
+  constraint: undefined,
+  file: 'parse_relation.c',
+  line: '3716',
+  routine: 'errorMissingColumn'
+}
+[Nest] 51204  - 23/02/2026, 03:35:49   ERROR [ExceptionsHandler] QueryFailedError: column Product.stockBySize does not exist
+    at PostgresQueryRunner.query (C:\Users\Natalia\Documents\Yhabiaunavez\back\node_modules\typeorm\driver\src\driver\postgres\PostgresQueryRunner.ts:325:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async SelectQueryBuilder.loadRawResults (C:\Users\Natalia\Documents\Yhabiaunavez\back\node_modules\typeorm\query-builder\src\query-builder\SelectQueryBuilder.ts:3868:25)
+    at async SelectQueryBuilder.executeEntitiesAndRawResults (C:\Users\Natalia\Documents\Yhabiaunavez\back\node_modules\typeorm\query-builder\src\query-builder\SelectQueryBuilder.ts:3614:26)
+    at async SelectQueryBuilder.getRawAndEntities (C:\Users\Natalia\Documents\Yhabiaunavez\back\node_modules\typeorm\query-builder\src\query-builder\SelectQueryBuilder.ts:1671:29)
+    at async SelectQueryBuilder.getMany (C:\Users\Natalia\Documents\Yhabiaunavez\back\node_modules\typeorm\query-builder\src\query-builder\SelectQueryBuilder.ts:1761:25)
+    at async ProductsService.findAll (C:\Users\Natalia\Documents\Yhabiaunavez\back\src\products\products.service.ts:70:16)
+    at async C:\Users\Natalia\Documents\Yhabiaunavez\back\node_modules\@nestjs\core\router\router-execution-context.js:46:28
+    at async C:\Users\Natalia\Documents\Yhabiaunavez\back\node_modules\@nestjs\core\router\router-proxy.js:9:17 {
+  query: 'SELECT "Product"."id" AS "Product_id", "Product"."name" AS "Product_name", "Product"."sizes" AS "Product_sizes", "Product"."price" AS "Product_price", "Product"."description" AS "Product_description", "Product"."stock" AS "Product_stock", "Product"."stockBySize" AS "Product_stockBySize", "Product"."image" AS "Product_image", "Product"."createdAt" AS "Product_createdAt", "Product"."updatedAt" AS "Product_updatedAt", "Product"."categoryId" AS "Product_categoryId", "Product"."orderId" AS "Product_orderId", "Product__Product_category"."id" AS "Product__Product_category_id", "Product__Product_category"."name" AS "Product__Product_category_name", "Product__Product_category"."createdAt" AS "Product__Product_category_createdAt", "Product__Product_category"."updatedAt" AS "Product__Product_category_updatedAt" FROM "products" "Product" LEFT JOIN "categories" "Product__Product_category" ON "Product__Product_category"."id"="Product"."categoryId"',
+  parameters: [],
+  driverError: error: column Product.stockBySize does not exist
+      at C:\Users\Natalia\Documents\Yhabiaunavez\back\node_modules\pg\lib\client.js:624:17
+      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+      at async PostgresQueryRunner.query (C:\Users\Natalia\Documents\Yhabiaunavez\back\node_modules\typeorm\driver\src\driver\postgres\PostgresQueryRunner.ts:254:25)
+      at async SelectQueryBuilder.loadRawResults (C:\Users\Natalia\Documents\Yhabiaunavez\back\node_modules\typeorm\query-builder\src\query-builder\SelectQueryBuilder.ts:3868:25)
+      at async SelectQueryBuilder.executeEntitiesAndRawResults (C:\Users\Natalia\Documents\Yhabiaunavez\back\node_modules\typeorm\query-builder\src\query-builder\SelectQueryBuilder.ts:3614:26)
+      at async SelectQueryBuilder.getRawAndEntities (C:\Users\Natalia\Documents\Yhabiaunavez\back\node_modules\typeorm\query-builder\src\query-builder\SelectQueryBuilder.ts:1671:29)
+      at async SelectQueryBuilder.getMany (C:\Users\Natalia\Documents\Yhabiaunavez\back\node_modules\typeorm\query-builder\src\query-builder\SelectQueryBuilder.ts:1761:25)
+      at async ProductsService.findAll (C:\Users\Natalia\Documents\Yhabiaunavez\back\src\products\products.service.ts:70:16)
+      at async C:\Users\Natalia\Documents\Yhabiaunavez\back\node_modules\@nestjs\core\router\router-execution-context.js:46:28
+      at async C:\Users\Natalia\Documents\Yhabiaunavez\back\node_modules\@nestjs\core\router\router-proxy.js:9:17 {
+    length: 118,
+    severity: 'ERROR',
+    code: '42703',
+    detail: undefined,
+    hint: undefined,
+    position: '240',
+    internalPosition: undefined,
+    internalQuery: undefined,
+    where: undefined,
+    schema: undefined,
+    table: undefined,
+    column: undefined,
+    dataType: undefined,
+    constraint: undefined,
+    file: 'parse_relation.c',
+    line: '3716',
+    routine: 'errorMissingColumn'
+  },
+  length: 118,
+  severity: 'ERROR',
+  code: '42703',
+  detail: undefined,
+  hint: undefined,
+  position: '240',
+  internalPosition: undefined,
+  internalQuery: undefined,
+  where: undefined,
+  schema: undefined,
+  table: undefined,
+  column: undefined,
+  dataType: undefined,
+  constraint: undefined,
+  file: 'parse_relation.c',
+  line: '3716',
+  routine: 'errorMissingColumn'
+}
+[Nest] 51204  - 23/02/2026, 03:35:55   ERROR [ExceptionsHandler] QueryFailedError: column Product.stockBySize does not exist
+    at PostgresQueryRunner.query (C:\Users\Natalia\Documents\Yhabiaunavez\back\node_modules\typeorm\driver\src\driver\postgres\PostgresQueryRunner.ts:325:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async SelectQueryBuilder.loadRawResults (C:\Users\Natalia\Documents\Yhabiaunavez\back\node_modules\typeorm\query-builder\src\query-builder\SelectQueryBuilder.ts:3868:25)
+    at async SelectQueryBuilder.executeEntitiesAndRawResults (C:\Users\Natalia\Documents\Yhabiaunavez\back\node_modules\typeorm\query-builder\src\query-builder\SelectQueryBuilder.ts:3614:26)
+    at async SelectQueryBuilder.getRawAndEntities (C:\Users\Natalia\Documents\Yhabiaunavez\back\node_modules\typeorm\query-builder\src\query-builder\SelectQueryBuilder.ts:1671:29)
+    at async SelectQueryBuilder.getMany (C:\Users\Natalia\Documents\Yhabiaunavez\back\node_modules\typeorm\query-builder\src\query-builder\SelectQueryBuilder.ts:1761:25)
+    at async ProductsService.findAll (C:\Users\Natalia\Documents\Yhabiaunavez\back\src\products\products.service.ts:70:16)
+    at async C:\Users\Natalia\Documents\Yhabiaunavez\back\node_modules\@nestjs\core\router\router-execution-context.js:46:28
+    at async C:\Users\Natalia\Documents\Yhabiaunavez\back\node_modules\@nestjs\core\router\router-proxy.js:9:17 {
+  query: 'SELECT "Product"."id" AS "Product_id", "Product"."name" AS "Product_name", "Product"."sizes" AS "Product_sizes", "Product"."price" AS "Product_price", "Product"."description" AS "Product_description", "Product"."stock" AS "Product_stock", "Product"."stockBySize" AS "Product_stockBySize", "Product"."image" AS "Product_image", "Product"."createdAt" AS "Product_createdAt", "Product"."updatedAt" AS "Product_updatedAt", "Product"."categoryId" AS "Product_categoryId", "Product"."orderId" AS "Product_orderId", "Product__Product_category"."id" AS "Product__Product_category_id", "Product__Product_category"."name" AS "Product__Product_category_name", "Product__Product_category"."createdAt" AS "Product__Product_category_createdAt", "Product__Product_category"."updatedAt" AS "Product__Product_category_updatedAt" FROM "products" "Product" LEFT JOIN "categories" "Product__Product_category" ON "Product__Product_category"."id"="Product"."categoryId"',
+  parameters: [],
+  driverError: error: column Product.stockBySize does not exist
+      at C:\Users\Natalia\Documents\Yhabiaunavez\back\node_modules\pg\lib\client.js:624:17
+      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+      at async PostgresQueryRunner.query (C:\Users\Natalia\Documents\Yhabiaunavez\back\node_modules\typeorm\driver\src\driver\postgres\PostgresQueryRunner.ts:254:25)
+      at async SelectQueryBuilder.loadRawResults (C:\Users\Natalia\Documents\Yhabiaunavez\back\node_modules\typeorm\query-builder\src\query-builder\SelectQueryBuilder.ts:3868:25)
+      at async SelectQueryBuilder.executeEntitiesAndRawResults (C:\Users\Natalia\Documents\Yhabiaunavez\back\node_modules\typeorm\query-builder\src\query-builder\SelectQueryBuilder.ts:3614:26)
+      at async SelectQueryBuilder.getRawAndEntities (C:\Users\Natalia\Documents\Yhabiaunavez\back\node_modules\typeorm\query-builder\src\query-builder\SelectQueryBuilder.ts:1671:29)
+      at async SelectQueryBuilder.getMany (C:\Users\Natalia\Documents\Yhabiaunavez\back\node_modules\typeorm\query-builder\src\query-builder\SelectQueryBuilder.ts:1761:25)
+      at async ProductsService.findAll (C:\Users\Natalia\Documents\Yhabiaunavez\back\src\products\products.service.ts:70:16)
+      at async C:\Users\Natalia\Documents\Yhabiaunavez\back\node_modules\@nestjs\core\router\router-execution-context.js:46:28
+      at async C:\Users\Natalia\Documents\Yhabiaunavez\back\node_modules\@nestjs\core\router\router-proxy.js:9:17 {
+    length: 118,
+    severity: 'ERROR',
+    code: '42703',
+    detail: undefined,
+    hint: undefined,
+    position: '240',
+    internalPosition: undefined,
+    internalQuery: undefined,
+    where: undefined,
+    schema: undefined,
+    table: undefined,
+    column: undefined,
+    dataType: undefined,
+    constraint: undefined,
+    file: 'parse_relation.c',
+    line: '3716',
+    routine: 'errorMissingColumn'
+  },
+  length: 118,
+  severity: 'ERROR',
+  code: '42703',
+  detail: undefined,
+  hint: undefined,
+  position: '240',
+  internalPosition: undefined,
+  internalQuery: undefined,
+  where: undefined,
+  schema: undefined,
+  table: undefined,
+  column: undefined,
+  dataType: undefined,
+  constraint: undefined,
+  file: 'parse_relation.c',
+  line: '3716',
+  routine: 'errorMissingColumn'
+}
+[Nest] 51204  - 23/02/2026, 03:35:55   ERROR [ExceptionsHandler] QueryFailedError: column Product.stockBySize does not exist
+    at PostgresQueryRunner.query (C:\Users\Natalia\Documents\Yhabiaunavez\back\node_modules\typeorm\driver\src\driver\postgres\PostgresQueryRunner.ts:325:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async SelectQueryBuilder.loadRawResults (C:\Users\Natalia\Documents\Yhabiaunavez\back\node_modules\typeorm\query-builder\src\query-builder\SelectQueryBuilder.ts:3868:25)
+    at async SelectQueryBuilder.executeEntitiesAndRawResults (C:\Users\Natalia\Documents\Yhabiaunavez\back\node_modules\typeorm\query-builder\src\query-builder\SelectQueryBuilder.ts:3614:26)
+    at async SelectQueryBuilder.getRawAndEntities (C:\Users\Natalia\Documents\Yhabiaunavez\back\node_modules\typeorm\query-builder\src\query-builder\SelectQueryBuilder.ts:1671:29)
+    at async SelectQueryBuilder.getMany (C:\Users\Natalia\Documents\Yhabiaunavez\back\node_modules\typeorm\query-builder\src\query-builder\SelectQueryBuilder.ts:1761:25)
+    at async ProductsService.findAll (C:\Users\Natalia\Documents\Yhabiaunavez\back\src\products\products.service.ts:70:16)
+    at async C:\Users\Natalia\Documents\Yhabiaunavez\back\node_modules\@nestjs\core\router\router-execution-context.js:46:28
+    at async C:\Users\Natalia\Documents\Yhabiaunavez\back\node_modules\@nestjs\core\router\router-proxy.js:9:17 {
+  query: 'SELECT "Product"."id" AS "Product_id", "Product"."name" AS "Product_name", "Product"."sizes" AS "Product_sizes", "Product"."price" AS "Product_price", "Product"."description" AS "Product_description", "Product"."stock" AS "Product_stock", "Product"."stockBySize" AS "Product_stockBySize", "Product"."image" AS "Product_image", "Product"."createdAt" AS "Product_createdAt", "Product"."updatedAt" AS "Product_updatedAt", "Product"."categoryId" AS "Product_categoryId", "Product"."orderId" AS "Product_orderId", "Product__Product_category"."id" AS "Product__Product_category_id", "Product__Product_category"."name" AS "Product__Product_category_name", "Product__Product_category"."createdAt" AS "Product__Product_category_createdAt", "Product__Product_category"."updatedAt" AS "Product__Product_category_updatedAt" FROM "products" "Product" LEFT JOIN "categories" "Product__Product_category" ON "Product__Product_category"."id"="Product"."categoryId"',
+  parameters: [],
+  driverError: error: column Product.stockBySize does not exist
+      at C:\Users\Natalia\Documents\Yhabiaunavez\back\node_modules\pg\lib\client.js:624:17
+      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+      at async PostgresQueryRunner.query (C:\Users\Natalia\Documents\Yhabiaunavez\back\node_modules\typeorm\driver\src\driver\postgres\PostgresQueryRunner.ts:254:25)
+      at async SelectQueryBuilder.loadRawResults (C:\Users\Natalia\Documents\Yhabiaunavez\back\node_modules\typeorm\query-builder\src\query-builder\SelectQueryBuilder.ts:3868:25)
+      at async SelectQueryBuilder.executeEntitiesAndRawResults (C:\Users\Natalia\Documents\Yhabiaunavez\back\node_modules\typeorm\query-builder\src\query-builder\SelectQueryBuilder.ts:3614:26)
+      at async SelectQueryBuilder.getRawAndEntities (C:\Users\Natalia\Documents\Yhabiaunavez\back\node_modules\typeorm\query-builder\src\query-builder\SelectQueryBuilder.ts:1671:29)
+      at async SelectQueryBuilder.getMany (C:\Users\Natalia\Documents\Yhabiaunavez\back\node_modules\typeorm\query-builder\src\query-builder\SelectQueryBuilder.ts:1761:25)
+      at async ProductsService.findAll (C:\Users\Natalia\Documents\Yhabiaunavez\back\src\products\products.service.ts:70:16)
+      at async C:\Users\Natalia\Documents\Yhabiaunavez\back\node_modules\@nestjs\core\router\router-execution-context.js:46:28
+      at async C:\Users\Natalia\Documents\Yhabiaunavez\back\node_modules\@nestjs\core\router\router-proxy.js:9:17 {
+    length: 118,
+    severity: 'ERROR',
+    code: '42703',
+    detail: undefined,
+    hint: undefined,
+    position: '240',
+    internalPosition: undefined,
+    internalQuery: undefined,
+    where: undefined,
+    schema: undefined,
+    table: undefined,
+    column: undefined,
+    dataType: undefined,
+    constraint: undefined,
+    file: 'parse_relation.c',
+    line: '3716',
+    routine: 'errorMissingColumn'
+  },
+  length: 118,
+  severity: 'ERROR',
+  code: '42703',
+  detail: undefined,
+  hint: undefined,
+  position: '240',
+  internalPosition: undefined,
+  internalQuery: undefined,
+  where: undefined,
+  schema: undefined,
+  table: undefined,
+  column: undefined,
+  dataType: undefined,
+  constraint: undefined,
+  file: 'parse_relation.c',
+  line: '3716',
+  routine: 'errorMissingColumn'
+}
+[2J[3J[H[[90m03:52:42[0m] File change detected. Starting incremental compilation...
+
+[[90m03:52:44[0m] Found 0 errors. Watching for file changes.
+
+[32m[Nest] 29808  - [39m23/02/2026, 03:52:47 [32m    LOG[39m [38;5;3m[NestFactory] [39m[32mStarting Nest application...[39m
+[32m[Nest] 29808  - [39m23/02/2026, 03:52:47 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mTypeOrmModule dependencies initialized[39m[38;5;3m +13ms[39m
+[32m[Nest] 29808  - [39m23/02/2026, 03:52:47 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mSupabaseModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 29808  - [39m23/02/2026, 03:52:47 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mPassportModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 29808  - [39m23/02/2026, 03:52:47 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mConfigHostModule dependencies initialized[39m[38;5;3m +0ms[39m
+--- DB CONNECTION (Local) --- -> db.gbeaegtyvxncudslomvi.supabase.co:5432
+[32m[Nest] 29808  - [39m23/02/2026, 03:52:47 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mConfigModule dependencies initialized[39m[38;5;3m +2ms[39m
+[32m[Nest] 29808  - [39m23/02/2026, 03:52:47 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mConfigModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 29808  - [39m23/02/2026, 03:52:47 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mJwtModule dependencies initialized[39m[38;5;3m +54ms[39m
+[32m[Nest] 29808  - [39m23/02/2026, 03:52:49 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mTypeOrmCoreModule dependencies initialized[39m[38;5;3m +1736ms[39m
+[32m[Nest] 29808  - [39m23/02/2026, 03:52:49 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mTypeOrmModule dependencies initialized[39m[38;5;3m +1ms[39m
+[32m[Nest] 29808  - [39m23/02/2026, 03:52:49 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mTypeOrmModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 29808  - [39m23/02/2026, 03:52:49 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mTypeOrmModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 29808  - [39m23/02/2026, 03:52:49 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mTypeOrmModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 29808  - [39m23/02/2026, 03:52:49 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mTypeOrmModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 29808  - [39m23/02/2026, 03:52:49 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mUsersModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 29808  - [39m23/02/2026, 03:52:49 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mAppModule dependencies initialized[39m[38;5;3m +1ms[39m
+[32m[Nest] 29808  - [39m23/02/2026, 03:52:49 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mAuthModule dependencies initialized[39m[38;5;3m +1ms[39m
+[32m[Nest] 29808  - [39m23/02/2026, 03:52:49 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mProductsModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 29808  - [39m23/02/2026, 03:52:49 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mCategoriesModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 29808  - [39m23/02/2026, 03:52:49 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mCustomerModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 29808  - [39m23/02/2026, 03:52:49 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mOrdersModule dependencies initialized[39m[38;5;3m +0ms[39m
+Backend iniciando...
+[32m[Nest] 29808  - [39m23/02/2026, 03:52:49 [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mAppController {/}:[39m[38;5;3m +24ms[39m
+[32m[Nest] 29808  - [39m23/02/2026, 03:52:49 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/, GET} route[39m[38;5;3m +3ms[39m
+[32m[Nest] 29808  - [39m23/02/2026, 03:52:49 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/seed, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 29808  - [39m23/02/2026, 03:52:49 [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mProductsController {/products}:[39m[38;5;3m +0ms[39m
+[32m[Nest] 29808  - [39m23/02/2026, 03:52:49 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/products, POST} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 29808  - [39m23/02/2026, 03:52:49 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/products, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 29808  - [39m23/02/2026, 03:52:49 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/products/:id, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 29808  - [39m23/02/2026, 03:52:49 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/products/:id, PATCH} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 29808  - [39m23/02/2026, 03:52:49 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/products/:id, DELETE} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 29808  - [39m23/02/2026, 03:52:49 [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mCategoriesController {/categories}:[39m[38;5;3m +0ms[39m
+[32m[Nest] 29808  - [39m23/02/2026, 03:52:49 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/categories, POST} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 29808  - [39m23/02/2026, 03:52:49 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/categories, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 29808  - [39m23/02/2026, 03:52:49 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/categories/:id, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 29808  - [39m23/02/2026, 03:52:49 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/categories/:id, PATCH} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 29808  - [39m23/02/2026, 03:52:49 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/categories/:id, DELETE} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 29808  - [39m23/02/2026, 03:52:49 [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mCustomersController {/customers}:[39m[38;5;3m +1ms[39m
+[32m[Nest] 29808  - [39m23/02/2026, 03:52:49 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/customers, POST} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 29808  - [39m23/02/2026, 03:52:49 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/customers, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 29808  - [39m23/02/2026, 03:52:49 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/customers/email/:email, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 29808  - [39m23/02/2026, 03:52:49 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/customers/:id, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 29808  - [39m23/02/2026, 03:52:49 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/customers/:id, PATCH} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 29808  - [39m23/02/2026, 03:52:49 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/customers/:id, DELETE} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 29808  - [39m23/02/2026, 03:52:49 [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mOrdersController {/orders}:[39m[38;5;3m +0ms[39m
+[32m[Nest] 29808  - [39m23/02/2026, 03:52:49 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/orders, POST} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 29808  - [39m23/02/2026, 03:52:49 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/orders, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 29808  - [39m23/02/2026, 03:52:49 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/orders/:id, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 29808  - [39m23/02/2026, 03:52:49 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/orders/:id/status, PATCH} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 29808  - [39m23/02/2026, 03:52:49 [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mAuthController {/auth}:[39m[38;5;3m +0ms[39m
+[32m[Nest] 29808  - [39m23/02/2026, 03:52:49 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/auth/login, POST} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 29808  - [39m23/02/2026, 03:52:49 [32m    LOG[39m [38;5;3m[SupabaseService] [39m[32mÔ£à Supabase client initialized successfully[39m
+[32m[Nest] 29808  - [39m23/02/2026, 03:52:49 [32m    LOG[39m [38;5;3m[NestApplication] [39m[32mNest application successfully started[39m[38;5;3m +2ms[39m
+[2J[3J[H[[90m03:54:16[0m] File change detected. Starting incremental compilation...
+
+[[90m03:54:17[0m] Found 0 errors. Watching for file changes.
+
+[32m[Nest] 28620  - [39m23/02/2026, 03:54:21 [32m    LOG[39m [38;5;3m[NestFactory] [39m[32mStarting Nest application...[39m
+[32m[Nest] 28620  - [39m23/02/2026, 03:54:21 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mTypeOrmModule dependencies initialized[39m[38;5;3m +15ms[39m
+[32m[Nest] 28620  - [39m23/02/2026, 03:54:21 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mSupabaseModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 28620  - [39m23/02/2026, 03:54:21 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mPassportModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 28620  - [39m23/02/2026, 03:54:21 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mConfigHostModule dependencies initialized[39m[38;5;3m +1ms[39m
+[32m[Nest] 28620  - [39m23/02/2026, 03:54:21 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mConfigModule dependencies initialized[39m[38;5;3m +1ms[39m
+[32m[Nest] 28620  - [39m23/02/2026, 03:54:21 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mConfigModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 28620  - [39m23/02/2026, 03:54:21 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mJwtModule dependencies initialized[39m[38;5;3m +53ms[39m
+[32m[Nest] 28620  - [39m23/02/2026, 03:54:23 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mTypeOrmCoreModule dependencies initialized[39m[38;5;3m +1804ms[39m
+[32m[Nest] 28620  - [39m23/02/2026, 03:54:23 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mTypeOrmModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 28620  - [39m23/02/2026, 03:54:23 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mTypeOrmModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 28620  - [39m23/02/2026, 03:54:23 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mTypeOrmModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 28620  - [39m23/02/2026, 03:54:23 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mTypeOrmModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 28620  - [39m23/02/2026, 03:54:23 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mTypeOrmModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 28620  - [39m23/02/2026, 03:54:23 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mUsersModule dependencies initialized[39m[38;5;3m +1ms[39m
+[32m[Nest] 28620  - [39m23/02/2026, 03:54:23 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mAppModule dependencies initialized[39m[38;5;3m +2ms[39m
+[32m[Nest] 28620  - [39m23/02/2026, 03:54:23 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mAuthModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 28620  - [39m23/02/2026, 03:54:23 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mProductsModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 28620  - [39m23/02/2026, 03:54:23 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mCategoriesModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 28620  - [39m23/02/2026, 03:54:23 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mCustomerModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 28620  - [39m23/02/2026, 03:54:23 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mOrdersModule dependencies initialized[39m[38;5;3m +0ms[39m
+Backend iniciando...
+[32m[Nest] 28620  - [39m23/02/2026, 03:54:23 [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mAppController {/}:[39m[38;5;3m +34ms[39m
+[32m[Nest] 28620  - [39m23/02/2026, 03:54:23 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/, GET} route[39m[38;5;3m +3ms[39m
+[32m[Nest] 28620  - [39m23/02/2026, 03:54:23 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/seed, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 28620  - [39m23/02/2026, 03:54:23 [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mProductsController {/products}:[39m[38;5;3m +0ms[39m
+[32m[Nest] 28620  - [39m23/02/2026, 03:54:23 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/products, POST} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 28620  - [39m23/02/2026, 03:54:23 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/products, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 28620  - [39m23/02/2026, 03:54:23 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/products/:id, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 28620  - [39m23/02/2026, 03:54:23 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/products/:id, PATCH} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 28620  - [39m23/02/2026, 03:54:23 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/products/:id, DELETE} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 28620  - [39m23/02/2026, 03:54:23 [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mCategoriesController {/categories}:[39m[38;5;3m +1ms[39m
+[32m[Nest] 28620  - [39m23/02/2026, 03:54:23 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/categories, POST} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 28620  - [39m23/02/2026, 03:54:23 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/categories, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 28620  - [39m23/02/2026, 03:54:23 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/categories/:id, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 28620  - [39m23/02/2026, 03:54:23 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/categories/:id, PATCH} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 28620  - [39m23/02/2026, 03:54:23 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/categories/:id, DELETE} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 28620  - [39m23/02/2026, 03:54:23 [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mCustomersController {/customers}:[39m[38;5;3m +0ms[39m
+[32m[Nest] 28620  - [39m23/02/2026, 03:54:23 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/customers, POST} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 28620  - [39m23/02/2026, 03:54:23 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/customers, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 28620  - [39m23/02/2026, 03:54:23 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/customers/email/:email, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 28620  - [39m23/02/2026, 03:54:23 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/customers/:id, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 28620  - [39m23/02/2026, 03:54:23 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/customers/:id, PATCH} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 28620  - [39m23/02/2026, 03:54:23 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/customers/:id, DELETE} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 28620  - [39m23/02/2026, 03:54:23 [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mOrdersController {/orders}:[39m[38;5;3m +0ms[39m
+[32m[Nest] 28620  - [39m23/02/2026, 03:54:23 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/orders, POST} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 28620  - [39m23/02/2026, 03:54:23 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/orders, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 28620  - [39m23/02/2026, 03:54:23 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/orders/:id, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 28620  - [39m23/02/2026, 03:54:23 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/orders/:id/status, PATCH} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 28620  - [39m23/02/2026, 03:54:23 [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mAuthController {/auth}:[39m[38;5;3m +0ms[39m
+[32m[Nest] 28620  - [39m23/02/2026, 03:54:23 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/auth/login, POST} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 28620  - [39m23/02/2026, 03:54:23 [32m    LOG[39m [38;5;3m[SupabaseService] [39m[32mÔ£à Supabase client initialized successfully[39m
+[32m[Nest] 28620  - [39m23/02/2026, 03:54:23 [32m    LOG[39m [38;5;3m[NestApplication] [39m[32mNest application successfully started[39m[38;5;3m +3ms[39m
+[2J[3J[H[[90m03:54:34[0m] File change detected. Starting incremental compilation...
+
+[[90m03:54:35[0m] Found 0 errors. Watching for file changes.
+
+[32m[Nest] 50056  - [39m23/02/2026, 03:54:38 [32m    LOG[39m [38;5;3m[NestFactory] [39m[32mStarting Nest application...[39m
+[32m[Nest] 50056  - [39m23/02/2026, 03:54:38 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mTypeOrmModule dependencies initialized[39m[38;5;3m +13ms[39m
+[32m[Nest] 50056  - [39m23/02/2026, 03:54:38 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mSupabaseModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 50056  - [39m23/02/2026, 03:54:38 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mPassportModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 50056  - [39m23/02/2026, 03:54:38 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mConfigHostModule dependencies initialized[39m[38;5;3m +1ms[39m
+[32m[Nest] 50056  - [39m23/02/2026, 03:54:38 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mConfigModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 50056  - [39m23/02/2026, 03:54:38 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mConfigModule dependencies initialized[39m[38;5;3m +1ms[39m
+[32m[Nest] 50056  - [39m23/02/2026, 03:54:38 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mJwtModule dependencies initialized[39m[38;5;3m +37ms[39m
+[32m[Nest] 50056  - [39m23/02/2026, 03:54:40 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mTypeOrmCoreModule dependencies initialized[39m[38;5;3m +1678ms[39m
+[32m[Nest] 50056  - [39m23/02/2026, 03:54:40 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mTypeOrmModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 50056  - [39m23/02/2026, 03:54:40 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mTypeOrmModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 50056  - [39m23/02/2026, 03:54:40 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mTypeOrmModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 50056  - [39m23/02/2026, 03:54:40 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mTypeOrmModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 50056  - [39m23/02/2026, 03:54:40 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mTypeOrmModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 50056  - [39m23/02/2026, 03:54:40 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mUsersModule dependencies initialized[39m[38;5;3m +1ms[39m
+[32m[Nest] 50056  - [39m23/02/2026, 03:54:40 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mAppModule dependencies initialized[39m[38;5;3m +1ms[39m
+[32m[Nest] 50056  - [39m23/02/2026, 03:54:40 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mAuthModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 50056  - [39m23/02/2026, 03:54:40 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mProductsModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 50056  - [39m23/02/2026, 03:54:40 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mCategoriesModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 50056  - [39m23/02/2026, 03:54:40 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mCustomerModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 50056  - [39m23/02/2026, 03:54:40 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mOrdersModule dependencies initialized[39m[38;5;3m +0ms[39m
+Backend iniciando...
+[32m[Nest] 50056  - [39m23/02/2026, 03:54:40 [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mAppController {/}:[39m[38;5;3m +21ms[39m
+[32m[Nest] 50056  - [39m23/02/2026, 03:54:40 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/, GET} route[39m[38;5;3m +2ms[39m
+[32m[Nest] 50056  - [39m23/02/2026, 03:54:40 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/seed, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 50056  - [39m23/02/2026, 03:54:40 [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mProductsController {/products}:[39m[38;5;3m +0ms[39m
+[32m[Nest] 50056  - [39m23/02/2026, 03:54:40 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/products, POST} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 50056  - [39m23/02/2026, 03:54:40 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/products, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 50056  - [39m23/02/2026, 03:54:40 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/products/:id, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 50056  - [39m23/02/2026, 03:54:40 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/products/:id, PATCH} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 50056  - [39m23/02/2026, 03:54:40 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/products/:id, DELETE} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 50056  - [39m23/02/2026, 03:54:40 [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mCategoriesController {/categories}:[39m[38;5;3m +0ms[39m
+[32m[Nest] 50056  - [39m23/02/2026, 03:54:40 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/categories, POST} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 50056  - [39m23/02/2026, 03:54:40 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/categories, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 50056  - [39m23/02/2026, 03:54:40 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/categories/:id, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 50056  - [39m23/02/2026, 03:54:40 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/categories/:id, PATCH} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 50056  - [39m23/02/2026, 03:54:40 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/categories/:id, DELETE} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 50056  - [39m23/02/2026, 03:54:40 [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mCustomersController {/customers}:[39m[38;5;3m +1ms[39m
+[32m[Nest] 50056  - [39m23/02/2026, 03:54:40 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/customers, POST} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 50056  - [39m23/02/2026, 03:54:40 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/customers, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 50056  - [39m23/02/2026, 03:54:40 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/customers/email/:email, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 50056  - [39m23/02/2026, 03:54:40 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/customers/:id, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 50056  - [39m23/02/2026, 03:54:40 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/customers/:id, PATCH} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 50056  - [39m23/02/2026, 03:54:40 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/customers/:id, DELETE} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 50056  - [39m23/02/2026, 03:54:40 [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mOrdersController {/orders}:[39m[38;5;3m +0ms[39m
+[32m[Nest] 50056  - [39m23/02/2026, 03:54:40 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/orders, POST} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 50056  - [39m23/02/2026, 03:54:40 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/orders, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 50056  - [39m23/02/2026, 03:54:40 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/orders/:id, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 50056  - [39m23/02/2026, 03:54:40 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/orders/:id/status, PATCH} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 50056  - [39m23/02/2026, 03:54:40 [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mAuthController {/auth}:[39m[38;5;3m +0ms[39m
+[32m[Nest] 50056  - [39m23/02/2026, 03:54:40 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/auth/login, POST} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 50056  - [39m23/02/2026, 03:54:40 [32m    LOG[39m [38;5;3m[SupabaseService] [39m[32mÔ£à Supabase client initialized successfully[39m
+[32m[Nest] 50056  - [39m23/02/2026, 03:54:40 [32m    LOG[39m [38;5;3m[NestApplication] [39m[32mNest application successfully started[39m[38;5;3m +2ms[39m
+[2J[3J[H[[90m03:55:04[0m] File change detected. Starting incremental compilation...
+
+[[90m03:55:05[0m] Found 0 errors. Watching for file changes.
+
+[32m[Nest] 50516  - [39m23/02/2026, 03:55:08 [32m    LOG[39m [38;5;3m[NestFactory] [39m[32mStarting Nest application...[39m
+[32m[Nest] 50516  - [39m23/02/2026, 03:55:08 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mTypeOrmModule dependencies initialized[39m[38;5;3m +13ms[39m
+[32m[Nest] 50516  - [39m23/02/2026, 03:55:08 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mSupabaseModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 50516  - [39m23/02/2026, 03:55:08 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mPassportModule dependencies initialized[39m[38;5;3m +1ms[39m
+[32m[Nest] 50516  - [39m23/02/2026, 03:55:08 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mConfigHostModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 50516  - [39m23/02/2026, 03:55:08 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mConfigModule dependencies initialized[39m[38;5;3m +1ms[39m
+[32m[Nest] 50516  - [39m23/02/2026, 03:55:08 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mConfigModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 50516  - [39m23/02/2026, 03:55:08 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mJwtModule dependencies initialized[39m[38;5;3m +46ms[39m
+[32m[Nest] 50516  - [39m23/02/2026, 03:55:10 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mTypeOrmCoreModule dependencies initialized[39m[38;5;3m +1692ms[39m
+[32m[Nest] 50516  - [39m23/02/2026, 03:55:10 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mTypeOrmModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 50516  - [39m23/02/2026, 03:55:10 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mTypeOrmModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 50516  - [39m23/02/2026, 03:55:10 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mTypeOrmModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 50516  - [39m23/02/2026, 03:55:10 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mTypeOrmModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 50516  - [39m23/02/2026, 03:55:10 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mTypeOrmModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 50516  - [39m23/02/2026, 03:55:10 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mUsersModule dependencies initialized[39m[38;5;3m +1ms[39m
+[32m[Nest] 50516  - [39m23/02/2026, 03:55:10 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mAppModule dependencies initialized[39m[38;5;3m +1ms[39m
+[32m[Nest] 50516  - [39m23/02/2026, 03:55:10 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mAuthModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 50516  - [39m23/02/2026, 03:55:10 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mProductsModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 50516  - [39m23/02/2026, 03:55:10 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mCategoriesModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 50516  - [39m23/02/2026, 03:55:10 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mCustomerModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 50516  - [39m23/02/2026, 03:55:10 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mOrdersModule dependencies initialized[39m[38;5;3m +0ms[39m
+Backend iniciando...
+[32m[Nest] 50516  - [39m23/02/2026, 03:55:10 [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mAppController {/}:[39m[38;5;3m +21ms[39m
+[32m[Nest] 50516  - [39m23/02/2026, 03:55:10 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/, GET} route[39m[38;5;3m +2ms[39m
+[32m[Nest] 50516  - [39m23/02/2026, 03:55:10 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/seed, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 50516  - [39m23/02/2026, 03:55:10 [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mProductsController {/products}:[39m[38;5;3m +0ms[39m
+[32m[Nest] 50516  - [39m23/02/2026, 03:55:10 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/products, POST} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 50516  - [39m23/02/2026, 03:55:10 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/products, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 50516  - [39m23/02/2026, 03:55:10 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/products/:id, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 50516  - [39m23/02/2026, 03:55:10 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/products/:id, PATCH} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 50516  - [39m23/02/2026, 03:55:10 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/products/:id, DELETE} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 50516  - [39m23/02/2026, 03:55:10 [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mCategoriesController {/categories}:[39m[38;5;3m +0ms[39m
+[32m[Nest] 50516  - [39m23/02/2026, 03:55:10 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/categories, POST} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 50516  - [39m23/02/2026, 03:55:10 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/categories, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 50516  - [39m23/02/2026, 03:55:10 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/categories/:id, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 50516  - [39m23/02/2026, 03:55:10 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/categories/:id, PATCH} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 50516  - [39m23/02/2026, 03:55:10 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/categories/:id, DELETE} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 50516  - [39m23/02/2026, 03:55:10 [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mCustomersController {/customers}:[39m[38;5;3m +0ms[39m
+[32m[Nest] 50516  - [39m23/02/2026, 03:55:10 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/customers, POST} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 50516  - [39m23/02/2026, 03:55:10 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/customers, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 50516  - [39m23/02/2026, 03:55:10 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/customers/email/:email, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 50516  - [39m23/02/2026, 03:55:10 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/customers/:id, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 50516  - [39m23/02/2026, 03:55:10 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/customers/:id, PATCH} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 50516  - [39m23/02/2026, 03:55:10 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/customers/:id, DELETE} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 50516  - [39m23/02/2026, 03:55:10 [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mOrdersController {/orders}:[39m[38;5;3m +0ms[39m
+[32m[Nest] 50516  - [39m23/02/2026, 03:55:10 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/orders, POST} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 50516  - [39m23/02/2026, 03:55:10 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/orders, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 50516  - [39m23/02/2026, 03:55:10 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/orders/:id, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 50516  - [39m23/02/2026, 03:55:10 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/orders/:id/status, PATCH} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 50516  - [39m23/02/2026, 03:55:10 [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mAuthController {/auth}:[39m[38;5;3m +0ms[39m
+[32m[Nest] 50516  - [39m23/02/2026, 03:55:10 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/auth/login, POST} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 50516  - [39m23/02/2026, 03:55:10 [32m    LOG[39m [38;5;3m[SupabaseService] [39m[32mÔ£à Supabase client initialized successfully[39m
+[32m[Nest] 50516  - [39m23/02/2026, 03:55:10 [32m    LOG[39m [38;5;3m[NestApplication] [39m[32mNest application successfully started[39m[38;5;3m +4ms[39m

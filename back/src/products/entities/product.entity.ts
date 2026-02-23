@@ -9,7 +9,6 @@ import {
     OneToMany
 } from 'typeorm';
 import { Category } from 'src/category/entities/category.entity';
-import { Order } from 'src/orders/entities/order.entity';
 import { OrderItem } from 'src/orders/entities/order-item';
 import { ApiProperty } from '@nestjs/swagger';
 
@@ -54,27 +53,19 @@ export class Product {
     @Column()
     image: string;
 
-    @ApiProperty({ example: '2023-10-25T10:00:00Z', description: 'Creation date' })
     @CreateDateColumn()
     createdAt: Date;
 
-    @ApiProperty({ example: '2023-10-25T10:00:00Z', description: 'Last update date' })
     @UpdateDateColumn()
     updatedAt: Date;
 
-    // Relaciones
     @ManyToOne(() => Category, (category) => category.products, { onDelete: 'SET NULL' })
     @JoinColumn({ name: 'categoryId' })
     category: Category;
 
-    @ApiProperty({ example: 'uuid-string', description: 'Category ID', required: false })
     @Column({ nullable: true })
     categoryId: string;
 
     @OneToMany(() => OrderItem, (orderItem) => orderItem.product)
     orderItems: OrderItem[];
-
-    @ApiProperty({ example: 'uuid-string', description: 'Order ID', required: false })
-    @Column({ nullable: true })
-    orderId: string;
 }

@@ -15,7 +15,7 @@ export class OrderItem {
 
     @ApiProperty({ example: 49.99, description: 'Price at purchase time' })
     @Column({ type: 'decimal', precision: 10, scale: 2 })
-    price: number; // Guardamos el precio del momento de la compra
+    price: number;
 
     @ManyToOne(() => Order, (order) => order.items, { onDelete: 'CASCADE' })
     order: Order;
