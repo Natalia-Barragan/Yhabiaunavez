@@ -16,6 +16,7 @@ import {
 } from "lucide-react";
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import Image from "next/image";
 
 const navItems = [
   { href: "/admin", icon: LayoutDashboard, label: "Dashboard" },
@@ -87,15 +88,20 @@ export default function AdminLayout({
         <div className="flex flex-col h-full">
           {/* Logo */}
           <div className="p-6 border-b border-sidebar-border">
-            <Link href="/admin" className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-full bg-sidebar-primary flex items-center justify-center">
-                <img src="/images/yhabiaunavez.jpg" alt="Logo" />
+            <Link href="/admin" className="flex items-center gap-4">
+              <div className="relative w-11 h-11 flex-shrink-0 bg-white rounded-full border border-sidebar-border/20 overflow-hidden p-1 shadow-sm">
+                <Image
+                  src="/images/yhabiaunavez.jpg"
+                  alt="Logo"
+                  fill
+                  className="object-contain"
+                />
               </div>
-              <div>
-                <span className="font-semibold text-sidebar-foreground block">
+              <div className="overflow-hidden">
+                <span className="font-bold text-sidebar-foreground block truncate">
                   Yhabiaunavez
                 </span>
-                <span className="text-xs text-sidebar-foreground/60">
+                <span className="text-xs text-sidebar-foreground/60 block truncate">
                   Panel Admin
                 </span>
               </div>
@@ -156,11 +162,16 @@ export default function AdminLayout({
           >
             <Menu size={24} />
           </button>
-          <Link href="/admin" className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded-full bg-primary flex items-center justify-center">
-              <span className="text-sm font-serif text-primary-foreground">H</span>
+          <Link href="/admin" className="flex items-center gap-3">
+            <div className="relative w-9 h-9 bg-white rounded-full border border-border/20 overflow-hidden p-1 shadow-sm">
+              <Image
+                src="/images/yhabiaunavez.jpg"
+                alt="Logo"
+                fill
+                className="object-contain"
+              />
             </div>
-            <span className="font-medium text-foreground">Admin</span>
+            <span className="font-bold text-foreground">Admin</span>
           </Link>
           <div className="w-10" />
         </header>
