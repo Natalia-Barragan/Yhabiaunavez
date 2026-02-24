@@ -33,13 +33,18 @@ export default function EditProductPage({
 }) {
   const { id } = use(params);
   const router = useRouter();
-  const { getProduct, updateProduct, categories, fetchCategories } = useAdminStore();
+  const { getProduct, updateProduct, categories, fetchCategories, sizes, fetchSizes } = useAdminStore();
+
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [notFound, setNotFound] = useState(false);
 
   useEffect(() => {
     fetchCategories();
-  }, [fetchCategories]);
+    fetchSizes();
+  }, [fetchCategories, fetchSizes]);
+
+  // Use dynamic sizes if available, otherwise fallback to common ones
+  const activeSizes = sizes.length > 0 ? sizes.map(s => s.label) : defaultSizes;
 
   const [formData, setFormData] = useState({
     name: "",
@@ -99,7 +104,7 @@ export default function EditProductPage({
 
   const addVariant = () => {
     const usedSizes = variants.map((v) => v.size);
-    const availableSize = defaultSizes.find((s) => !usedSizes.includes(s));
+    const availableSize = activeSizes.find((s) => !usedSizes.includes(s));
     if (availableSize) {
       setVariants([...variants, { size: availableSize, stock: 0 }]);
     }
@@ -326,7 +331,7 @@ export default function EditProductPage({
               size="sm"
               onClick={addVariant}
               className="rounded-full gap-2 bg-transparent"
-              disabled={variants.length >= defaultSizes.length}
+              disabled={variants.length >= activeSizes.length}
             >
               <Plus size={16} />
               Agregar Talle
@@ -351,7 +356,7 @@ export default function EditProductPage({
                       <SelectValue />
                     </SelectTrigger>
                     <SelectContent>
-                      {defaultSizes.map((size) => (
+                      {activeSizes.map((size) => (
                         <SelectItem
                           key={size}
                           value={size}

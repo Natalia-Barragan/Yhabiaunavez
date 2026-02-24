@@ -6,6 +6,11 @@ export interface Category {
   name: string;
 }
 
+export interface Size {
+  id: string;
+  label: string;
+}
+
 export interface ProductVariant {
   size: string;
   stock: number;

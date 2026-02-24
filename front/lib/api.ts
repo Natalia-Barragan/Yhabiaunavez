@@ -72,5 +72,11 @@ export const api = {
   customers: {
     create: (data: any) => fetchAPI('/customers', { method: 'POST', body: JSON.stringify(data) }),
     getByEmail: (email: string) => fetchAPI(`/customers/email/${email}`),
+  },
+  sizes: {
+    getAll: () => fetchAPI('/sizes'),
+    create: (data: any) => fetchAPI('/sizes', { method: 'POST', body: JSON.stringify(data) }),
+    update: (id: string, data: any) => fetchAPI(`/sizes/${id}`, { method: 'PATCH', body: JSON.stringify(data) }),
+    delete: (id: string) => fetchAPI(`/sizes/${id}`, { method: 'DELETE' }),
   }
 };

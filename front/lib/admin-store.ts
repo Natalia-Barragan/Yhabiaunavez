@@ -2,16 +2,18 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import { api } from "./api";
-import type { Product, ProductVariant, Category, Order } from "./store";
+import type { Product, ProductVariant, Category, Order, Size } from "./store";
 
 interface AdminStore {
   products: Product[];
   categories: Category[];
+  sizes: Size[];
   orders: Order[];
   isLoading: boolean;
   error: string | null;
   fetchProducts: () => Promise<void>;
   fetchCategories: () => Promise<void>;
+  fetchSizes: () => Promise<void>;
   fetchOrders: () => Promise<void>;
   addProduct: (product: FormData) => Promise<void>;
   updateProduct: (id: string, product: Partial<Product>) => Promise<void>;
@@ -19,6 +21,9 @@ interface AdminStore {
   getProduct: (id: string) => Product | undefined;
   addCategory: (name: string) => Promise<void>;
   deleteCategory: (id: string) => Promise<void>;
+  addSize: (label: string) => Promise<void>;
+  updateSize: (id: string, label: string) => Promise<void>;
+  deleteSize: (id: string) => Promise<void>;
   clearSoldOut: () => Promise<void>;
   updateOrderStatus: (id: string, status: string) => Promise<void>;
 }
@@ -65,6 +70,7 @@ export const useAdminStore = create<AdminStore>()(
     (set, get) => ({
       products: [],
       categories: [],
+      sizes: [],
       orders: [],
       isLoading: false,
       error: null,
@@ -100,6 +106,17 @@ export const useAdminStore = create<AdminStore>()(
           set({ categories: data, isLoading: false });
         } catch (error: any) {
           console.error("Failed to fetch categories:", error);
+          set({ error: error.message, isLoading: false });
+        }
+      },
+
+      fetchSizes: async () => {
+        set({ isLoading: true, error: null });
+        try {
+          const data = await api.sizes.getAll();
+          set({ sizes: data, isLoading: false });
+        } catch (error: any) {
+          console.error("Failed to fetch sizes:", error);
           set({ error: error.message, isLoading: false });
         }
       },
@@ -187,6 +204,49 @@ export const useAdminStore = create<AdminStore>()(
           await api.categories.delete(id);
           set((state) => ({
             categories: state.categories.filter((c) => c.id !== id),
+            isLoading: false,
+          }));
+        } catch (error: any) {
+          set({ error: error.message, isLoading: false });
+        }
+      },
+
+      addSize: async (label) => {
+        set({ isLoading: true });
+        try {
+          const newSize = await api.sizes.create({ label });
+          set((state) => ({
+            sizes: [...state.sizes, newSize],
+            isLoading: false,
+          }));
+        } catch (error: any) {
+          set({ error: error.message, isLoading: false });
+          throw error;
+        }
+      },
+
+      updateSize: async (id: string, label: string) => {
+        set({ isLoading: true });
+        try {
+          const updatedSize = await api.sizes.update(id, { label });
+          set((state) => ({
+            sizes: state.sizes.map((s) =>
+              s.id === id ? updatedSize : s
+            ),
+            isLoading: false,
+          }));
+        } catch (error: any) {
+          set({ error: error.message, isLoading: false });
+          throw error;
+        }
+      },
+
+      deleteSize: async (id) => {
+        set({ isLoading: true });
+        try {
+          await api.sizes.delete(id);
+          set((state) => ({
+            sizes: state.sizes.filter((s) => s.id !== id),
             isLoading: false,
           }));
         } catch (error: any) {

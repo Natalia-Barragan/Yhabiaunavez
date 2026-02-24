@@ -12,6 +12,7 @@ import {
   Menu,
   X,
   Tags,
+  Ruler,
 } from "lucide-react";
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -20,6 +21,7 @@ const navItems = [
   { href: "/admin", icon: LayoutDashboard, label: "Dashboard" },
   { href: "/admin/products", icon: Package, label: "Productos" },
   { href: "/admin/categories", icon: Tags, label: "Categorías" },
+  { href: "/admin/sizes", icon: Ruler, label: "Talles" },
   { href: "/admin/orders", icon: ShoppingCart, label: "Pedidos" },
 ];
 
