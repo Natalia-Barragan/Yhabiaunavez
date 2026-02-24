@@ -226,8 +226,13 @@ export default function CheckoutPage() {
             <span className="text-sm font-medium">Volver</span>
           </Link>
           <Link href="/" className="flex items-center gap-2">
-            <div className="w-10 h-10 rounded-full bg-primary flex items-center justify-center">
-              <span className="text-lg font-serif text-primary-foreground">Y</span>
+            <div className="relative w-11 h-11 flex-shrink-0 bg-white rounded-full border border-sidebar-border/20 overflow-hidden p-1 shadow-sm">
+              <Image
+                src="/images/yhabiaunavez.jpg"
+                alt="Logo"
+                fill
+                className="object-contain"
+              />
             </div>
           </Link>
           <div className="w-20" />
