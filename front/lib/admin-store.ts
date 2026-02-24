@@ -23,7 +23,7 @@ interface AdminStore {
   updateOrderStatus: (id: string, status: string) => Promise<void>;
 }
 
-const transformProduct = (backendProduct: any): Product => {
+const transformProduct = (backendProduct: any, existingCategories: Category[] = []): Product => {
   let sizes: string[] = [];
   if (Array.isArray(backendProduct.sizes)) {
     sizes = backendProduct.sizes.flatMap((s: any) =>
@@ -40,13 +40,21 @@ const transformProduct = (backendProduct: any): Product => {
     }))
     : [{ size: "Único", stock: backendProduct.stock || 0 }];
 
+  // Lookup category name if missing but categoryId exists
+  let categoryName = backendProduct.category?.name;
+  if (!categoryName && (backendProduct.categoryId || backendProduct.category?.id)) {
+    const id = backendProduct.categoryId || backendProduct.category?.id;
+    const found = existingCategories.find(c => c.id === id);
+    if (found) categoryName = found.name;
+  }
+
   return {
     id: backendProduct.id,
     name: backendProduct.name,
     price: Number(backendProduct.price),
     description: backendProduct.description || "",
-    category: backendProduct.category?.name || "General",
-    categoryId: backendProduct.category?.id || backendProduct.categoryId || "",
+    category: categoryName || "Sin Categoría",
+    categoryId: backendProduct.categoryId || backendProduct.category?.id || "",
     images: backendProduct.images || (backendProduct.image ? [backendProduct.image] : []),
     variants: variants,
   };
@@ -76,7 +84,8 @@ export const useAdminStore = create<AdminStore>()(
         set({ isLoading: true, error: null });
         try {
           const data = await api.products.getAll();
-          const products = data.map(transformProduct);
+          const { categories } = get();
+          const products = data.map((p: any) => transformProduct(p, categories));
           set({ products, isLoading: false });
         } catch (error: any) {
           console.error("Failed to fetch products:", error);
@@ -99,7 +108,8 @@ export const useAdminStore = create<AdminStore>()(
         set({ isLoading: true, error: null });
         try {
           const newBackendProduct = await api.products.create(formData);
-          const newProduct = transformProduct(newBackendProduct);
+          const { categories } = get();
+          const newProduct = transformProduct(newBackendProduct, categories);
           set((state) => ({
             products: [...state.products, newProduct],
             isLoading: false,

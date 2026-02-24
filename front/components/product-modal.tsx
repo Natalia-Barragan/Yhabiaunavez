@@ -91,13 +91,13 @@ export function ProductModal({ product, onClose }: ProductModalProps) {
 
               <div className="md:w-1/2 p-6 md:p-8 flex flex-col md:overflow-y-auto">
                 <span className="text-sm font-medium text-primary tracking-wider uppercase">
-                  {product.category || "General"}
+                  {product.category || "Sin Categoría"}
                 </span>
                 <h2 className="text-2xl md:text-3xl font-serif text-foreground mt-2 mb-4">
                   {product.name}
                 </h2>
                 <p className="text-3xl font-semibold text-primary mb-6">
-                  {formatPrice(product.price)}
+                  {formatPrice(Number(product.price))}
                 </p>
 
                 <p className="text-muted-foreground leading-relaxed mb-8">
@@ -110,7 +110,7 @@ export function ProductModal({ product, onClose }: ProductModalProps) {
                   </h3>
                   <div className="flex flex-wrap gap-2">
                     {availableSizes.map((size) => {
-                      const variant = product.variants.find((v) => v.size === size);
+                      const variant = (product.variants || []).find((v) => v.size === size);
                       const isOutOfStock = (variant?.stock || 0) === 0;
                       const isSelected = selectedSize === size;
 
@@ -194,7 +194,7 @@ export function ProductModal({ product, onClose }: ProductModalProps) {
                         <ShoppingBag size={20} className="mr-2" />
                         {selectedSize
                           ? `Agregar al carrito - ${formatPrice(
-                            product.price * quantity
+                            Number(product.price) * quantity
                           )}`
                           : "Selecciona un talle"}
                       </>

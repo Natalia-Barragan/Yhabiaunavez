@@ -21,17 +21,10 @@ const _pacifico = Pacifico({
 });
 
 export const metadata: Metadata = {
-  title: "Había una Vez | Ropa Infantil Premium",
+  title: "Yhabiaunavez | Ropa Infantil",
   description:
-    "Boutique de ropa infantil con diseños únicos y materiales de calidad para los más pequeños del hogar.",
-  generator: "v0.app",
-  keywords: ["ropa infantil", "bebé", "niños", "boutique", "moda infantil"],
-};
-
-export const viewport: Viewport = {
-  themeColor: "#2E8B7E",
-  width: "device-width",
-  initialScale: 1,
+    "Ropa y juguetes para bebé. Para jugar, descubrir y moverse cómodxs.",
+  keywords: ["ropa infantil", "bebé", "niños", "boutique", "moda infantil", "juguetes", "ajuar", "accesorios"],
 };
 
 export default function RootLayout({

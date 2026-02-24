@@ -32,7 +32,7 @@ export function ProductGrid() {
     return products.filter((product) => {
       // AJUSTE 1: El backend devuelve 'categoryId', pero el filtro busca 'category'.
       // Comparamos el nombre de la categoría si el backend trae el objeto completo.
-      const productCategoryName = product.category || "General";
+      const productCategoryName = product.category || "Sin Categoría";
 
       const categoryMatch =
         selectedCategory === "Todos" || productCategoryName === selectedCategory;
