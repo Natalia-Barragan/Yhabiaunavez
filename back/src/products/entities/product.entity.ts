@@ -22,13 +22,6 @@ export class Product {
     @Column()
     name: string;
 
-    @ApiProperty({
-        example: ['0-3m', '3-6m', '6-12m', '12-18m', '12-24m'],
-        type: [String],
-        description: 'Lista de talles disponibles'
-    })
-    @Column('text', { array: true, default: [] })
-    sizes: string[];
 
     @ApiProperty({ example: 999.99, description: 'Product Price' })
     @Column({ type: 'decimal', precision: 10, scale: 2 })

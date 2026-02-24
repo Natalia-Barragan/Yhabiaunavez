@@ -24,22 +24,6 @@ export class CreateProductDto {
     @IsOptional()
     description?: string;
 
-    @ApiProperty({
-        type: [String],
-        example: ['0-3m', '6-9m'],
-        required: false
-    })
-    @IsOptional()
-    @IsArray({ message: 'Los talles deben ser un arreglo' })
-    @IsString({ each: true })
-    @Transform(({ value }) => {
-        if (typeof value === 'string') {
-            // Split by comma and trim each size
-            return value.split(',').map(s => s.trim()).filter(s => s.length > 0);
-        }
-        return value;
-    })
-    sizes?: string[];
 
     @ApiProperty({ example: 999.99, description: 'Price of the product' })
     @IsNumber({ maxDecimalPlaces: 2 }) // Ayuda con la precisión de precios

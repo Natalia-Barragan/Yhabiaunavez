@@ -64,7 +64,7 @@ async function bootstrap() {
         categoryId: categoryId,
         image: undefined // Let the service handle upload
         ,
-        sizes: []
+        stockBySize: {},
     };
 
     try {

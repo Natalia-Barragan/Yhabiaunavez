@@ -51,10 +51,6 @@ export class ProductsController {
                 stock: { type: 'integer' },
                 categoryId: { type: 'string', format: 'uuid' },
                 image: { type: 'string', format: 'binary' },
-                sizes: {
-                    type: 'array',
-                    items: { type: 'string' } // Esto obliga a Swagger a mostrar el campo
-                },
             },
         },
     })
