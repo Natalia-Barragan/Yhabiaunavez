@@ -40,7 +40,9 @@ export class ProductsService {
 
             const savedProduct = await this.productRepository.save(product);
             console.log('Product saved to DB:', savedProduct);
-            return savedProduct;
+
+            // Re-fetch with relations to ensure category name is returned to frontend
+            return await this.findOne(savedProduct.id);
         } catch (error) {
             console.error('Error creating product:', error);
             throw error;
@@ -63,7 +65,10 @@ export class ProductsService {
             product.stock = Object.values(dto.stockBySize).reduce((acc: number, val: number) => acc + val, 0);
         }
 
-        return await this.productRepository.save(product);
+        const updatedProduct = await this.productRepository.save(product);
+
+        // Re-fetch with relations
+        return await this.findOne(updatedProduct.id);
     }
 
     async findAll() {
