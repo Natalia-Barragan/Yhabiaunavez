@@ -35,7 +35,7 @@ export default function SettingsPage() {
               <Label htmlFor="storeName">Nombre de la tienda</Label>
               <Input
                 id="storeName"
-                defaultValue="Había una Vez"
+                defaultValue="Yhabiaunavez"
                 className="rounded-xl"
               />
             </div>
@@ -73,7 +73,7 @@ export default function SettingsPage() {
                 <Input
                   id="email"
                   type="email"
-                  defaultValue="hola@habiaunavez.com"
+                  defaultValue="hola@yhabiaunavez.com"
                   className="rounded-xl"
                 />
               </div>
@@ -103,7 +103,7 @@ export default function SettingsPage() {
                 <Label htmlFor="instagram">Instagram</Label>
                 <Input
                   id="instagram"
-                  placeholder="@habiaunavez"
+                  placeholder="@yhabiaunavez"
                   className="rounded-xl"
                 />
               </div>
@@ -111,7 +111,7 @@ export default function SettingsPage() {
                 <Label htmlFor="facebook">Facebook</Label>
                 <Input
                   id="facebook"
-                  placeholder="habiaunavez"
+                  placeholder="yhabiaunavez"
                   className="rounded-xl"
                 />
               </div>

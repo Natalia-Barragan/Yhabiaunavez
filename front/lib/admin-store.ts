@@ -2,19 +2,21 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import { api } from "./api";
-import type { Product, ProductVariant, Category, Order, Size } from "./store";
+import type { Product, ProductVariant, Category, Order, Size, Customer } from "./store";
 
 interface AdminStore {
   products: Product[];
   categories: Category[];
   sizes: Size[];
   orders: Order[];
+  customers: Customer[];
   isLoading: boolean;
   error: string | null;
   fetchProducts: () => Promise<void>;
   fetchCategories: () => Promise<void>;
   fetchSizes: () => Promise<void>;
   fetchOrders: () => Promise<void>;
+  fetchCustomers: () => Promise<void>;
   addProduct: (product: FormData) => Promise<void>;
   updateProduct: (id: string, product: Partial<Product>) => Promise<void>;
   deleteProduct: (id: string) => Promise<void>;
@@ -26,6 +28,8 @@ interface AdminStore {
   deleteSize: (id: string) => Promise<void>;
   clearSoldOut: () => Promise<void>;
   updateOrderStatus: (id: string, status: string) => Promise<void>;
+  updateCustomer: (id: string, customer: Partial<Customer>) => Promise<void>;
+  deleteCustomer: (id: string) => Promise<void>;
 }
 
 const transformProduct = (backendProduct: any, existingCategories: Category[] = []): Product => {
@@ -66,6 +70,7 @@ export const useAdminStore = create<AdminStore>()(
       categories: [],
       sizes: [],
       orders: [],
+      customers: [],
       isLoading: false,
       error: null,
 
@@ -283,6 +288,43 @@ export const useAdminStore = create<AdminStore>()(
           }));
         } catch (error: any) {
           set({ error: error.message });
+        }
+      },
+
+      fetchCustomers: async () => {
+        set({ isLoading: true, error: null });
+        try {
+          const data = await api.customers.getAll();
+          set({ customers: data, isLoading: false });
+        } catch (error: any) {
+          console.error("Failed to fetch customers:", error);
+          set({ error: error.message, isLoading: false });
+        }
+      },
+
+      updateCustomer: async (id: string, updates: Partial<Customer>) => {
+        set({ isLoading: true });
+        try {
+          const updated = await api.customers.update(id, updates);
+          set((state) => ({
+            customers: state.customers.map((c: Customer) => (c.id === id ? updated : c)),
+            isLoading: false,
+          }));
+        } catch (error: any) {
+          set({ error: error.message, isLoading: false });
+        }
+      },
+
+      deleteCustomer: async (id: string) => {
+        set({ isLoading: true });
+        try {
+          await api.customers.delete(id);
+          set((state) => ({
+            customers: state.customers.filter((c: Customer) => c.id !== id),
+            isLoading: false,
+          }));
+        } catch (error: any) {
+          set({ error: error.message, isLoading: false });
         }
       },
     }),

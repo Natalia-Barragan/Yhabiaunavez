@@ -19,9 +19,11 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { ShoppingCart, ChevronDown, ChevronUp } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { ShoppingCart, ChevronDown, ChevronUp, MessageCircle } from "lucide-react";
 import { motion } from "framer-motion";
 import type { Order } from "@/lib/store";
+import { formatWhatsApp } from "@/lib/utils";
 
 const ORDER_STATUSES = [
   { value: "pendiente", label: "Pendiente", color: "border-orange-400 text-orange-500 bg-orange-500/10" },
@@ -126,33 +128,105 @@ function OrderRow({ order }: { order: Order }) {
 
       {expanded && (
         <TableRow className="bg-muted/20 hover:bg-muted/20">
-          <TableCell colSpan={5} className="py-4 px-8">
-            <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground mb-3">
-              Ítems del pedido
-            </p>
-            {order.items?.map((item) => (
-              <div
-                key={item.id}
-                className="flex items-center justify-between text-sm py-1.5 border-b border-border/30 last:border-0"
-              >
-                <div className="flex items-center gap-3">
-                  <span className="font-medium">
-                    {item.product?.name || "Producto eliminado"}
-                  </span>
-                  {item.size && (
-                    <Badge variant="secondary" className="text-xs">
-                      Talle: {item.size}
-                    </Badge>
-                  )}
-                </div>
-                <div className="flex items-center gap-4 text-muted-foreground">
-                  <span>x{item.quantity}</span>
-                  <span className="font-medium text-foreground">
-                    {formatPrice(item.price * item.quantity)}
-                  </span>
+          <TableCell colSpan={5} className="py-6 px-8">
+            <div className="grid md:grid-cols-2 gap-8">
+              {/* Items Section */}
+              <div>
+                <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground mb-3">
+                  Ítems del pedido
+                </p>
+                <div className="space-y-3">
+                  {order.items?.map((item) => (
+                    <div
+                      key={item.id}
+                      className="flex items-center justify-between text-sm py-1.5 border-b border-border/30 last:border-0"
+                    >
+                      <div className="flex items-center gap-3">
+                        <span className="font-medium">
+                          {item.product?.name || "Producto eliminado"}
+                        </span>
+                        {item.size && (
+                          <Badge variant="secondary" className="text-xs">
+                            Talle: {item.size}
+                          </Badge>
+                        )}
+                      </div>
+                      <div className="flex items-center gap-4 text-muted-foreground">
+                        <span>x{item.quantity}</span>
+                        <span className="font-medium text-foreground">
+                          {formatPrice(item.price * item.quantity)}
+                        </span>
+                      </div>
+                    </div>
+                  ))}
                 </div>
               </div>
-            ))}
+
+              {/* Shipping Section */}
+              <div className="bg-card/50 rounded-2xl p-4 border border-border/50">
+                <p className="text-xs font-semibold uppercase tracking-wide text-primary mb-3">
+                  Datos de Envío
+                </p>
+                {order.customer ? (
+                  <div className="space-y-3 text-sm text-foreground">
+                    <div className="flex items-start gap-3">
+                      <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center text-primary flex-shrink-0">
+                        {order.customer.name.charAt(0).toUpperCase()}
+                      </div>
+                      <div>
+                        <p className="font-semibold">{order.customer.name}</p>
+                        <p className="text-xs text-muted-foreground">{order.customer.email}</p>
+                        <p className="text-xs text-muted-foreground">{order.customer.phone}</p>
+                      </div>
+                    </div>
+
+                    <div className="pt-3 border-t border-border/50">
+                      <div className="flex items-start gap-2">
+                        <div className="text-primary mt-1">📍</div>
+                        <div>
+                          <p className="font-medium">{order.customer.address}</p>
+                          <p className="text-muted-foreground text-xs">
+                            {order.customer.city}, {order.customer.state} ({order.customer.zipCode})
+                          </p>
+                          <p className="text-muted-foreground text-xs">
+                            {order.customer.country}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+
+                    {order.customer.notes && (
+                      <div className="pt-3 border-t border-border/50">
+                        <p className="text-xs font-medium text-muted-foreground mb-1 italic px-2 py-1 bg-amber-500/5 rounded border border-amber-500/10">
+                          Nota: {order.customer.notes}
+                        </p>
+                      </div>
+                    )}
+
+                    <div className="pt-2">
+                      <Button
+                        asChild
+                        size="sm"
+                        className="w-full rounded-xl bg-[#25D366] hover:bg-[#20ba5a] text-white font-bold gap-2 shadow-sm"
+                      >
+                        <a
+                          href={`https://wa.me/${formatWhatsApp(order.customer.phone)}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          <MessageCircle size={16} />
+                          Enviar WhatsApp
+                        </a>
+                      </Button>
+                    </div>
+                  </div>
+                ) : (
+                  <p className="text-sm text-muted-foreground italic">
+                    Sin datos de cliente asociados.
+                  </p>
+                )}
+              </div>
+            </div>
           </TableCell>
         </TableRow>
       )}

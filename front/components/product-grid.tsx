@@ -65,9 +65,9 @@ export function ProductGrid() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.1 }}
-            className="text-8xl md:text-8xl font-handwriting text-primary-foreground mb-6"
+            className="text-6xl sm:text-7xl md:text-8xl font-handwriting text-primary-foreground mb-6"
           >
-            Yhabíaunavez
+            Yhabiaunavez
           </motion.h2>
           <motion.span
             initial={{ opacity: 0, y: 20 }}

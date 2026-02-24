@@ -21,15 +21,15 @@ import { motion } from "framer-motion";
 const aboutImages = [
     {
         src: "/images/Foto 1.jpeg",
-        alt: "Sabrina creadora de Había una Vez",
+        alt: "Sabrina creadora de Yhabiaunavez",
     },
     {
         src: "/images/Foto 2.png",
-        alt: "Productos artesanales Había una Vez",
+        alt: "Productos artesanales Yhabiaunavez",
     },
     {
         src: "/images/Foto 3.jpeg",
-        alt: "Letrero Había una Vez",
+        alt: "Letrero Yhabiaunavez",
     },
 ];
 
@@ -87,7 +87,7 @@ export function AboutUsModal() {
                                 ¡Hola! Mi nombre es <span className="text-primary font-semibold">Sabrina</span> (aunque casi todos me dicen Chavi), tengo 33 años y soy la mamá de Renzo.
                             </p>
                             <p>
-                                Soy la persona que está detrás de cada detalle de <strong>Había una Vez</strong>. Este proyecto nació allá por el <strong>2013</strong>, primero como una necesidad laboral, pero hoy se transformó en muchísimo más que eso. Todo empezó gracias a mi mamá, que es una grosa total cosiendo y enseñando.
+                                Soy la persona que está detrás de cada detalle de <strong>Yhabiaunavez</strong>. Este proyecto nació allá por el <strong>2013</strong>, primero como una necesidad laboral, pero hoy se transformó en muchísimo más que eso. Todo empezó gracias a mi mamá, que es una grosa total cosiendo y enseñando.
                             </p>
                             <p>
                                 Después de algunos años compartiendo el camino con una socia, quedé al frente siempre empujando para adelante, con el aguante incondicional de mi familia.

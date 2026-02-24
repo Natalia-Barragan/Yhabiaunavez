@@ -168,7 +168,7 @@ export default function SuccessPage() {
               <span className="text-sm font-serif text-primary-foreground">H</span>
             </div>
             <span className="text-sm font-medium text-muted-foreground">
-              Había una Vez
+              Yhabiaunavez
             </span>
           </Link>
         </div>

@@ -11,16 +11,19 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { ArrowLeft, Minus, Plus, Trash2, ShoppingBag, MessageCircle } from "lucide-react";
-import { motion } from "framer-motion";
+import { ArrowLeft, ArrowRight, Minus, Plus, Trash2, ShoppingBag, MessageCircle, AlertTriangle, X } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
 
 import { api } from "@/lib/api";
+import { formatWhatsApp } from "@/lib/utils";
 
 export default function CheckoutPage() {
   const router = useRouter();
   const { items, removeItem, updateQuantity, getTotalPrice, clearCart } =
     useCartStore();
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [showConfirmation, setShowConfirmation] = useState(false);
+  const [pendingChanges, setPendingChanges] = useState<{ field: string; old: string; new: string }[]>([]);
   const [formData, setFormData] = useState({
     nombre: "",
     apellido: "",
@@ -53,6 +56,62 @@ export default function CheckoutPage() {
     e.preventDefault();
     setIsSubmitting(true);
 
+    try {
+      // 1. Verificar si el cliente ya existe y si hay cambios
+      const existingCustomer = await api.customers.getByEmail(formData.email).catch(() => null);
+
+      if (existingCustomer) {
+        const changes: { field: string; old: string; new: string }[] = [];
+        const fieldLabels: Record<string, string> = {
+          name: "Nombre y Apellido",
+          phone: "Teléfono/WhatsApp",
+          address: "Dirección",
+          city: "Ciudad",
+          state: "Provincia",
+          zipCode: "Código Postal",
+          country: "País",
+        };
+
+        const currentName = `${formData.nombre} ${formData.apellido}`;
+        if (existingCustomer.name !== currentName)
+          changes.push({ field: fieldLabels.name, old: existingCustomer.name, new: currentName });
+
+        if (existingCustomer.phone !== formData.telefono)
+          changes.push({ field: fieldLabels.phone, old: existingCustomer.phone, new: formData.telefono });
+
+        if (existingCustomer.address !== formData.direccion)
+          changes.push({ field: fieldLabels.address, old: existingCustomer.address, new: formData.direccion });
+
+        if (existingCustomer.city !== formData.ciudad)
+          changes.push({ field: fieldLabels.city, old: existingCustomer.city, new: formData.ciudad });
+
+        if (existingCustomer.state !== formData.provincia)
+          changes.push({ field: fieldLabels.state, old: existingCustomer.state, new: formData.provincia });
+
+        if (existingCustomer.zipCode !== formData.codigoPostal)
+          changes.push({ field: fieldLabels.zipCode, old: existingCustomer.zipCode, new: formData.codigoPostal });
+
+        if (existingCustomer.country !== formData.pais)
+          changes.push({ field: fieldLabels.country, old: existingCustomer.country, new: formData.pais });
+
+        if (changes.length > 0) {
+          setPendingChanges(changes);
+          setShowConfirmation(true);
+          setIsSubmitting(false);
+          return;
+        }
+      }
+
+      await proceedWithOrder();
+    } catch (error: any) {
+      console.error("Error al procesar el pedido:", error);
+      alert(error.message || "Hubo un error al procesar tu pedido. Por favor intentá de nuevo.");
+      setIsSubmitting(false);
+    }
+  };
+
+  const proceedWithOrder = async () => {
+    setIsSubmitting(true);
     try {
       // 1. Crear o buscar cliente (el backend maneja la lógica de upsert)
       const customer = await api.customers.create({
@@ -88,7 +147,7 @@ export default function CheckoutPage() {
       const orderNumber = savedOrder.id.slice(-6).toUpperCase();
 
       let message = `¡Hola! Acabo de realizar un pedido en la tienda online.\n\n`;
-      message += `*Pedido #HUV-${orderNumber}*\n`;
+      message += `*Pedido #YHUV-${orderNumber}*\n`;
       message += `*Cliente:* ${formData.nombre} ${formData.apellido}\n`;
       message += `*Email:* ${formData.email}\n`;
       message += `*Dirección:* ${formData.direccion}, ${formData.ciudad} (${formData.codigoPostal}), ${formData.provincia}\n\n`;
@@ -102,14 +161,14 @@ export default function CheckoutPage() {
       if (formData.notas) message += `*Notas:* ${formData.notas}\n\n`;
       message += `Quedo a la espera para coordinar el pago y el envío. ¡Gracias!`;
 
-      const whatsappUrl = `https://wa.me/${businessPhone}?text=${encodeURIComponent(message)}`;
+      const whatsappUrl = `https://wa.me/${formatWhatsApp(businessPhone)}?text=${encodeURIComponent(message)}`;
 
       // 4. Guardar detalles para la página de éxito
       const orderDetails = {
         items: items,
         total: getTotalPrice(),
         customer: formData,
-        orderId: `HUV-${orderNumber}`,
+        orderId: `YHUV-${orderNumber}`,
         whatsappUrl: whatsappUrl
       };
       sessionStorage.setItem("lastOrder", JSON.stringify(orderDetails));
@@ -122,10 +181,11 @@ export default function CheckoutPage() {
 
       router.push("/checkout/success");
     } catch (error: any) {
-      console.error("Error al procesar el pedido:", error);
-      alert(error.message || "Hubo un error al procesar tu pedido. Por favor intentá de nuevo.");
+      console.error("Error al proceder con la orden:", error);
+      alert(error.message || "Error al finalizar la compra");
     } finally {
       setIsSubmitting(false);
+      setShowConfirmation(false);
     }
   };
 
@@ -167,7 +227,7 @@ export default function CheckoutPage() {
           </Link>
           <Link href="/" className="flex items-center gap-2">
             <div className="w-10 h-10 rounded-full bg-primary flex items-center justify-center">
-              <span className="text-lg font-serif text-primary-foreground">H</span>
+              <span className="text-lg font-serif text-primary-foreground">Y</span>
             </div>
           </Link>
           <div className="w-20" />
@@ -247,7 +307,7 @@ export default function CheckoutPage() {
                       onChange={handleInputChange}
                       required
                       className="rounded-xl"
-                      placeholder="+54 11 1234-5678"
+                      placeholder="Ej: 221 5043658 (sin 0 ni 15)"
                     />
                   </div>
                 </div>
@@ -463,6 +523,85 @@ export default function CheckoutPage() {
           </motion.div>
         </div>
       </main>
+
+      {/* Actualización de Datos Confirmation Modal */}
+      <AnimatePresence>
+        {showConfirmation && (
+          <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setShowConfirmation(false)}
+              className="absolute inset-0 bg-foreground/30 backdrop-blur-sm"
+            />
+            <motion.div
+              initial={{ scale: 0.9, opacity: 0, y: 20 }}
+              animate={{ scale: 1, opacity: 1, y: 0 }}
+              exit={{ scale: 0.9, opacity: 0, y: 20 }}
+              className="relative bg-card w-full max-w-lg rounded-3xl shadow-2xl border border-border/50 overflow-hidden"
+            >
+              <div className="p-6 sm:p-8">
+                <div className="flex items-center gap-3 mb-6">
+                  <div className="w-12 h-12 rounded-full bg-amber-500/10 flex items-center justify-center text-amber-500">
+                    <AlertTriangle size={24} />
+                  </div>
+                  <div>
+                    <h2 className="text-xl font-semibold text-foreground">
+                      ¿Deseas actualizar tus datos?
+                    </h2>
+                    <p className="text-sm text-muted-foreground">
+                      Detectamos cambios respecto a tu última compra.
+                    </p>
+                  </div>
+                </div>
+
+                <div className="space-y-4 mb-8">
+                  {pendingChanges.map((change, idx) => (
+                    <div key={idx} className="bg-muted/30 rounded-2xl p-4 border border-border/50">
+                      <p className="text-[10px] uppercase tracking-wider text-muted-foreground font-bold mb-1">
+                        {change.field}
+                      </p>
+                      <div className="flex items-center gap-3">
+                        <span className="text-sm text-muted-foreground line-through opacity-50 truncate max-w-[150px]">
+                          {change.old}
+                        </span>
+                        <ArrowRight size={14} className="text-primary flex-shrink-0" />
+                        <span className="text-sm font-semibold text-foreground truncate">
+                          {change.new}
+                        </span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+
+                <div className="grid sm:grid-cols-2 gap-3">
+                  <Button
+                    variant="ghost"
+                    className="rounded-xl h-12"
+                    onClick={() => setShowConfirmation(false)}
+                  >
+                    Revisar Datos
+                  </Button>
+                  <Button
+                    className="rounded-xl h-12 bg-primary text-primary-foreground font-bold"
+                    onClick={() => proceedWithOrder()}
+                  >
+                    Confirmar y Pedir
+                  </Button>
+                </div>
+              </div>
+
+              <button
+                onClick={() => setShowConfirmation(false)}
+                className="absolute top-4 right-4 p-2 hover:bg-muted rounded-full text-muted-foreground transition-colors"
+              >
+                <X size={20} />
+              </button>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }

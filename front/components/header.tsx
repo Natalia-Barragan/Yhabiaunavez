@@ -59,7 +59,7 @@ export function Header() {
                       >
                         <Image
                           src="/images/yhabiaunavez.jpg"
-                          alt="Había una vez Logo"
+                          alt="Yhabiaunavez Logo"
                           fill
                           className="object-contain"
                         />
@@ -129,7 +129,7 @@ export function Header() {
                 >
                   <Image
                     src="/images/yhabiaunavez.jpg"
-                    alt="Había una vez Logo"
+                    alt="Yhabiaunavez Logo"
                     fill
                     className="object-contain rounded-full"
                   />

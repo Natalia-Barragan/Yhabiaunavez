@@ -6,6 +6,20 @@ export interface Category {
   name: string;
 }
 
+export interface Customer {
+  id: string;
+  name: string;
+  email: string;
+  phone: string;
+  address: string;
+  city: string;
+  state: string;
+  zipCode: string;
+  country: string;
+  notes?: string;
+  createdAt?: string;
+}
+
 export interface Size {
   id: string;
   label: string;

@@ -13,6 +13,7 @@ import {
   X,
   Tags,
   Ruler,
+  Users,
 } from "lucide-react";
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -24,6 +25,7 @@ const navItems = [
   { href: "/admin/categories", icon: Tags, label: "Categorías" },
   { href: "/admin/sizes", icon: Ruler, label: "Talles" },
   { href: "/admin/orders", icon: ShoppingCart, label: "Pedidos" },
+  { href: "/admin/customers", icon: Users, label: "Clientes" },
 ];
 
 export default function AdminLayout({

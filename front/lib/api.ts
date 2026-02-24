@@ -70,8 +70,12 @@ export const api = {
       fetchAPI(`/orders/${id}/status`, { method: 'PATCH', body: JSON.stringify({ status }) }),
   },
   customers: {
+    getAll: () => fetchAPI('/customers'),
+    getOne: (id: string) => fetchAPI(`/customers/${id}`),
     create: (data: any) => fetchAPI('/customers', { method: 'POST', body: JSON.stringify(data) }),
     getByEmail: (email: string) => fetchAPI(`/customers/email/${email}`),
+    update: (id: string, data: Partial<any>) => fetchAPI(`/customers/${id}`, { method: 'PATCH', body: JSON.stringify(data) }),
+    delete: (id: string) => fetchAPI(`/customers/${id}`, { method: 'DELETE' }),
   },
   sizes: {
     getAll: () => fetchAPI('/sizes'),
