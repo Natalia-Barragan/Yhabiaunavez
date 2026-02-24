@@ -113,9 +113,6 @@ export default function NewProductPage() {
       formDataToSend.append("description", formData.description);
       formDataToSend.append("categoryId", formData.category); // Note: frontend uses 'category' but backend expects 'categoryId' (usually UUID)
 
-      // Sizes as comma-separated string for the backend Transform to handle
-      const sizesArray = variants.map(v => v.size).join(",");
-      formDataToSend.append("sizes", sizesArray);
 
       // Stock por talle (mapeamos el array de variantes a un objeto { talle: stock })
       const stockBySize: Record<string, number> = {};

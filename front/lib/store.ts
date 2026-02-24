@@ -27,7 +27,6 @@ export interface Product {
   images?: string[]; // Para las múltiples fotos que vas a tener mañana
   stock?: number; // Para el stock general de Supabase
   variants?: ProductVariant[]; // Para el stock por talles
-  sizes?: string[];
 }
 
 export interface CartItem {

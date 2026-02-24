@@ -29,19 +29,13 @@ interface AdminStore {
 }
 
 const transformProduct = (backendProduct: any, existingCategories: Category[] = []): Product => {
-  let sizes: string[] = [];
-  if (Array.isArray(backendProduct.sizes)) {
-    sizes = backendProduct.sizes.flatMap((s: any) =>
-      typeof s === "string" ? s.split(",").map((v) => v.trim()) : s
-    ).filter(Boolean);
-  } else if (typeof backendProduct.sizes === "string") {
-    sizes = backendProduct.sizes.split(",").map((s: string) => s.trim()).filter(Boolean);
-  }
+  const stockBySize = backendProduct.stockBySize || {};
+  const sizes = Object.keys(stockBySize);
 
   const variants = sizes.length > 0
     ? sizes.map((size: string) => ({
       size,
-      stock: backendProduct.stockBySize?.[size] ?? (sizes.length === 1 ? backendProduct.stock : 0)
+      stock: stockBySize[size]
     }))
     : [{ size: "Único", stock: backendProduct.stock || 0 }];
 

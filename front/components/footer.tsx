@@ -37,12 +37,12 @@ export function Footer() {
               >
                 <Instagram size={20} />
               </a>
-              {/* <a
-                href="#"
+              <a
+                href="https://www.facebook.com/yhabiaunavezlaplata"
                 className="p-2 bg-primary-foreground/10 rounded-full hover:bg-primary-foreground/20 transition-colors"
               >
                 <Facebook size={20} />
-              </a> */}
+              </a>
             </div>
           </div>
 

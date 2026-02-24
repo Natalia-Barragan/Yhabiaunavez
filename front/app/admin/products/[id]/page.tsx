@@ -146,7 +146,6 @@ export default function EditProductPage({
         description: formData.description,
         categoryId: formData.category,
         stock: variants.reduce((acc, v) => acc + Number(v.stock), 0),
-        sizes: variants.map(v => v.size),
         stockBySize: stockBySize
       };
 
