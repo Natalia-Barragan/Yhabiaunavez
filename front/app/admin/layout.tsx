@@ -89,9 +89,7 @@ export default function AdminLayout({
           <div className="p-6 border-b border-sidebar-border">
             <Link href="/admin" className="flex items-center gap-3">
               <div className="w-10 h-10 rounded-full bg-sidebar-primary flex items-center justify-center">
-                <span className="text-lg font-serif text-sidebar-primary-foreground">
-                  Y
-                </span>
+                <img src="/images/yhabiaunavez.jpg" alt="Logo" />
               </div>
               <div>
                 <span className="font-semibold text-sidebar-foreground block">
