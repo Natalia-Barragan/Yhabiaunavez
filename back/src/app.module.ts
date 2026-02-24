@@ -11,6 +11,7 @@ import { OrdersModule } from './orders/orders.module';
 import { SupabaseModule } from './supabase/supabase.module';
 import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
+import { SizeModule } from './size/size.module';
 
 @Module({
   imports: [
@@ -57,6 +58,7 @@ import { AuthModule } from './auth/auth.module';
     SupabaseModule,
     UsersModule,
     AuthModule,
+    SizeModule,
   ],
   controllers: [AppController],
   providers: [AppService],
