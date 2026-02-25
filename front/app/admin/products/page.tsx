@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { useAdminStore } from "@/lib/admin-store";
@@ -31,11 +31,16 @@ import { Suspense } from "react";
 import Loading from "./loading";
 
 export default function ProductsPage() {
-  const { products, deleteProduct } = useAdminStore();
+  const { products, deleteProduct, fetchProducts, fetchCategories } = useAdminStore();
   const [searchQuery, setSearchQuery] = useState("");
   const [deleteId, setDeleteId] = useState<string | null>(null);
   const [isClearDialogOpen, setIsClearDialogOpen] = useState(false);
   const { clearSoldOut, isLoading } = useAdminStore();
+
+  useEffect(() => {
+    fetchProducts();
+    fetchCategories();
+  }, [fetchProducts, fetchCategories]);
 
   const filteredProducts = products.filter(
     (product) =>

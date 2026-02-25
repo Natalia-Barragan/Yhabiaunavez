@@ -41,10 +41,10 @@ export function AboutUsModal() {
                     Sobre Nosotros
                 </button>
             </DialogTrigger>
-            <DialogContent className="sm:max-w-[1100px] w-[95vw] max-h-[90vh] overflow-y-auto p-0 border-none rounded-3xl overflow-hidden focus:outline-none focus-visible:outline-none">
-                <div className="grid md:grid-cols-[1.2fr_1.8fr] items-stretch">
+            <DialogContent className="sm:max-w-[1100px] w-[95vw] max-h-[90vh] p-0 border-none rounded-3xl overflow-hidden focus:outline-none focus-visible:outline-none">
+                <div className="flex flex-col md:flex-row h-full max-h-[90vh]">
                     {/* Carousel Section */}
-                    <div className="bg-secondary/30 relative min-h-[400px] md:min-h-full flex items-center justify-center p-8 lg:p-16">
+                    <div className="bg-secondary/30 relative min-h-[400px] md:min-h-full flex items-center justify-center p-8 lg:p-16 md:w-[40%]">
                         <Carousel className="w-full max-w-[340px] sm:max-w-sm">
                             <CarouselContent>
                                 {aboutImages.map((image, index) => (
@@ -68,7 +68,7 @@ export function AboutUsModal() {
                     </div>
 
                     {/* Text Section */}
-                    <div className="p-8 md:p-12 lg:p-20 bg-white flex flex-col justify-start min-h-full">
+                    <div className="p-8 md:p-12 lg:p-20 bg-white flex flex-col justify-start min-h-full flex-1 overflow-y-auto">
                         <DialogHeader className="mb-8">
                             <motion.div
                                 initial={{ opacity: 0, scale: 0.9 }}

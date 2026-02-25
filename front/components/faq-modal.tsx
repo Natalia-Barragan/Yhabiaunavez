@@ -58,10 +58,10 @@ export function FaqModal() {
                     Preguntas Frecuentes
                 </button>
             </DialogTrigger>
-            <DialogContent className="sm:max-w-[1100px] w-[95vw] max-h-[90vh] overflow-y-auto p-0 border-none rounded-3xl overflow-hidden focus:outline-none focus-visible:outline-none">
-                <div className="grid md:grid-cols-[1.2fr_1.8fr] items-stretch min-h-[500px]">
+            <DialogContent className="sm:max-w-[1100px] w-[95vw] max-h-[90vh] p-0 border-none rounded-3xl overflow-hidden focus:outline-none focus-visible:outline-none">
+                <div className="flex flex-col md:flex-row h-full max-h-[90vh]">
                     {/* Left Side: Visual/Branding */}
-                    <div className="bg-secondary/30 relative flex items-center justify-center p-12 lg:p-16 border-r border-secondary/20">
+                    <div className="hidden md:flex bg-secondary/30 relative items-center justify-center p-12 lg:p-16 border-r border-secondary/20 md:w-[40%]">
                         <motion.div
                             initial={{ opacity: 0, scale: 0.9 }}
                             animate={{ opacity: 1, scale: 1 }}
@@ -81,7 +81,7 @@ export function FaqModal() {
                     </div>
 
                     {/* Right Side: FAQ Content */}
-                    <div className="p-8 md:p-12 lg:p-16 bg-white flex flex-col justify-start">
+                    <div className="p-8 md:p-12 lg:p-16 bg-white flex flex-col justify-start flex-1 overflow-y-auto">
                         <DialogHeader className="mb-8">
                             <motion.div
                                 initial={{ opacity: 0, x: 20 }}

@@ -36,7 +36,8 @@ export function ProductCard({ product, onSelect, index }: ProductCardProps) {
       initial={{ opacity: 0, y: 30 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4, delay: index * 0.1 }}
-      className="group"
+      className="group cursor-pointer"
+      onClick={() => onSelect(product)}
     >
       <div className="bg-card rounded-3xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-border/50">
 

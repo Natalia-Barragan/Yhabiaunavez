@@ -54,7 +54,7 @@ export const api = {
     getOne: (id: string) => fetchAPI(`/products/${id}`),
     create: (data: FormData) => fetchFormData('/products', data),
     update: (id: string, data: Partial<any>) => fetchAPI(`/products/${id}`, { method: 'PATCH', body: JSON.stringify(data) }),
-    updateImage: (id: string, data: FormData) => fetchFormData(`/products/${id}`, data, 'PATCH'),
+    uploadProductImages: (id: string, data: FormData) => fetchFormData(`/products/${id}/images`, data, 'POST'),
     delete: (id: string) => fetchAPI(`/products/${id}`, { method: 'DELETE' }),
   },
   categories: {

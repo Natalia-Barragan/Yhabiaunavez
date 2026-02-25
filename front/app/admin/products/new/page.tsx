@@ -46,8 +46,8 @@ export default function NewProductPage() {
     category: "",
   });
 
-  const [imageFile, setImageFile] = useState<File | null>(null);
-  const [imagePreview, setImagePreview] = useState<string | null>(null);
+  const [imageFiles, setImageFiles] = useState<File[]>([]);
+  const [imagePreviews, setImagePreviews] = useState<string[]>([]);
 
   const fileInputRef = React.useRef<HTMLInputElement>(null);
 
@@ -63,15 +63,23 @@ export default function NewProductPage() {
   };
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      setImageFile(file);
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setImagePreview(reader.result as string);
-      };
-      reader.readAsDataURL(file);
+    const files = Array.from(e.target.files || []);
+    if (files.length > 0) {
+      setImageFiles((prev) => [...prev, ...files]);
+
+      files.forEach(file => {
+        const reader = new FileReader();
+        reader.onloadend = () => {
+          setImagePreviews((prev) => [...prev, reader.result as string]);
+        };
+        reader.readAsDataURL(file);
+      });
     }
+  };
+
+  const removeImage = (index: number) => {
+    setImageFiles((prev) => prev.filter((_, i) => i !== index));
+    setImagePreviews((prev) => prev.filter((_, i) => i !== index));
   };
 
   const handleCategoryChange = (value: string) => {
@@ -111,8 +119,10 @@ export default function NewProductPage() {
       formDataToSend.append("name", formData.name);
       formDataToSend.append("price", formData.price.toString());
       formDataToSend.append("description", formData.description);
-      formDataToSend.append("categoryId", formData.category); // Note: frontend uses 'category' but backend expects 'categoryId' (usually UUID)
 
+      if (formData.category) {
+        formDataToSend.append("categoryId", formData.category); // Note: frontend uses 'category' but backend expects 'categoryId' (usually UUID)
+      }
 
       // Stock por talle (mapeamos el array de variantes a un objeto { talle: stock })
       const stockBySize: Record<string, number> = {};
@@ -125,9 +135,10 @@ export default function NewProductPage() {
       const totalStock = variants.reduce((acc, v) => acc + Number(v.stock), 0);
       formDataToSend.append("stock", totalStock.toString());
 
-      if (imageFile) {
-        formDataToSend.append("image", imageFile);
+      imageFiles.forEach(file => {
+        formDataToSend.append("images", file);
       }
+      );
 
       await addProduct(formDataToSend);
       router.push("/admin/products");
@@ -237,43 +248,39 @@ export default function NewProductPage() {
           <h2 className="text-lg font-semibold text-foreground">Imágenes</h2>
 
           <div className="grid grid-cols-3 sm:grid-cols-4 gap-4">
-            {imagePreview && (
-              <div className="relative aspect-square rounded-xl bg-muted overflow-hidden group">
-                <img src={imagePreview} alt="Vista previa" className="w-full h-full object-cover" />
+            {imagePreviews.map((preview, index) => (
+              <div key={index} className="relative aspect-square rounded-xl bg-muted overflow-hidden group">
+                <img src={preview} alt={`Vista previa ${index + 1}`} className="w-full h-full object-cover" />
                 <button
                   type="button"
-                  onClick={() => {
-                    setImageFile(null);
-                    setImagePreview(null);
-                  }}
+                  onClick={() => removeImage(index)}
                   className="absolute inset-0 bg-foreground/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center"
                 >
                   <Trash2 size={20} className="text-white" />
                 </button>
               </div>
-            )}
+            ))}
 
             <input
               type="file"
               ref={fileInputRef}
               onChange={handleFileChange}
               accept="image/*"
+              multiple
               className="hidden"
             />
 
-            {!imagePreview && (
-              <button
-                type="button"
-                onClick={() => fileInputRef.current?.click()}
-                className="aspect-square rounded-xl border-2 border-dashed border-border hover:border-primary hover:bg-primary/5 transition-colors flex flex-col items-center justify-center gap-2 text-muted-foreground hover:text-primary"
-              >
-                <ImagePlus size={24} />
-                <span className="text-xs">Seleccionar Imagen</span>
-              </button>
-            )}
+            <button
+              type="button"
+              onClick={() => fileInputRef.current?.click()}
+              className="aspect-square rounded-xl border-2 border-dashed border-border hover:border-primary hover:bg-primary/5 transition-colors flex flex-col items-center justify-center gap-2 text-muted-foreground hover:text-primary"
+            >
+              <ImagePlus size={24} />
+              <span className="text-xs">Agregar Imagen</span>
+            </button>
           </div>
           <p className="text-xs text-muted-foreground">
-            Sube una imagen representativa para el producto.
+            Sube una o varias imágenes para el producto. El primer archivo será la imagen principal.
           </p>
         </div>
 

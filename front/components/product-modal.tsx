@@ -6,6 +6,13 @@ import { X, Minus, Plus, ShoppingBag, Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { type Product, useCartStore } from "@/lib/store";
 import Image from "next/image";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel";
 
 interface ProductModalProps {
   product: Product | null;
@@ -80,13 +87,28 @@ export function ProductModal({ product, onClose }: ProductModalProps) {
             </button>
 
             <div className="flex flex-col md:flex-row h-full overflow-y-auto md:overflow-hidden">
-              <div className="md:w-1/2 relative aspect-square md:aspect-auto flex-shrink-0">
-                <Image
-                  src={product.images?.[0] || "/placeholder.svg"} // Solo esto. Sin localhost.
-                  alt={product.name}
-                  fill
-                  className="object-cover"
-                />
+              <div className="md:w-1/2 flex flex-col bg-secondary/20 min-h-[350px] md:min-h-full">
+                <Carousel className="w-full h-full flex-1">
+                  <CarouselContent className="h-full ml-0">
+                    {(product.images && product.images.length > 0 ? product.images : [product.image || "/placeholder.svg"]).map((imageUrl, index) => (
+                      <CarouselItem key={index} className="pl-0 relative w-full h-full min-h-[350px] md:min-h-[500px]">
+                        <Image
+                          src={imageUrl}
+                          alt={`${product.name} - Imagen ${index + 1}`}
+                          fill
+                          className="object-cover"
+                          priority={index === 0}
+                        />
+                      </CarouselItem>
+                    ))}
+                  </CarouselContent>
+                  {product.images && product.images.length > 1 && (
+                    <>
+                      <CarouselPrevious className="left-4 bg-card/50 border-none hover:bg-card" />
+                      <CarouselNext className="right-4 bg-card/50 border-none hover:bg-card" />
+                    </>
+                  )}
+                </Carousel>
               </div>
 
               <div className="md:w-1/2 p-6 md:p-8 flex flex-col md:overflow-y-auto">

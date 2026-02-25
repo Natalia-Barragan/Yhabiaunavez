@@ -53,8 +53,8 @@ export default function EditProductPage({
     category: "",
   });
 
-  const [imageFile, setImageFile] = useState<File | null>(null);
-  const [imagePreview, setImagePreview] = useState<string | null>(null);
+  const [imageFiles, setImageFiles] = useState<File[]>([]);
+  const [imagePreviews, setImagePreviews] = useState<string[]>([]);
 
   const fileInputRef = React.useRef<HTMLInputElement>(null);
 
@@ -71,7 +71,7 @@ export default function EditProductPage({
       });
       setVariants(product.variants || []);
       if (product.images && product.images.length > 0) {
-        setImagePreview(product.images[0]);
+        setImagePreviews(product.images);
       }
     } else {
       setNotFound(true);
@@ -86,15 +86,22 @@ export default function EditProductPage({
   };
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      setImageFile(file);
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setImagePreview(reader.result as string);
-      };
-      reader.readAsDataURL(file);
+    const files = Array.from(e.target.files || []);
+    if (files.length > 0) {
+      setImageFiles((prev) => [...prev, ...files]);
+      files.forEach(file => {
+        const reader = new FileReader();
+        reader.onloadend = () => {
+          setImagePreviews((prev) => [...prev, reader.result as string]);
+        };
+        reader.readAsDataURL(file);
+      });
     }
+  };
+
+  const removeImage = (index: number) => {
+    setImageFiles((prev) => prev.filter((_, i) => i !== index));
+    setImagePreviews((prev) => prev.filter((_, i) => i !== index));
   };
 
   const handleCategoryChange = (value: string) => {
@@ -131,31 +138,36 @@ export default function EditProductPage({
     setIsSubmitting(true);
 
     try {
-      // Because our api.update currently only supports JSON, we'll use a local fetch if we have an image,
-      // or we can update admin-store.ts to support FormData in updateProduct too.
-      // For now, let's prioritize consistency and use the existing api calls.
-
       const stockBySize: Record<string, number> = {};
       variants.forEach(v => {
         stockBySize[v.size] = Number(v.stock);
       });
 
-      const updates = {
+      const keptImages = imagePreviews.filter(p => typeof p === 'string' && p.startsWith('http'));
+
+      const updates: any = {
         name: formData.name,
         price: Number.parseFloat(formData.price),
         description: formData.description,
-        categoryId: formData.category,
         stock: variants.reduce((acc, v) => acc + Number(v.stock), 0),
-        stockBySize: stockBySize
+        stockBySize: stockBySize,
+        existingImages: keptImages,
       };
 
+      if (formData.category) {
+        updates.categoryId = formData.category;
+      }
+
+      // 1. Actualización de texto e imágenes mantenidas (JSON, confiable)
       await updateProduct(id, updates);
 
-      // If there's a new image file, upload it separately using updateImage
-      if (imageFile) {
+      // 2. Si hay imágenes nuevas, se suben en una petición separada (FormData)
+      if (imageFiles.length > 0) {
         const imageFormData = new FormData();
-        imageFormData.append("image", imageFile);
-        await api.products.updateImage(id, imageFormData);
+        imageFiles.forEach(file => {
+          imageFormData.append("images", file);
+        });
+        await useAdminStore.getState().uploadProductImages(id, imageFormData);
       }
 
       router.push("/admin/products");
@@ -278,43 +290,39 @@ export default function EditProductPage({
           <h2 className="text-lg font-semibold text-foreground">Imagen del Producto</h2>
 
           <div className="grid grid-cols-3 sm:grid-cols-4 gap-4">
-            {imagePreview && (
-              <div className="relative aspect-square rounded-xl bg-muted overflow-hidden group">
-                <img src={imagePreview} alt="Vista previa" className="w-full h-full object-cover" />
+            {imagePreviews.map((preview, index) => (
+              <div key={index} className="relative aspect-square rounded-xl bg-muted overflow-hidden group">
+                <img src={preview} alt={`Vista previa ${index + 1}`} className="w-full h-full object-cover" />
                 <button
                   type="button"
-                  onClick={() => {
-                    setImageFile(null);
-                    setImagePreview(null);
-                  }}
+                  onClick={() => removeImage(index)}
                   className="absolute inset-0 bg-foreground/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center"
                 >
                   <Trash2 size={20} className="text-white" />
                 </button>
               </div>
-            )}
+            ))}
 
             <input
               type="file"
               ref={fileInputRef}
               onChange={handleFileChange}
               accept="image/*"
+              multiple
               className="hidden"
             />
 
-            {!imagePreview && (
-              <button
-                type="button"
-                onClick={() => fileInputRef.current?.click()}
-                className="aspect-square rounded-xl border-2 border-dashed border-border hover:border-primary hover:bg-primary/5 transition-colors flex flex-col items-center justify-center gap-2 text-muted-foreground hover:text-primary"
-              >
-                <ImagePlus size={24} />
-                <span className="text-xs">Seleccionar Imagen</span>
-              </button>
-            )}
+            <button
+              type="button"
+              onClick={() => fileInputRef.current?.click()}
+              className="aspect-square rounded-xl border-2 border-dashed border-border hover:border-primary hover:bg-primary/5 transition-colors flex flex-col items-center justify-center gap-2 text-muted-foreground hover:text-primary"
+            >
+              <ImagePlus size={24} />
+              <span className="text-xs">Agregar Imagen</span>
+            </button>
           </div>
           <p className="text-xs text-muted-foreground">
-            Sube una nueva foto para actualizar la imagen del producto.
+            Sube nuevas fotos para actualizar la galería del producto. Se reemplazarán las existentes si subes nuevas.
           </p>
         </div>
 

@@ -19,6 +19,7 @@ interface AdminStore {
   fetchCustomers: () => Promise<void>;
   addProduct: (product: FormData) => Promise<void>;
   updateProduct: (id: string, product: Partial<Product>) => Promise<void>;
+  uploadProductImages: (id: string, data: FormData) => Promise<void>;
   deleteProduct: (id: string) => Promise<void>;
   getProduct: (id: string) => Product | undefined;
   addCategory: (name: string) => Promise<void>;
@@ -137,18 +138,41 @@ export const useAdminStore = create<AdminStore>()(
         }
       },
 
-      updateProduct: async (id, updates) => {
+      updateProduct: async (id: string, updates: any) => {
         set({ isLoading: true });
         try {
-          await api.products.update(id, updates);
+          const updatedBackendProduct = await api.products.update(id, updates);
+          const { categories } = get();
+          const updatedProduct = transformProduct(updatedBackendProduct, categories);
+
           set((state) => ({
             products: state.products.map((p) =>
-              p.id === id ? { ...p, ...updates } : p
+              p.id === id ? updatedProduct : p
             ),
             isLoading: false
           }));
         } catch (error: any) {
           set({ error: error.message, isLoading: false });
+          throw error;
+        }
+      },
+
+      uploadProductImages: async (id: string, data: FormData) => {
+        set({ isLoading: true });
+        try {
+          const updatedBackendProduct = await api.products.uploadProductImages(id, data);
+          const { categories } = get();
+          const updatedProduct = transformProduct(updatedBackendProduct, categories);
+
+          set((state) => ({
+            products: state.products.map((p) =>
+              p.id === id ? updatedProduct : p
+            ),
+            isLoading: false
+          }));
+        } catch (error: any) {
+          set({ error: error.message, isLoading: false });
+          throw error;
         }
       },
 
