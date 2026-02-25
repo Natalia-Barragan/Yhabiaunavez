@@ -42,9 +42,13 @@ export class Product {
     @Column('jsonb', { default: {} })
     stockBySize: Record<string, number>;
 
-    @ApiProperty({ example: 'https://example.com/image.jpg', description: 'Product Image URL' })
+    @ApiProperty({ example: 'https://example.com/image.jpg', description: 'Product Image URL (Legacy/Main)' })
     @Column()
     image: string;
+
+    @ApiProperty({ example: ['url1', 'url2'], description: 'Product Images Array' })
+    @Column('text', { array: true, nullable: true })
+    images: string[];
 
     @CreateDateColumn()
     createdAt: Date;

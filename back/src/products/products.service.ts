@@ -14,16 +14,23 @@ export class ProductsService {
         private readonly supabaseService: SupabaseService,
     ) { }
 
-    async create(dto: CreateProductDto, file: Express.Multer.File) {
+    async create(dto: CreateProductDto, files: Express.Multer.File[]) {
         try {
             console.log('DTO received:', dto);
-            console.log('File received:', file ? file.originalname : 'No file');
+            console.log('Files received:', files ? files.length : 0);
 
-            // CORRECCIÓN: Agregamos await para que imageUrl sea string y no Promise/void
             let imageUrl = '';
-            if (file) {
-                imageUrl = await this.supabaseService.uploadImage(file);
-                console.log('Image uploaded to Supabase:', imageUrl);
+            let imageUrls: string[] = [];
+
+            if (files && files.length > 0) {
+                // Sube todas las imágenes en paralelo
+                imageUrls = await Promise.all(
+                    files.map(file => this.supabaseService.uploadImage(file))
+                );
+
+                // La primera imagen sigue siendo la principal para compatibilidad
+                imageUrl = imageUrls[0];
+                console.log('Images uploaded to Supabase:', imageUrls);
             }
 
             // Si se proporciona stockBySize, sincronizamos el stock total
@@ -36,6 +43,7 @@ export class ProductsService {
                 ...dto,
                 stock: totalStock,
                 image: imageUrl,
+                images: imageUrls,
             });
 
             const savedProduct = await this.productRepository.save(product);
@@ -49,16 +57,23 @@ export class ProductsService {
         }
     }
 
-    async update(id: string, dto: UpdateProductDto, file?: Express.Multer.File) {
+    async update(id: string, dto: UpdateProductDto) {
+        console.log('--- UPDATE PRODUCT (JSON) START ---');
+        console.log('ID:', id);
+
         const product = await this.productRepository.findOne({ where: { id } });
         if (!product) throw new NotFoundException('Producto no encontrado');
 
-        if (file) {
-            // Si mandan una foto nueva, la actualizamos en Supabase
-            product.image = await this.supabaseService.uploadImage(file);
+        // Determinar la lista de imágenes actual
+        if (dto.existingImages !== undefined) {
+            product.images = Array.isArray(dto.existingImages) ? dto.existingImages : [dto.existingImages];
+            product.image = product.images[0] || "";
         }
 
-        Object.assign(product, dto);
+        // Actualizar el resto de campos
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        const { existingImages, image, images, ...otherData } = dto as any;
+        Object.assign(product, otherData);
 
         // Si se actualizó stockBySize, sincronizamos el stock total
         if (dto.stockBySize) {
@@ -66,9 +81,35 @@ export class ProductsService {
         }
 
         const updatedProduct = await this.productRepository.save(product);
+        console.log('--- UPDATE PRODUCT (JSON) END ---');
 
-        // Re-fetch with relations
         return await this.findOne(updatedProduct.id);
+    }
+
+    async uploadImages(id: string, files: Express.Multer.File[]) {
+        console.log('--- UPLOAD IMAGES START ---');
+        const product = await this.productRepository.findOne({ where: { id } });
+        if (!product) throw new NotFoundException('Producto no encontrado');
+
+        if (files && files.length > 0) {
+            console.log('Uploading new files to Supabase...', files.length);
+            const newImageUrls = await Promise.all(
+                files.map(file => this.supabaseService.uploadImage(file))
+            );
+
+            // Append new images to existing ones
+            const currentImages = product.images || [];
+            const completeGallery = [...currentImages, ...newImageUrls];
+
+            product.images = completeGallery;
+            product.image = completeGallery[0] || product.image;
+
+            await this.productRepository.save(product);
+            console.log('Images appended to product successfully.');
+        }
+
+        console.log('--- UPLOAD IMAGES END ---');
+        return await this.findOne(id);
     }
 
     async findAll() {

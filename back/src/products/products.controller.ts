@@ -8,9 +8,10 @@ import {
     Delete,
     UseInterceptors,
     UploadedFile,
+    UploadedFiles,
     ParseUUIDPipe
 } from '@nestjs/common';
-import { FileInterceptor } from '@nestjs/platform-express';
+import { FileInterceptor, FilesInterceptor } from '@nestjs/platform-express';
 import { ProductsService } from './products.service';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
@@ -55,12 +56,12 @@ export class ProductsController {
         },
     })
     @ApiConsumes('multipart/form-data')
-    @UseInterceptors(FileInterceptor('image'))
+    @UseInterceptors(FilesInterceptor('images'))
     create(
-        @UploadedFile() file: Express.Multer.File,
+        @UploadedFiles() files: Express.Multer.File[],
         @Body() createProductDto: CreateProductDto
     ) {
-        return this.productsService.create(createProductDto, file);
+        return this.productsService.create(createProductDto, files);
     }
 
     @ApiOperation({ summary: 'Get all products' })
@@ -76,33 +77,37 @@ export class ProductsController {
         return this.productsService.findOne(id);
     }
 
-    // 4. Actualizar producto (imagen opcional)
-    @ApiOperation({ summary: 'Update a product' })
+    // 4. Actualizar producto (datos generales JSOn)
+    @ApiOperation({ summary: 'Update a product information' })
+    @Patch(':id')
+    update(
+        @Param('id', ParseUUIDPipe) id: string,
+        @Body() updateProductDto: UpdateProductDto,
+    ) {
+        return this.productsService.update(id, updateProductDto);
+    }
+
+    // 4.5. Subir imágenes a un producto existente
+    @ApiOperation({ summary: 'Upload images to an existing product' })
     @ApiConsumes('multipart/form-data')
     @ApiBody({
         schema: {
             type: 'object',
             properties: {
-                image: {
-                    type: 'string',
-                    format: 'binary',
-                },
-                name: { type: 'string' },
-                description: { type: 'string' },
-                price: { type: 'number' },
-                stock: { type: 'integer' },
-                categoryId: { type: 'string', format: 'uuid' },
+                images: {
+                    type: 'array',
+                    items: { type: 'string', format: 'binary' }
+                }
             },
         },
     })
-    @Patch(':id')
-    @UseInterceptors(FileInterceptor('image'))
-    update(
+    @Post(':id/images')
+    @UseInterceptors(FilesInterceptor('images'))
+    uploadImages(
         @Param('id', ParseUUIDPipe) id: string,
-        @Body() updateProductDto: UpdateProductDto,
-        @UploadedFile() file?: Express.Multer.File,
+        @UploadedFiles() files: Express.Multer.File[],
     ) {
-        return this.productsService.update(id, updateProductDto, file);
+        return this.productsService.uploadImages(id, files);
     }
 
     // 5. Eliminar producto

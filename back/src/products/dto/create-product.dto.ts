@@ -42,6 +42,20 @@ export class CreateProductDto {
     @IsOptional()
     image?: string;
 
+    @ApiProperty({ example: ['url1', 'url2'], description: 'Array of existing image URLs to keep', required: false })
+    @IsOptional()
+    @Transform(({ value }) => {
+        if (typeof value === 'string') {
+            try {
+                return JSON.parse(value);
+            } catch {
+                return [value];
+            }
+        }
+        return value;
+    })
+    existingImages?: string[];
+
     @ApiProperty({ example: 'uuid-of-category', description: 'Category ID' })
     @IsUUID() // Importante: debe coincidir con el tipo de ID de tu entidad Category
     @IsNotEmpty()
