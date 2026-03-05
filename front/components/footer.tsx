@@ -84,8 +84,10 @@ export function Footer() {
                 <span>+54 221 554-7170</span>
               </li>
               <li className="flex items-center gap-3 text-primary-foreground/80">
-                <Mail size={18} />
-                <span>hola@yhabiaunavez.com</span>
+                <Instagram size={18} />
+                <a href="https://www.instagram.com/emprendidascasa/" target="_blank" rel="noopener noreferrer" className="hover:text-primary-foreground transition-colors">
+                  @emprendidascasa
+                </a>
               </li>
               <li className="flex items-start gap-3 text-primary-foreground/80">
                 <MapPin size={18} className="flex-shrink-0 mt-0.5" />
