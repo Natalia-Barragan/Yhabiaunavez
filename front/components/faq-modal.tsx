@@ -39,7 +39,7 @@ const faqs = [
     {
         id: "item-4",
         question: "Tengo dudas con los talles o los colores, ¿qué hago?",
-        answer: "¡Tranqui! Armá tu carrito igual con la opción que creas correcta. Como el paso final es hablar conmigo por WhatsApp antes de abonar, ahí mismo me podés consultar todo. Te asesoro con las medidas, te muestro combinaciones y nos aseguramos de que te lleves exactamente lo que buscás para los peques.",
+        answer: "Los talles van a estar detallados en la última foto de cada producto. Si tenés alguna otra duda, podés comunicarte con Chavi desde el botón de abajo en esta misma pantalla.",
         icon: Ruler
     },
     {
