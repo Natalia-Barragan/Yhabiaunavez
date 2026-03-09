@@ -12,6 +12,7 @@ import { SupabaseModule } from './supabase/supabase.module';
 import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
 import { SizeModule } from './size/size.module';
+import { PingController } from './ping.controller';
 
 @Module({
   imports: [
@@ -60,7 +61,7 @@ import { SizeModule } from './size/size.module';
     AuthModule,
     SizeModule,
   ],
-  controllers: [AppController],
+  controllers: [AppController, PingController],
   providers: [AppService],
 })
 export class AppModule { }
