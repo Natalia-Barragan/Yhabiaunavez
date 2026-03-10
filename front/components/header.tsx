@@ -26,11 +26,11 @@ export function Header() {
 
   return (
     <>
-      <header className="sticky top-0 z-50 bg-card/95 backdrop-blur-md border-b border-border">
+      <header className="sticky top-0 z-50 bg-[#e5e5e5] backdrop-blur-md border-b border-border">
         {/* Desktop Header Layout */}
         <div className="hidden lg:block shadow-sm">
           {/* Top Row: Search - Logo - Cart (White Background) */}
-          <div className="bg-card py-1 border-b border-border/20">
+          <div className="bg-gradient-to-r from-[#e5e5e5] via-white to-[#e5e5e5] border-b border-border/20">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
               <div className="grid grid-cols-3 items-center">
                 {/* Left: Search */}
@@ -53,17 +53,14 @@ export function Header() {
                 <div className="flex justify-center">
                   <Link href="/" className="flex flex-col items-center group">
                     <div className="relative">
-                      <motion.div
-                        whileHover={{ scale: 1.05 }}
-                        className="relative w-72 h-32"
-                      >
+                      <div className="relative w-[340px] h-[160px]">
                         <Image
                           src="/images/yhabiaunavez.jpg"
                           alt="Yhabiaunavez Logo"
                           fill
-                          className="object-contain"
+                          className="object-contain mix-blend-multiply"
                         />
-                      </motion.div>
+                      </div>
                     </div>
                   </Link>
                 </div>
@@ -123,17 +120,14 @@ export function Header() {
             {/* Center - Logo */}
             <Link href="/" className="flex flex-col items-center group absolute left-1/2 -translate-x-1/2">
               <div className="relative">
-                <motion.div
-                  whileHover={{ scale: 1.05 }}
-                  className="relative w-16 h-16"
-                >
+                <div className="relative w-16 h-16">
                   <Image
                     src="/images/yhabiaunavez.jpg"
                     alt="Yhabiaunavez Logo"
                     fill
-                    className="object-contain rounded-full"
+                    className="object-contain rounded-full mix-blend-multiply"
                   />
-                </motion.div>
+                </div>
               </div>
             </Link>
 
