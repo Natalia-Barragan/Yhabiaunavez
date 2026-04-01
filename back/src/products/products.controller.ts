@@ -9,13 +9,15 @@ import {
     UseInterceptors,
     UploadedFile,
     UploadedFiles,
-    ParseUUIDPipe
+    ParseUUIDPipe,
+    UseGuards
 } from '@nestjs/common';
 import { FileInterceptor, FilesInterceptor } from '@nestjs/platform-express';
 import { ProductsService } from './products.service';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
 import { ApiTags, ApiOperation, ApiConsumes, ApiBody } from '@nestjs/swagger';
+import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 
 @ApiTags('Products')
 @Controller('products')
@@ -56,6 +58,7 @@ export class ProductsController {
         },
     })
     @ApiConsumes('multipart/form-data')
+    @UseGuards(JwtAuthGuard)
     @UseInterceptors(FilesInterceptor('images'))
     create(
         @UploadedFiles() files: Express.Multer.File[],
@@ -80,6 +83,7 @@ export class ProductsController {
     // 4. Actualizar producto (datos generales JSOn)
     @ApiOperation({ summary: 'Update a product information' })
     @Patch(':id')
+    @UseGuards(JwtAuthGuard)
     update(
         @Param('id', ParseUUIDPipe) id: string,
         @Body() updateProductDto: UpdateProductDto,
@@ -102,6 +106,7 @@ export class ProductsController {
         },
     })
     @Post(':id/images')
+    @UseGuards(JwtAuthGuard)
     @UseInterceptors(FilesInterceptor('images'))
     uploadImages(
         @Param('id', ParseUUIDPipe) id: string,
@@ -113,6 +118,7 @@ export class ProductsController {
     // 5. Eliminar producto
     @ApiOperation({ summary: 'Delete a product' })
     @Delete(':id')
+    @UseGuards(JwtAuthGuard)
     remove(@Param('id', ParseUUIDPipe) id: string) {
         return this.productsService.remove(id);
     }

@@ -1,7 +1,8 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, ParseUUIDPipe } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, ParseUUIDPipe, UseGuards } from '@nestjs/common';
 import { SizeService } from './size.service';
 import { CreateSizeDto, UpdateSizeDto } from './dto/size.dto';
 import { ApiTags, ApiOperation } from '@nestjs/swagger';
+import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 
 @ApiTags('Sizes')
 @Controller('sizes')
@@ -10,6 +11,7 @@ export class SizeController {
 
     @ApiOperation({ summary: 'Create a new size' })
     @Post()
+    @UseGuards(JwtAuthGuard)
     create(@Body() createSizeDto: CreateSizeDto) {
         return this.sizeService.create(createSizeDto);
     }
@@ -28,12 +30,14 @@ export class SizeController {
 
     @ApiOperation({ summary: 'Update a size' })
     @Patch(':id')
+    @UseGuards(JwtAuthGuard)
     update(@Param('id', ParseUUIDPipe) id: string, @Body() updateSizeDto: UpdateSizeDto) {
         return this.sizeService.update(id, updateSizeDto);
     }
 
     @ApiOperation({ summary: 'Delete a size' })
     @Delete(':id')
+    @UseGuards(JwtAuthGuard)
     remove(@Param('id', ParseUUIDPipe) id: string) {
         return this.sizeService.remove(id);
     }
