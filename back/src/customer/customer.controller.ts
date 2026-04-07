@@ -7,7 +7,6 @@ import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 
 @ApiTags('Customers')
 @Controller('customers')
-@UseGuards(JwtAuthGuard)
 export class CustomersController {
   constructor(private readonly customersService: CustomersService) { }
 
@@ -19,6 +18,7 @@ export class CustomersController {
 
   @ApiOperation({ summary: 'Get all customers' })
   @Get()
+  @UseGuards(JwtAuthGuard)
   findAll() {
     return this.customersService.findAll();
   }
@@ -31,12 +31,14 @@ export class CustomersController {
 
   @ApiOperation({ summary: 'Get a customer by ID' })
   @Get(':id')
+  @UseGuards(JwtAuthGuard)
   findOne(@Param('id', ParseUUIDPipe) id: string) {
     return this.customersService.findOne(id);
   }
 
   @ApiOperation({ summary: 'Update a customer' })
   @Patch(':id')
+  @UseGuards(JwtAuthGuard)
   update(
     @Param('id', ParseUUIDPipe) id: string,
     @Body() updateCustomerDto: UpdateCustomerDto
@@ -46,6 +48,7 @@ export class CustomersController {
 
   @ApiOperation({ summary: 'Delete a customer' })
   @Delete(':id')
+  @UseGuards(JwtAuthGuard)
   remove(@Param('id', ParseUUIDPipe) id: string) {
     return this.customersService.remove(id);
   }
