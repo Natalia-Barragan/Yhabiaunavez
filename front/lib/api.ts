@@ -15,6 +15,13 @@ async function fetchAPI(endpoint: string, options: RequestInit = {}) {
   });
 
   if (!res.ok) {
+    if (res.status === 401) {
+      if (typeof window !== 'undefined') {
+        localStorage.removeItem('admin_token');
+        localStorage.removeItem('admin_user');
+        window.location.href = '/login';
+      }
+    }
     const error = await res.json().catch(() => ({ message: 'An error occurred' }));
     throw new Error(error.message || 'API request failed');
   }
@@ -36,6 +43,13 @@ async function fetchFormData(endpoint: string, data: FormData, method: string = 
   });
 
   if (!res.ok) {
+    if (res.status === 401) {
+      if (typeof window !== 'undefined') {
+        localStorage.removeItem('admin_token');
+        localStorage.removeItem('admin_user');
+        window.location.href = '/login';
+      }
+    }
     const errorBody = await res.json().catch(() => ({}));
     throw new Error(errorBody.message || 'API Error');
   }
