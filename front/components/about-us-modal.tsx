@@ -103,3 +103,5 @@ export function AboutUsModal() {
         </Dialog>
     );
 }
+
+export default AboutUsModal;

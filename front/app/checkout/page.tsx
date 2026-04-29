@@ -11,7 +11,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { ArrowLeft, ArrowRight, Minus, Plus, Trash2, ShoppingBag, MessageCircle, AlertTriangle, X } from "lucide-react";
+import { ArrowLeft, ArrowRight, Minus, Plus, Trash2, ShoppingBag, MessageCircle, AlertTriangle, X, Handshake } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
 import { api } from "@/lib/api";
@@ -142,26 +142,14 @@ export default function CheckoutPage() {
 
       const savedOrder = await api.orders.create(orderData);
 
-      // 3. Generar mensaje de WhatsApp
-      const businessPhone = "542215043666";
       const orderNumber = savedOrder.id.slice(-6).toUpperCase();
 
-      let message = `¡Hola! Acabo de realizar un pedido en la tienda online.\n\n`;
-      message += `*Pedido #YHUV-${orderNumber}*\n`;
-      message += `*Cliente:* ${formData.nombre} ${formData.apellido}\n`;
-      message += `*Email:* ${formData.email}\n`;
-      message += `*Dirección:* ${formData.direccion}, ${formData.ciudad} (${formData.codigoPostal}), ${formData.provincia}\n\n`;
-      message += `*Productos:*\n`;
-
-      items.forEach(item => {
-        message += `- ${item.product.name} (Talle: ${item.size}) x ${item.quantity}: ${formatPrice(Number(item.product.price) * item.quantity)}\n`;
-      });
-
-      message += `\n*TOTAL: ${formatPrice(getTotalPrice())}*\n\n`;
-      if (formData.notas) message += `*Notas:* ${formData.notas}\n\n`;
-      message += `Quedo a la espera para coordinar el pago y el envío. ¡Gracias!`;
-
-      const whatsappUrl = `https://wa.me/${formatWhatsApp(businessPhone)}?text=${encodeURIComponent(message)}`;
+      // 3. Obtener preferencia de Mercado Pago
+      const mpPreference = await api.mercadopago.createPreference(savedOrder.id);
+      
+      if (!mpPreference.init_point) {
+         throw new Error("No se pudo obtener el link de Mercado Pago");
+      }
 
       // 4. Guardar detalles para la página de éxito
       const orderDetails = {
@@ -169,17 +157,13 @@ export default function CheckoutPage() {
         total: getTotalPrice(),
         customer: formData,
         orderId: `YHUV-${orderNumber}`,
-        whatsappUrl: whatsappUrl
       };
       sessionStorage.setItem("lastOrder", JSON.stringify(orderDetails));
 
-      // 5. Limpiar carrito y redirigir
+      // 5. Limpiar carrito y redirigir a Mercado Pago
       clearCart();
 
-      // Abrir WhatsApp en una nueva pestaña
-      window.open(whatsappUrl, '_blank');
-
-      router.push("/checkout/success");
+      window.location.href = mpPreference.init_point;
     } catch (error: any) {
       console.error("Error al proceder con la orden:", error);
       alert(error.message || "Error al finalizar la compra");
@@ -409,22 +393,28 @@ export default function CheckoutPage() {
               <Button
                 type="submit"
                 size="lg"
-                className="w-full rounded-full h-14 text-base font-semibold bg-[#25D366] hover:bg-[#128C7E] text-white border-none"
+                className="w-full rounded-full h-14 bg-foreground hover:bg-foreground/90 text-background border-none shadow-md transition-all duration-300 active:scale-[0.98] font-semibold text-[17px]"
                 disabled={isSubmitting}
               >
                 {isSubmitting
                   ? "Procesando..."
-                  : (
-                    <span className="flex items-center justify-center">
-                      Finalizar Compra por WhatsApp
-                      <MessageCircle size={20} className="ml-2" />
-                    </span>
-                  )}
+                  : "Finalizar Compra"
+                }
               </Button>
 
+              <div className="flex items-center justify-center gap-2.5 mt-3 bg-secondary/60 border border-border/60 rounded-2xl py-2.5 px-4 shadow-sm">
+                <span className="text-foreground font-semibold text-[15px] tracking-tight">
+                  Pago seguro con MercadoPago
+                </span>
+                <img 
+                  src="https://img.icons8.com/color/48/mercado-pago.png" 
+                  alt="Mercado Pago Logo" 
+                  className="w-7 h-7 object-contain drop-shadow-sm"
+                />
+              </div>
+
               <p className="text-sm text-center text-muted-foreground">
-                Al finalizar, te enviaremos un mensaje por WhatsApp para coordinar
-                el pago y envío.
+                Te redirigiremos a Mercado Pago para realizar el pago de forma segura.
               </p>
             </form>
           </motion.div>

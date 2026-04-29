@@ -1,10 +1,12 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, Suspense } from "react";
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 import { Button } from "@/components/ui/button";
-import { CheckCircle2, Package, MessageCircle, ArrowRight } from "lucide-react";
+import { CheckCircle2, Package, MessageCircle, ArrowRight, Loader2 } from "lucide-react";
 import { motion } from "framer-motion";
+import { api } from "@/lib/api";
 
 interface OrderDetails {
   orderId: string;
@@ -18,15 +20,36 @@ interface OrderDetails {
   whatsappUrl?: string;
 }
 
-export default function SuccessPage() {
+function SuccessContent() {
+  const searchParams = useSearchParams();
+  const payment_id = searchParams.get("payment_id");
+  
   const [order, setOrder] = useState<OrderDetails | null>(null);
+  const [verifying, setVerifying] = useState(false);
+  const [paymentStatus, setPaymentStatus] = useState<string | null>(null);
 
   useEffect(() => {
     const orderData = sessionStorage.getItem("lastOrder");
     if (orderData) {
       setOrder(JSON.parse(orderData));
     }
-  }, []);
+
+    const verify = async () => {
+      if (payment_id) {
+        setVerifying(true);
+        try {
+          const res = await api.mercadopago.verifyPayment(payment_id);
+          if (res && res.success) {
+            setPaymentStatus(res.status);
+          }
+        } catch (e) {
+          console.error("Error al verificar pago", e);
+        }
+        setVerifying(false);
+      }
+    };
+    verify();
+  }, [payment_id]);
 
   const formatPrice = (price: number) => {
     return new Intl.NumberFormat("es-AR", {
@@ -67,10 +90,21 @@ export default function SuccessPage() {
                 Pedido #{order.orderId}
               </p>
             )}
-            <p className="text-muted-foreground leading-relaxed mb-8">
-              Hemos recibido tu pedido correctamente. En breve nos pondremos en
-              contacto contigo por WhatsApp para coordinar el pago y envío.
-            </p>
+            
+            {verifying ? (
+              <div className="flex items-center justify-center text-muted-foreground mb-8">
+                <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                <span>Verificando estado del pago...</span>
+              </div>
+            ) : paymentStatus === 'pagado' ? (
+              <p className="text-[#25D366] font-medium leading-relaxed mb-8">
+                ¡Tu pago fue procesado exitosamente! Nos pondremos en contacto por WhatsApp para coordinar el envío.
+              </p>
+            ) : (
+              <p className="text-muted-foreground leading-relaxed mb-8">
+                Hemos recibido tu pedido. Si pagaste a través de Mercado Pago, el estado se actualizará en breve. Contáctanos por WhatsApp para coordinar el envío o despejar dudas.
+              </p>
+            )}
           </motion.div>
 
           {order && (
@@ -120,10 +154,10 @@ export default function SuccessPage() {
                 <MessageCircle size={20} className="text-primary flex-shrink-0 mt-0.5" />
                 <div>
                   <p className="font-medium text-foreground text-sm">
-                    Te contactaremos por WhatsApp
+                    Contáctanos por WhatsApp
                   </p>
                   <p className="text-muted-foreground text-xs">
-                    Para coordinar método de pago y detalles del envío
+                    Para coordinar detalles del envío
                   </p>
                 </div>
               </div>
@@ -134,17 +168,17 @@ export default function SuccessPage() {
                     Preparamos tu pedido
                   </p>
                   <p className="text-muted-foreground text-xs">
-                    Una vez confirmado el pago, enviamos tu pedido
+                    Una vez acreditado el pago, preparamos todo
                   </p>
                 </div>
               </div>
             </div>
 
-            {order?.whatsappUrl && (
-              <a href={order.whatsappUrl} target="_blank" rel="noopener noreferrer">
+            {order && (
+              <a href={`https://wa.me/542215043666?text=${encodeURIComponent(`Hola! Acabo de completar el pedido ${order.orderId}. Mi nombre es ${order.customer.nombre} ${order.customer.apellido}.`)}`} target="_blank" rel="noopener noreferrer">
                 <Button variant="secondary" className="w-full rounded-full h-12 font-semibold mb-4 bg-[#25D366] hover:bg-[#128C7E] text-white border-none">
                   <MessageCircle size={20} className="mr-2" />
-                  Enviar WhatsApp de nuevo
+                  Escribir al WhatsApp
                 </Button>
               </a>
             )}
@@ -174,5 +208,15 @@ export default function SuccessPage() {
         </div>
       </motion.div>
     </div>
+  );
+}
+
+export default function SuccessPage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen bg-background flex items-center justify-center p-4">
+      <Loader2 className="h-8 w-8 text-primary animate-spin" />
+    </div>}>
+      <SuccessContent />
+    </Suspense>
   );
 }

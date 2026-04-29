@@ -1,12 +1,13 @@
 "use client";
 
+import { lazy, Suspense } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { Instagram, Facebook, Mail, Phone, MapPin } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { AboutUsModal } from "./about-us-modal";
-import { FaqModal } from "./faq-modal";
+const AboutUsModal = lazy(() => import("./about-us-modal"));
+const FaqModal = lazy(() => import("./faq-modal"));
 
 export function Footer() {
   return (
@@ -67,10 +68,14 @@ export function Footer() {
                 </Link>
               </li>
               <li>
-                <AboutUsModal />
+                <Suspense fallback={null}>
+                  <AboutUsModal />
+                </Suspense>
               </li>
               <li>
-                <FaqModal />
+                <Suspense fallback={null}>
+                  <FaqModal />
+                </Suspense>
               </li>
             </ul>
           </div>

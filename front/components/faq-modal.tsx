@@ -146,3 +146,5 @@ export function FaqModal() {
         </Dialog>
     );
 }
+
+export default FaqModal;

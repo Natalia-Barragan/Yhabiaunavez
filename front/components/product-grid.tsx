@@ -1,8 +1,8 @@
 "use client";
 
-import { useState, useMemo, useEffect } from "react";
+import { useState, useMemo, useEffect, lazy, Suspense } from "react";
 import { ProductCard } from "./product-card";
-import { ProductModal } from "./product-modal";
+const ProductModal = lazy(() => import("./product-modal"));
 import type { Product } from "@/lib/store";
 import { useAdminStore } from "@/lib/admin-store";
 import { Button } from "@/components/ui/button";
@@ -185,7 +185,7 @@ export function ProductGrid() {
                 </Button>
               </div>
             ) : (
-              <div className="grid sm:grid-cols-2 xl:grid-cols-3 gap-6">
+              <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
                 {filteredProducts.map((product, index) => (
                   <ProductCard
                     key={product.id}
@@ -200,10 +200,12 @@ export function ProductGrid() {
         </div>
       </div>
 
-      <ProductModal
-        product={selectedProduct}
-        onClose={() => setSelectedProduct(null)}
-      />
+      <Suspense fallback={null}>
+        <ProductModal
+          product={selectedProduct}
+          onClose={() => setSelectedProduct(null)}
+        />
+      </Suspense>
     </section>
   );
 }

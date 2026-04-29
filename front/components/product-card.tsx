@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import type { Product } from "@/lib/store";
@@ -41,15 +42,17 @@ export function ProductCard({ product, onSelect, index }: ProductCardProps) {
     >
       <div className="bg-card rounded-3xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-border/50">
 
-        {/* Foto menos alta: cambiamos aspect-square por aspect-[4/3] */}
-        <div className="relative aspect-[4/3] overflow-hidden bg-secondary">
-          <img
+        {/* Imagen optimizada y más compacta */}
+        <div className="relative aspect-[5/4] overflow-hidden bg-secondary">
+          <Image
             src={imageUrl}
             alt={product.name}
-            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+            fill
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+            className="object-cover group-hover:scale-105 transition-transform duration-500"
           />
           {isOutOfStock && (
-            <div className="absolute inset-0 bg-foreground/50 flex items-center justify-center">
+            <div className="absolute inset-0 bg-foreground/50 flex items-center justify-center z-10">
               <span className="bg-card px-3 py-1.5 rounded-full text-xs font-medium text-foreground">
                 Agotado
               </span>
@@ -57,30 +60,30 @@ export function ProductCard({ product, onSelect, index }: ProductCardProps) {
           )}
         </div>
 
-        {/* Reducimos padding y márgenes */}
-        <div className="p-4">
-          <div className="flex justify-between items-start mb-1">
+        {/* Padding reducido para compacidad */}
+        <div className="p-3">
+          <div className="flex justify-between items-start mb-0.5">
             <span className="text-[10px] font-medium text-primary tracking-wider uppercase">
               {product.category || "Sin Categoría"}
             </span>
           </div>
 
-          <h3 className="text-sm font-medium text-foreground mb-1 line-clamp-1">
+          <h3 className="text-xs font-medium text-foreground mb-0.5 line-clamp-1">
             {product.name}
           </h3>
 
-          <p className="text-xs text-muted-foreground mb-2 line-clamp-2">
+          <p className="text-xs text-muted-foreground mb-1.5 line-clamp-1">
             {product.description || "Sin descripción"}
           </p>
 
-          <p className="text-lg font-semibold text-foreground mb-3">
+          <p className="text-base font-semibold text-foreground mb-2">
             {formatPrice(product.price)}
           </p>
 
-          {/* Botón un poco más compacto */}
+          {/* Botón compacto */}
           <Button
             variant="outline"
-            className="w-full h-9 text-sm rounded-full border-primary text-primary hover:bg-primary hover:text-primary-foreground transition-all bg-transparent"
+            className="w-full h-8 text-xs rounded-full border-primary text-primary hover:bg-primary hover:text-primary-foreground transition-all bg-transparent"
             onClick={() => onSelect(product)}
             disabled={isOutOfStock}
           >

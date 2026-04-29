@@ -1,8 +1,16 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  typescript: {
-    ignoreBuildErrors: true,
+  // Desactivar source maps en development para evitar conflictos
+  productionBrowserSourceMaps: false,
+  // Optimizaciones de bundle - Solo Radix UI (lucide usa imports normales)
+  modularizeImports: {
+    '@radix-ui/react-*': {
+      transform: '@radix-ui/react-{{ member }}/dist/index.esm.js',
+      skipDefaultConversion: true,
+    },
   },
+  // Turbopack config (empty = usa defaults)
+  turbopack: {},
   images: {
     remotePatterns: [
       {

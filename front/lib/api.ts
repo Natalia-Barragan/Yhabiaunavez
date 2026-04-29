@@ -1,7 +1,37 @@
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || 'https://yhabiaunavez.onrender.com';
 
+// Sistema simple de caché (5 minutos)
+const cache = new Map<string, { data: any; timestamp: number }>();
+const CACHE_DURATION = 5 * 60 * 1000; // 5 minutos
+
+function getCacheKey(endpoint: string, options: RequestInit) {
+  // Solo cachear GET requests
+  if (options.method && options.method !== 'GET') return null;
+  return `${endpoint}`;
+}
+
+function getFromCache(key: string) {
+  const cached = cache.get(key);
+  if (cached && Date.now() - cached.timestamp < CACHE_DURATION) {
+    return cached.data;
+  }
+  cache.delete(key);
+  return null;
+}
+
+function setCache(key: string, data: any) {
+  cache.set(key, { data, timestamp: Date.now() });
+}
+
 async function fetchAPI(endpoint: string, options: RequestInit = {}) {
+  // Verificar caché para GET requests
+  const cacheKey = getCacheKey(endpoint, options);
+  if (cacheKey) {
+    const cached = getFromCache(cacheKey);
+    if (cached) return cached;
+  }
+
   const token = typeof window !== 'undefined' ? localStorage.getItem('admin_token') : null;
   const headers = {
     'Content-Type': 'application/json',
@@ -29,7 +59,14 @@ async function fetchAPI(endpoint: string, options: RequestInit = {}) {
   // Handle 204 No Content
   if (res.status === 204) return null;
 
-  return res.json();
+  const data = await res.json();
+  
+  // Guardar en caché si es GET
+  if (cacheKey) {
+    setCache(cacheKey, data);
+  }
+  
+  return data;
 }
 
 async function fetchFormData(endpoint: string, data: FormData, method: string = 'POST') {
@@ -96,5 +133,9 @@ export const api = {
     create: (data: any) => fetchAPI('/sizes', { method: 'POST', body: JSON.stringify(data) }),
     update: (id: string, data: any) => fetchAPI(`/sizes/${id}`, { method: 'PATCH', body: JSON.stringify(data) }),
     delete: (id: string) => fetchAPI(`/sizes/${id}`, { method: 'DELETE' }),
+  },
+  mercadopago: {
+    createPreference: (orderId: string) => fetchAPI('/mercadopago/create-preference', { method: 'POST', body: JSON.stringify({ orderId }) }),
+    verifyPayment: (paymentId: string) => fetchAPI('/mercadopago/verify', { method: 'POST', body: JSON.stringify({ paymentId }) }),
   }
 };

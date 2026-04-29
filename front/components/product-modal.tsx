@@ -231,3 +231,5 @@ export function ProductModal({ product, onClose }: ProductModalProps) {
     </AnimatePresence>
   );
 }
+
+export default ProductModal;
