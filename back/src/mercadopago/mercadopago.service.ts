@@ -12,29 +12,22 @@ export class MercadopagoService {
     private configService: ConfigService,
     private ordersService: OrdersService,
   ) {
-    const accessToken = this.validateToken();
-    this.client = new MercadoPagoConfig({ accessToken });
+    const token = this.configService.get<string>('MP_ACCESS_TOKEN');
+    if (!token || token.trim() === '') {
+      this.logger.error('MP_ACCESS_TOKEN no está configurado');
+    }
+    this.client = new MercadoPagoConfig({ accessToken: token || '' });
   }
 
-  private validateToken(): string {
+  private validateToken(): void {
     const token = this.configService.get<string>('MP_ACCESS_TOKEN');
-    const nodeEnv = process.env.NODE_ENV || 'development';
-
-    if (!token || token.trim() === '' || token === 'APP_USR-test') {
-      const message = 'MP_ACCESS_TOKEN no está configurado';
-      
-      if (nodeEnv === 'production') {
-        this.logger.error(message);
-        throw new BadRequestException('Mercado Pago no está configurado para producción');
-      } else {
-        this.logger.warn(message + ' - Usando fallback para desarrollo');
-      }
+    if (!token || token.trim() === '') {
+      throw new BadRequestException('Mercado Pago no está configurado');
     }
-
-    return token || 'APP_USR-test';
   }
 
   async createPreference(orderId: string) {
+    this.validateToken();
     try {
       const order = await this.ordersService.findOne(orderId);
       if (!order) {
@@ -79,6 +72,7 @@ export class MercadopagoService {
   }
 
   async verifyPayment(paymentId: string) {
+    this.validateToken();
     return await this.verifyPaymentWithRetry(paymentId, 0);
   }
 
@@ -112,6 +106,7 @@ export class MercadopagoService {
   }
 
   async processWebhook(data: any) {
+    this.validateToken();
     try {
       const paymentId = data.id;
       this.logger.log(`Procesando webhook para pago: ${paymentId}`);
