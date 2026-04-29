@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { ThrottlerModule } from '@nestjs/throttler';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 
@@ -13,9 +14,18 @@ import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
 import { SizeModule } from './size/size.module';
 import { PingController } from './ping.controller';
+import { MercadopagoModule } from './mercadopago/mercadopago.module';
 
 @Module({
   imports: [
+    // Rate Limiting: 100 requests por 60 segundos por IP
+    ThrottlerModule.forRoot([
+      {
+        ttl: 60000,  // Ventana de tiempo: 60 segundos (en ms)
+        limit: 100,  // Máximo: 100 requests por ventana
+      },
+    ]),
+    
     ConfigModule.forRoot({ isGlobal: true }),
 
     TypeOrmModule.forRootAsync({
@@ -60,6 +70,7 @@ import { PingController } from './ping.controller';
     UsersModule,
     AuthModule,
     SizeModule,
+    MercadopagoModule,
   ],
   controllers: [AppController, PingController],
   providers: [AppService],
