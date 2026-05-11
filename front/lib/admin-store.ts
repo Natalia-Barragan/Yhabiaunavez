@@ -23,6 +23,7 @@ interface AdminStore {
   deleteProduct: (id: string) => Promise<void>;
   getProduct: (id: string) => Product | undefined;
   addCategory: (name: string) => Promise<void>;
+  updateCategory: (id: string, name: string) => Promise<void>;
   deleteCategory: (id: string) => Promise<void>;
   addSize: (label: string) => Promise<void>;
   updateSize: (id: string, label: string) => Promise<void>;
