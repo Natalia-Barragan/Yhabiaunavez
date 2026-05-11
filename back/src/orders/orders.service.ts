@@ -111,6 +111,7 @@ export class OrdersService {
   async deductStockForOrder(orderId: string) {
     const order = await this.findOne(orderId);
     for (const item of order.items) {
+      if (!item.productId) continue;
       const product = await this.productRepo.findOne({ where: { id: item.productId } });
       if (!product) continue;
       if (item.size && product.stockBySize && product.stockBySize[item.size] !== undefined) {
