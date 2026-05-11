@@ -130,6 +130,7 @@ export default function CheckoutPage() {
 
       const orderData = {
         customerId: customer.id,
+        paymentMethod,
         items: items.map(item => ({
           productId: item.product.id,
           quantity: item.quantity,
