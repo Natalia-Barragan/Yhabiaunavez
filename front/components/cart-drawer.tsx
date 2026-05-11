@@ -11,12 +11,12 @@ export function CartDrawer() {
   const { items, isOpen, setCartOpen, removeItem, updateQuantity, getTotalPrice } =
     useCartStore();
 
-  const formatPrice = (price: number) => {
+  const formatPrice = (price: number | string) => {
     return new Intl.NumberFormat("es-AR", {
       style: "currency",
       currency: "ARS",
       minimumFractionDigits: 0,
-    }).format(price);
+    }).format(Number(price));
   };
 
   return (

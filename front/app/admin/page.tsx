@@ -28,12 +28,12 @@ export default function AdminDashboard() {
     (p.variants ?? []).some((v) => v.stock > 0 && v.stock <= 2)
   ).length;
 
-  const formatPrice = (price: number) => {
+  const formatPrice = (price: number | string) => {
     return new Intl.NumberFormat("es-AR", {
       style: "currency",
       currency: "ARS",
       minimumFractionDigits: 0,
-    }).format(price);
+    }).format(Number(price));
   };
 
   const stats = [
