@@ -58,6 +58,7 @@ export class MercadopagoService {
           failure: failureUrl,
           pending: pendingUrl,
         },
+        auto_return: 'approved',
         external_reference: order.id,
       };
 
