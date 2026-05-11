@@ -3,7 +3,6 @@
 import React from "react"
 
 import { useState } from "react";
-import { useRouter } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import { useCartStore } from "@/lib/store";
@@ -11,19 +10,19 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { ArrowLeft, ArrowRight, Minus, Plus, Trash2, ShoppingBag, MessageCircle, AlertTriangle, X, Handshake } from "lucide-react";
+import { ArrowLeft, ArrowRight, Minus, Plus, Trash2, ShoppingBag, MessageCircle, AlertTriangle, X, Building2, Smartphone } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
 import { api } from "@/lib/api";
-import { formatWhatsApp } from "@/lib/utils";
 
 export default function CheckoutPage() {
-  const router = useRouter();
   const { items, removeItem, updateQuantity, getTotalPrice, clearCart } =
     useCartStore();
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isRedirecting, setIsRedirecting] = useState(false);
   const [showConfirmation, setShowConfirmation] = useState(false);
   const [pendingChanges, setPendingChanges] = useState<{ field: string; old: string; new: string }[]>([]);
+  const [paymentMethod, setPaymentMethod] = useState<"mercadopago" | "transferencia" | "cuenta-dni">("mercadopago");
   const [formData, setFormData] = useState({
     nombre: "",
     apellido: "",
@@ -113,7 +112,6 @@ export default function CheckoutPage() {
   const proceedWithOrder = async () => {
     setIsSubmitting(true);
     try {
-      // 1. Crear o buscar cliente (el backend maneja la lógica de upsert)
       const customer = await api.customers.create({
         name: `${formData.nombre} ${formData.apellido}`,
         email: formData.email,
@@ -130,7 +128,6 @@ export default function CheckoutPage() {
         throw new Error("No se pudo obtener el ID del cliente");
       }
 
-      // 2. Crear la orden (esto descuenta stock en el backend)
       const orderData = {
         customerId: customer.id,
         items: items.map(item => ({
@@ -141,29 +138,31 @@ export default function CheckoutPage() {
       };
 
       const savedOrder = await api.orders.create(orderData);
-
       const orderNumber = savedOrder.id.slice(-6).toUpperCase();
+      const orderId = `YHUV-${orderNumber}`;
 
-      // 3. Obtener preferencia de Mercado Pago
-      const mpPreference = await api.mercadopago.createPreference(savedOrder.id);
-      
-      if (!mpPreference.init_point) {
-         throw new Error("No se pudo obtener el link de Mercado Pago");
-      }
-
-      // 4. Guardar detalles para la página de éxito
       const orderDetails = {
         items: items,
         total: getTotalPrice(),
         customer: formData,
-        orderId: `YHUV-${orderNumber}`,
+        orderId,
       };
       sessionStorage.setItem("lastOrder", JSON.stringify(orderDetails));
-
-      // 5. Limpiar carrito y redirigir a Mercado Pago
+      setIsRedirecting(true);
       clearCart();
 
-      window.location.href = mpPreference.init_point;
+      if (paymentMethod === "mercadopago") {
+        const mpPreference = await api.mercadopago.createPreference(savedOrder.id);
+        if (!mpPreference.init_point) {
+          throw new Error("No se pudo obtener el link de Mercado Pago");
+        }
+        window.location.href = mpPreference.init_point;
+      } else {
+        const metodoPago = paymentMethod === "transferencia" ? "Transferencia Bancaria" : "Cuenta DNI";
+        const total = new Intl.NumberFormat("es-AR", { style: "currency", currency: "ARS", minimumFractionDigits: 0 }).format(getTotalPrice());
+        const mensaje = `Hola! Acabo de hacer mi pedido *${orderId}* y quiero pagar por *${metodoPago}*.\nMi nombre es ${formData.nombre} ${formData.apellido}.\nTotal: ${total}\n¿Me podés enviar los datos para realizar el pago? Gracias!`;
+        window.location.href = `https://wa.me/542215043666?text=${encodeURIComponent(mensaje)}`;
+      }
     } catch (error: any) {
       console.error("Error al proceder con la orden:", error);
       alert(error.message || "Error al finalizar la compra");
@@ -173,7 +172,7 @@ export default function CheckoutPage() {
     }
   };
 
-  if (items.length === 0) {
+  if (items.length === 0 && !isRedirecting) {
     return (
       <div className="min-h-screen bg-background flex items-center justify-center p-4">
         <motion.div
@@ -390,32 +389,118 @@ export default function CheckoutPage() {
                 </div>
               </div>
 
+              <div className="bg-card rounded-3xl p-6 md:p-8 border border-border/50">
+                <h2 className="text-xl font-semibold text-foreground mb-5">
+                  Método de Pago
+                </h2>
+                <div className="space-y-3">
+                  {/* Mercado Pago */}
+                  <button
+                    type="button"
+                    onClick={() => setPaymentMethod("mercadopago")}
+                    className={`w-full flex items-center gap-4 p-4 rounded-2xl border-2 transition-all duration-200 text-left ${
+                      paymentMethod === "mercadopago"
+                        ? "border-primary bg-primary/5"
+                        : "border-border/50 bg-secondary/40 hover:border-border"
+                    }`}
+                  >
+                    <div className={`w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0 ${paymentMethod === "mercadopago" ? "bg-primary/10" : "bg-muted"}`}>
+                      <img src="https://img.icons8.com/color/48/mercado-pago.png" alt="MP" className="w-6 h-6 object-contain" />
+                    </div>
+                    <div className="flex-1">
+                      <p className="font-semibold text-foreground text-sm">Mercado Pago</p>
+                      <p className="text-xs text-muted-foreground">Tarjeta, débito, crédito o saldo MP</p>
+                    </div>
+                    <div className={`w-5 h-5 rounded-full border-2 flex-shrink-0 flex items-center justify-center ${paymentMethod === "mercadopago" ? "border-primary" : "border-muted-foreground/40"}`}>
+                      {paymentMethod === "mercadopago" && <div className="w-2.5 h-2.5 rounded-full bg-primary" />}
+                    </div>
+                  </button>
+
+                  {/* Transferencia Bancaria */}
+                  <button
+                    type="button"
+                    onClick={() => setPaymentMethod("transferencia")}
+                    className={`w-full flex items-center gap-4 p-4 rounded-2xl border-2 transition-all duration-200 text-left ${
+                      paymentMethod === "transferencia"
+                        ? "border-primary bg-primary/5"
+                        : "border-border/50 bg-secondary/40 hover:border-border"
+                    }`}
+                  >
+                    <div className={`w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0 ${paymentMethod === "transferencia" ? "bg-primary/10" : "bg-muted"}`}>
+                      <Building2 size={20} className={paymentMethod === "transferencia" ? "text-primary" : "text-muted-foreground"} />
+                    </div>
+                    <div className="flex-1">
+                      <p className="font-semibold text-foreground text-sm">Transferencia Bancaria</p>
+                      <p className="text-xs text-muted-foreground">Te enviamos los datos por WhatsApp</p>
+                    </div>
+                    <div className={`w-5 h-5 rounded-full border-2 flex-shrink-0 flex items-center justify-center ${paymentMethod === "transferencia" ? "border-primary" : "border-muted-foreground/40"}`}>
+                      {paymentMethod === "transferencia" && <div className="w-2.5 h-2.5 rounded-full bg-primary" />}
+                    </div>
+                  </button>
+
+                  {/* Cuenta DNI */}
+                  <button
+                    type="button"
+                    onClick={() => setPaymentMethod("cuenta-dni")}
+                    className={`w-full flex items-center gap-4 p-4 rounded-2xl border-2 transition-all duration-200 text-left ${
+                      paymentMethod === "cuenta-dni"
+                        ? "border-primary bg-primary/5"
+                        : "border-border/50 bg-secondary/40 hover:border-border"
+                    }`}
+                  >
+                    <div className={`w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0 ${paymentMethod === "cuenta-dni" ? "bg-primary/10" : "bg-muted"}`}>
+                      <Smartphone size={20} className={paymentMethod === "cuenta-dni" ? "text-primary" : "text-muted-foreground"} />
+                    </div>
+                    <div className="flex-1">
+                      <p className="font-semibold text-foreground text-sm">Cuenta DNI</p>
+                      <p className="text-xs text-muted-foreground">Te enviamos el link de cobro por WhatsApp</p>
+                    </div>
+                    <div className={`w-5 h-5 rounded-full border-2 flex-shrink-0 flex items-center justify-center ${paymentMethod === "cuenta-dni" ? "border-primary" : "border-muted-foreground/40"}`}>
+                      {paymentMethod === "cuenta-dni" && <div className="w-2.5 h-2.5 rounded-full bg-primary" />}
+                    </div>
+                  </button>
+                </div>
+              </div>
+
               <Button
                 type="submit"
                 size="lg"
                 className="w-full rounded-full h-14 bg-foreground hover:bg-foreground/90 text-background border-none shadow-md transition-all duration-300 active:scale-[0.98] font-semibold text-[17px]"
                 disabled={isSubmitting}
               >
-                {isSubmitting
-                  ? "Procesando..."
-                  : "Finalizar Compra"
-                }
+                {isSubmitting ? (
+                  "Procesando..."
+                ) : paymentMethod === "mercadopago" ? (
+                  "Finalizar Compra"
+                ) : (
+                  <span className="flex items-center gap-2">
+                    <MessageCircle size={20} />
+                    Coordinar Pago por WhatsApp
+                  </span>
+                )}
               </Button>
 
-              <div className="flex items-center justify-center gap-2.5 mt-3 bg-secondary/60 border border-border/60 rounded-2xl py-2.5 px-4 shadow-sm">
-                <span className="text-foreground font-semibold text-[15px] tracking-tight">
-                  Pago seguro con MercadoPago
-                </span>
-                <img 
-                  src="https://img.icons8.com/color/48/mercado-pago.png" 
-                  alt="Mercado Pago Logo" 
-                  className="w-7 h-7 object-contain drop-shadow-sm"
-                />
-              </div>
-
-              <p className="text-sm text-center text-muted-foreground">
-                Te redirigiremos a Mercado Pago para realizar el pago de forma segura.
-              </p>
+              {paymentMethod === "mercadopago" ? (
+                <>
+                  <div className="flex items-center justify-center gap-2.5 mt-3 bg-secondary/60 border border-border/60 rounded-2xl py-2.5 px-4 shadow-sm">
+                    <span className="text-foreground font-semibold text-[15px] tracking-tight">
+                      Pago seguro con MercadoPago
+                    </span>
+                    <img
+                      src="https://img.icons8.com/color/48/mercado-pago.png"
+                      alt="Mercado Pago Logo"
+                      className="w-7 h-7 object-contain drop-shadow-sm"
+                    />
+                  </div>
+                  <p className="text-sm text-center text-muted-foreground">
+                    Te redirigiremos a Mercado Pago para realizar el pago de forma segura.
+                  </p>
+                </>
+              ) : (
+                <p className="text-sm text-center text-muted-foreground">
+                  Crearemos tu pedido y te redirigiremos a WhatsApp para coordinar el pago.
+                </p>
+              )}
             </form>
           </motion.div>
 
