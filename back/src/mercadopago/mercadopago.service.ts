@@ -85,6 +85,7 @@ export class MercadopagoService {
       const paymentData = await payment.get({ id: paymentId });
       
       if (paymentData.status === 'approved' && paymentData.external_reference) {
+        await this.ordersService.deductStockForOrder(paymentData.external_reference);
         await this.ordersService.update(paymentData.external_reference, { status: 'pagado' } as any);
         this.logger.log(`Pago ${paymentId} aprobado para orden: ${paymentData.external_reference}`);
         return { success: true, status: 'pagado', orderId: paymentData.external_reference };
@@ -115,6 +116,7 @@ export class MercadopagoService {
       const paymentData = await payment.get({ id: paymentId });
 
       if (paymentData.status === 'approved' && paymentData.external_reference) {
+        await this.ordersService.deductStockForOrder(paymentData.external_reference);
         await this.ordersService.update(paymentData.external_reference, { status: 'pagado' } as any);
         this.logger.log(`Orden ${paymentData.external_reference} marcada como pagada vía webhook`);
         return { success: true, orderId: paymentData.external_reference };

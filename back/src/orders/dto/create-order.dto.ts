@@ -56,4 +56,9 @@ export class CreateOrderDto {
     @IsEnum(OrderStatus)
     @IsOptional()
     status?: OrderStatus;
+
+    @ApiProperty({ example: 'mercadopago', description: 'Payment method', required: false })
+    @IsString()
+    @IsOptional()
+    paymentMethod?: string;
 }

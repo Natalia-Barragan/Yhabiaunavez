@@ -35,15 +35,18 @@ export class OrdersService {
           throw new BadRequestException(`Stock total insuficiente para ${product.name}`);
         }
 
-        if (item.size && product.stockBySize && product.stockBySize[item.size] !== undefined) {
-          if (product.stockBySize[item.size] < item.quantity) {
-            throw new BadRequestException(`Stock insuficiente para el talle ${item.size} de ${product.name}`);
-          }
-          product.stockBySize[item.size] -= item.quantity;
-        }
+        const deductStock = dto.paymentMethod !== 'mercadopago';
 
-        product.stock -= item.quantity;
-        await queryRunner.manager.save(product);
+        if (deductStock) {
+          if (item.size && product.stockBySize && product.stockBySize[item.size] !== undefined) {
+            if (product.stockBySize[item.size] < item.quantity) {
+              throw new BadRequestException(`Stock insuficiente para el talle ${item.size} de ${product.name}`);
+            }
+            product.stockBySize[item.size] -= item.quantity;
+          }
+          product.stock -= item.quantity;
+          await queryRunner.manager.save(product);
+        }
 
         // Creamos el objeto del item de la orden
         const orderItem: Partial<OrderItem> = {
@@ -103,5 +106,18 @@ export class OrdersService {
     const order = await this.findOne(id);
     await this.orderRepo.remove(order);
     return { deleted: true };
+  }
+
+  async deductStockForOrder(orderId: string) {
+    const order = await this.findOne(orderId);
+    for (const item of order.items) {
+      const product = await this.productRepo.findOne({ where: { id: item.productId } });
+      if (!product) continue;
+      if (item.size && product.stockBySize && product.stockBySize[item.size] !== undefined) {
+        product.stockBySize[item.size] = Math.max(0, product.stockBySize[item.size] - item.quantity);
+      }
+      product.stock = Math.max(0, product.stock - item.quantity);
+      await this.productRepo.save(product);
+    }
   }
 }
