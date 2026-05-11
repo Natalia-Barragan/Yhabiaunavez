@@ -21,7 +21,7 @@ export default function AdminDashboard() {
   );
   const totalValue = products.reduce(
     (acc, p) =>
-      acc + p.price * (p.variants ?? []).reduce((a, v) => a + v.stock, 0),
+      acc + Number(p.price) * (p.variants ?? []).reduce((a, v) => a + v.stock, 0),
     0
   );
   const lowStockProducts = products.filter((p) =>
