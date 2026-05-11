@@ -16,16 +16,16 @@ export default function AdminDashboard() {
 
   const totalProducts = products.length;
   const totalStock = products.reduce(
-    (acc, p) => acc + p.variants.reduce((a, v) => a + v.stock, 0),
+    (acc, p) => acc + (p.variants ?? []).reduce((a, v) => a + v.stock, 0),
     0
   );
   const totalValue = products.reduce(
     (acc, p) =>
-      acc + p.price * p.variants.reduce((a, v) => a + v.stock, 0),
+      acc + p.price * (p.variants ?? []).reduce((a, v) => a + v.stock, 0),
     0
   );
   const lowStockProducts = products.filter((p) =>
-    p.variants.some((v) => v.stock > 0 && v.stock <= 2)
+    (p.variants ?? []).some((v) => v.stock > 0 && v.stock <= 2)
   ).length;
 
   const formatPrice = (price: number) => {
