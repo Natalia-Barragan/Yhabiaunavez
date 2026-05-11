@@ -13,8 +13,7 @@ export class MercadopagoController {
     const preference = await this.mercadopagoService.createPreference(body.orderId);
     return {
       id: preference.id,
-      // Usamos sandbox_init_point para permitir que MercadoPago apruebe pagos de prueba
-      init_point: preference.sandbox_init_point,
+      init_point: preference.init_point,
     };
   }
 
