@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { CheckCircle2, Package, MessageCircle, ArrowRight, Loader2 } from "lucide-react";
 import { motion } from "framer-motion";
 import { api } from "@/lib/api";
-import { useCartStore } from "@/store/cartStore";
+import { useCartStore } from "@/lib/store";
 
 interface OrderDetails {
   orderId: string;
