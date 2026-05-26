@@ -648,6 +648,20 @@
     height: 280px;
   }
 
+  /* Logo más chico en mobile */
+  .logo-circle {
+    padding: 16px !important;
+  }
+
+  .logo-circle img {
+    width: 180px !important;
+  }
+
+  /* Botones centrados y uno al lado del otro */
+  .hero-buttons {
+    justify-content: center;
+  }
+
   /* Ocultar iconos decorativos flotantes en mobile */
   .hero-image > div[style*="position: absolute"] {
     display: none;

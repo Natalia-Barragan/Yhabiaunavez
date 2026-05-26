@@ -31,18 +31,19 @@ export default function Home() {
             <div className="hero-image">
               <div className="blob" style={{ zIndex: 3 }}></div>
               <div className="animate-float" style={{ position: 'relative', zIndex: 1 }}>
-                <div style={{
+                <div className="logo-circle" style={{
                   backgroundColor: 'white',
                   borderRadius: '50%',
                   padding: '24px',
                   boxShadow: '0 20px 40px rgba(0, 168, 150, 0.15)',
                   display: 'inline-block',
-                  border: '8px solid rgba(255,255,255,0.8)'
+                  border: '8px solid rgba(255,255,255,0.8)',
+                  overflow: 'hidden'
                 }}>
                   <img
                     src="/logo.jpg"
                     alt="Y Había Una Vez - Búho"
-                    style={{ width: '100%', maxWidth: '350px', display: 'block', borderRadius: '50%' }}
+                    style={{ width: '300px', maxWidth: '350px', display: 'block', borderRadius: '50%' }}
                   />
                 </div>
               </div>

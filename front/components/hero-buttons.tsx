@@ -16,7 +16,7 @@ export function HeroButtons() {
   };
 
   return (
-    <div style={{ display: "flex", gap: "16px", flexWrap: "wrap" }}>
+    <div className="hero-buttons" style={{ display: "flex", gap: "16px" }}>
       <button onClick={handleVerColeccion} className="btn btn-primary">
         Ver Colección
       </button>
