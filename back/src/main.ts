@@ -7,7 +7,7 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   console.log("Backend iniciando...");
 
-  const allowedOrigins = ['http://localhost:3001', 'http://localhost:3000'];
+  const allowedOrigins = ['http://localhost:3001', 'http://localhost:3000', 'http://localhost:3002'];
   if (process.env.FRONTEND_URL) {
     allowedOrigins.push(process.env.FRONTEND_URL);
   }

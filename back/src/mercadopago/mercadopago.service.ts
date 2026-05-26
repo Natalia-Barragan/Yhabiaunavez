@@ -26,7 +26,7 @@ export class MercadopagoService {
     }
   }
 
-  async createPreference(orderId: string) {
+  async createPreference(orderId: string, withInstallments = false) {
     this.validateToken();
     try {
       const order = await this.ordersService.findOne(orderId);
@@ -35,12 +35,15 @@ export class MercadopagoService {
       }
 
       const preference = new Preference(this.client);
-      
+
+      const INSTALLMENT_RATE = 1.2943;
       const items = order.items.map(item => ({
         id: item.product.id,
         title: item.product.name,
         quantity: item.quantity,
-        unit_price: Number(item.price),
+        unit_price: withInstallments
+          ? Math.ceil(Number(item.price) * INSTALLMENT_RATE)
+          : Math.ceil(Number(item.price)),
         currency_id: 'ARS',
       }));
 
@@ -58,8 +61,14 @@ export class MercadopagoService {
           failure: failureUrl,
           pending: pendingUrl,
         },
-        auto_return: 'approved',
+        ...(frontendUrl.includes('localhost') ? {} : { auto_return: 'approved' }),
         external_reference: order.id,
+        payment_methods: {
+          excluded_payment_types: [
+            { id: 'ticket' }
+          ],
+          ...(withInstallments ? { installments: 3 } : {})
+        }
       };
 
       this.logger.log('Creando preferencia MP para orden: ' + orderId);
