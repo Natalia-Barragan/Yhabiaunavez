@@ -616,5 +616,58 @@
   margin-bottom: 16px;
 }
 
+/* ===== RESPONSIVE MOBILE ===== */
+@media (max-width: 768px) {
+  /* Hero */
+  .hero {
+    padding-top: 40px;
+    padding-bottom: 20px;
+    overflow-x: hidden;
+    overflow-y: visible;
+  }
 
+  .hero-content {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
 
+  .hero-text {
+    text-align: center;
+  }
+
+  .hero-text h1 {
+    font-size: 2.2rem;
+  }
+
+  .hero-text p {
+    font-size: 1rem;
+    margin: 0 auto 24px;
+  }
+
+  .hero-image {
+    height: 280px;
+  }
+
+  /* Ocultar iconos decorativos flotantes en mobile */
+  .hero-image > div[style*="position: absolute"] {
+    display: none;
+  }
+
+  /* Navbar */
+  .nav-links {
+    display: none;
+  }
+
+  .mobile-menu-btn {
+    display: flex !important;
+  }
+
+  .nav-icons {
+    padding-right: 0 !important;
+    gap: 8px !important;
+  }
+
+  .nav-icons input {
+    width: 130px !important;
+  }
+}
