@@ -135,7 +135,7 @@ export const api = {
     delete: (id: string) => fetchAPI(`/sizes/${id}`, { method: 'DELETE' }),
   },
   mercadopago: {
-    createPreference: (orderId: string) => fetchAPI('/mercadopago/create-preference', { method: 'POST', body: JSON.stringify({ orderId }) }),
+    createPreference: (orderId: string, withInstallments?: boolean) => fetchAPI('/mercadopago/create-preference', { method: 'POST', body: JSON.stringify({ orderId, withInstallments }) }),
     verifyPayment: (paymentId: string) => fetchAPI('/mercadopago/verify', { method: 'POST', body: JSON.stringify({ paymentId }) }),
   }
 };

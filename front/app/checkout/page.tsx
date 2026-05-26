@@ -23,6 +23,7 @@ export default function CheckoutPage() {
   const [showConfirmation, setShowConfirmation] = useState(false);
   const [pendingChanges, setPendingChanges] = useState<{ field: string; old: string; new: string }[]>([]);
   const [paymentMethod, setPaymentMethod] = useState<"mercadopago" | "transferencia" | "cuenta-dni">("mercadopago");
+  const [mpOption, setMpOption] = useState<"1-pago" | "3-cuotas">("1-pago");
   const [formData, setFormData] = useState({
     nombre: "",
     apellido: "",
@@ -36,12 +37,22 @@ export default function CheckoutPage() {
     notas: "",
   });
 
+  const INSTALLMENT_RATE = 1.2943;
+
   const formatPrice = (price: number) => {
     return new Intl.NumberFormat("es-AR", {
       style: "currency",
       currency: "ARS",
       minimumFractionDigits: 0,
     }).format(price);
+  };
+
+  const getDisplayTotal = () => {
+    const base = getTotalPrice();
+    if (paymentMethod === "mercadopago" && mpOption === "3-cuotas") {
+      return Math.ceil(base * INSTALLMENT_RATE);
+    }
+    return base;
   };
 
   const handleInputChange = (
@@ -148,17 +159,23 @@ export default function CheckoutPage() {
         customer: formData,
         orderId,
       };
-      sessionStorage.setItem("lastOrder", JSON.stringify(orderDetails));
-      setIsRedirecting(true);
-      clearCart();
 
       if (paymentMethod === "mercadopago") {
-        const mpPreference = await api.mercadopago.createPreference(savedOrder.id);
+        const withInstallments = mpOption === "3-cuotas";
+        const mpPreference = await api.mercadopago.createPreference(savedOrder.id, withInstallments);
         if (!mpPreference.init_point) {
           throw new Error("No se pudo obtener el link de Mercado Pago");
         }
+        // Solo guardamos la orden, NO limpiamos el carrito todavía
+        sessionStorage.setItem("lastOrder", JSON.stringify(orderDetails));
+        setIsRedirecting(true);
         window.location.href = mpPreference.init_point;
       } else {
+        // Limpiamos el carrito antes de ir a WhatsApp
+        sessionStorage.setItem("lastOrder", JSON.stringify(orderDetails));
+        setIsRedirecting(true);
+        clearCart();
+        
         const metodoPago = paymentMethod === "transferencia" ? "Transferencia Bancaria" : "Cuenta DNI";
         const total = new Intl.NumberFormat("es-AR", { style: "currency", currency: "ARS", minimumFractionDigits: 0 }).format(getTotalPrice());
         const mensaje = `Hola! Acabo de hacer mi pedido *${orderId}* y quiero pagar por *${metodoPago}*.\nMi nombre es ${formData.nombre} ${formData.apellido}.\nTotal: ${total}\n¿Me podés enviar los datos para realizar el pago? Gracias!`;
@@ -417,6 +434,36 @@ export default function CheckoutPage() {
                     </div>
                   </button>
 
+                  {/* MP sub-options */}
+                  {paymentMethod === "mercadopago" && (
+                    <div className="ml-4 flex gap-2">
+                      <button
+                        type="button"
+                        onClick={() => setMpOption("1-pago")}
+                        className={`flex-1 py-2.5 px-3 rounded-xl border-2 text-sm font-medium transition-all duration-200 ${
+                          mpOption === "1-pago"
+                            ? "border-primary bg-primary/10 text-primary"
+                            : "border-border/50 bg-secondary/40 text-muted-foreground hover:border-border"
+                        }`}
+                      >
+                        <span className="block font-semibold">Dinero en cuenta</span>
+                        <span className="block text-xs mt-0.5">{formatPrice(getTotalPrice())}</span>
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => setMpOption("3-cuotas")}
+                        className={`flex-1 py-2.5 px-3 rounded-xl border-2 text-sm font-medium transition-all duration-200 ${
+                          mpOption === "3-cuotas"
+                            ? "border-primary bg-primary/10 text-primary"
+                            : "border-border/50 bg-secondary/40 text-muted-foreground hover:border-border"
+                        }`}
+                      >
+                        <span className="block font-semibold">3 cuotas</span>
+                        <span className="block text-xs mt-0.5">{formatPrice(Math.ceil(getTotalPrice() * INSTALLMENT_RATE / 3))} c/u</span>
+                      </button>
+                    </div>
+                  )}
+
                   {/* Transferencia Bancaria */}
                   <button
                     type="button"
@@ -589,6 +636,14 @@ export default function CheckoutPage() {
                     {formatPrice(getTotalPrice())}
                   </span>
                 </div>
+                {paymentMethod === "mercadopago" && mpOption === "3-cuotas" && (
+                  <div className="flex justify-between text-sm">
+                    <span className="text-muted-foreground">Financiación (3 cuotas)</span>
+                    <span className="font-medium text-[#FF9900]">
+                      3 cuotas de {formatPrice(Math.ceil(getDisplayTotal() / 3))} c/u
+                    </span>
+                  </div>
+                )}
                 <div className="flex justify-between text-sm">
                   <span className="text-muted-foreground">Envío</span>
                   <span className="text-foreground">A coordinar</span>
@@ -596,9 +651,14 @@ export default function CheckoutPage() {
                 <div className="flex justify-between text-lg font-semibold pt-3 border-t border-border">
                   <span className="text-foreground">Total</span>
                   <span className="text-primary">
-                    {formatPrice(getTotalPrice())}
+                    {formatPrice(getDisplayTotal())}
                   </span>
                 </div>
+                {paymentMethod === "mercadopago" && mpOption === "3-cuotas" && (
+                  <p className="text-[11px] text-muted-foreground text-right">
+                    3 cuotas de {formatPrice(Math.ceil(getDisplayTotal() / 3))} c/u
+                  </p>
+                )}
               </div>
             </div>
           </motion.div>

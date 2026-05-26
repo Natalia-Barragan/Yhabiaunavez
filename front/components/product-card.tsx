@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { motion } from "framer-motion";
-import { Button } from "@/components/ui/button";
+import { ShoppingBag } from "lucide-react";
 import type { Product } from "@/lib/store";
 
 interface ProductCardProps {
@@ -36,59 +36,48 @@ export function ProductCard({ product, onSelect, index }: ProductCardProps) {
     <motion.div
       initial={{ opacity: 0, y: 30 }}
       animate={{ opacity: 1, y: 0 }}
+      whileHover={{ y: -6, scale: 1.02 }}
       transition={{ duration: 0.4, delay: index * 0.1 }}
-      className="group cursor-pointer"
+      className="product-card"
       onClick={() => onSelect(product)}
+      style={{ cursor: 'pointer', display: 'flex', flexDirection: 'column' }}
     >
-      <div className="bg-card rounded-3xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-border/50">
-
-        {/* Imagen optimizada y más compacta */}
-        <div className="relative aspect-[5/4] overflow-hidden bg-secondary">
-          <Image
-            src={imageUrl}
-            alt={product.name}
-            fill
-            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-            className="object-cover group-hover:scale-105 transition-transform duration-500"
-          />
-          {isOutOfStock && (
-            <div className="absolute inset-0 bg-foreground/50 flex items-center justify-center z-10">
-              <span className="bg-card px-3 py-1.5 rounded-full text-xs font-medium text-foreground">
-                Agotado
-              </span>
-            </div>
-          )}
-        </div>
-
-        {/* Padding reducido para compacidad */}
-        <div className="p-3">
-          <div className="flex justify-between items-start mb-0.5">
-            <span className="text-[10px] font-medium text-primary tracking-wider uppercase">
-              {product.category || "Sin Categoría"}
-            </span>
-          </div>
-
-          <h3 className="text-xs font-medium text-foreground mb-0.5 line-clamp-1">
-            {product.name}
-          </h3>
-
-          <p className="text-xs text-muted-foreground mb-1.5 line-clamp-1">
-            {product.description || "Sin descripción"}
+      {isOutOfStock && <div className="product-badge" style={{ backgroundColor: 'var(--color-secondary)' }}>Agotado</div>}
+      
+      <div style={{ position: 'relative', width: '100%', height: '300px' }}>
+        <Image 
+          src={imageUrl} 
+          alt={product.name} 
+          fill
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+          className="product-image object-cover" 
+        />
+      </div>
+      
+      <div className="product-info" style={{ display: 'flex', flexDirection: 'column', flex: 1 }}>
+        <h3 className="product-title line-clamp-1">{product.name}</h3>
+        {product.description && (
+          <p className="line-clamp-2 text-sm mb-3" style={{ color: 'var(--color-text-light)' }}>
+            {product.description}
           </p>
-
-          <p className="text-base font-semibold text-foreground mb-2">
-            {formatPrice(product.price)}
+        )}
+        <div style={{ marginTop: 'auto' }}>
+          <p className="product-price" style={{ textAlign: 'right', marginBottom: '4px' }}>{formatPrice(product.price)}</p>
+          <p style={{ textAlign: 'right', fontSize: '0.85rem', color: '#FF9900', marginBottom: '16px', fontWeight: 600 }}>
+            o 3 cuotas de {formatPrice((Number(product.price) * 1.2943) / 3)}
           </p>
-
-          {/* Botón compacto */}
-          <Button
-            variant="outline"
-            className="w-full h-8 text-xs rounded-full border-primary text-primary hover:bg-primary hover:text-primary-foreground transition-all bg-transparent"
-            onClick={() => onSelect(product)}
+          <button 
+            className="btn-add-cart" 
+            onClick={(e) => {
+              e.stopPropagation();
+              onSelect(product);
+            }}
             disabled={isOutOfStock}
+            style={isOutOfStock ? { opacity: 0.5, cursor: 'not-allowed' } : {}}
           >
-            {isOutOfStock ? "Sin Stock" : "Comprar"}
-          </Button>
+            <ShoppingBag size={18} />
+            {isOutOfStock ? "Sin Stock" : "Agregar"}
+          </button>
         </div>
       </div>
     </motion.div>

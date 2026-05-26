@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { CheckCircle2, Package, MessageCircle, ArrowRight, Loader2 } from "lucide-react";
 import { motion } from "framer-motion";
 import { api } from "@/lib/api";
+import { useCartStore } from "@/store/cartStore";
 
 interface OrderDetails {
   orderId: string;
@@ -41,6 +42,9 @@ function SuccessContent() {
           const res = await api.mercadopago.verifyPayment(payment_id);
           if (res && res.success) {
             setPaymentStatus(res.status);
+            if (res.status === 'pagado' || res.status === 'approved') {
+              useCartStore.getState().clearCart();
+            }
           }
         } catch (e) {
           console.error("Error al verificar pago", e);

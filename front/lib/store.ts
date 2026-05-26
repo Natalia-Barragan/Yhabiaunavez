@@ -77,6 +77,15 @@ interface CartStore {
   setCartOpen: (open: boolean) => void;
   getTotalItems: () => number;
   getTotalPrice: () => number;
+  selectedCategory: string;
+  setSelectedCategory: (category: string) => void;
+  showFilters: boolean;
+  setShowFilters: (show: boolean) => void;
+  searchQuery: string;
+  setSearchQuery: (query: string) => void;
+  selectedPriceRangeLabel: string;
+  setSelectedPriceRangeLabel: (label: string) => void;
+  clearAllFilters: () => void;
 }
 
 export const useCartStore = create<CartStore>()(
@@ -84,6 +93,19 @@ export const useCartStore = create<CartStore>()(
     (set, get) => ({
       items: [],
       isOpen: false,
+      selectedCategory: "Todos",
+      setSelectedCategory: (category) => set({ selectedCategory: category }),
+      showFilters: false,
+      setShowFilters: (show) => set({ showFilters: show }),
+      searchQuery: "",
+      setSearchQuery: (query) => set({ searchQuery: query }),
+      selectedPriceRangeLabel: "Todos",
+      setSelectedPriceRangeLabel: (label) => set({ selectedPriceRangeLabel: label }),
+      clearAllFilters: () => set({ 
+        selectedCategory: "Todos", 
+        searchQuery: "", 
+        selectedPriceRangeLabel: "Todos" 
+      }),
 
       addItem: (product, size) => {
         set((state) => {

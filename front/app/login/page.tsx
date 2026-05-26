@@ -24,9 +24,9 @@ export default function LoginPage() {
         try {
             const response = await api.auth.login({ email, password });
 
-            // Store token
             localStorage.setItem("admin_token", response.access_token);
             localStorage.setItem("admin_user", JSON.stringify(response.user));
+            document.cookie = `admin_token=${response.access_token}; path=/; SameSite=Strict`;
 
             toast({
                 title: "Sesión iniciada",

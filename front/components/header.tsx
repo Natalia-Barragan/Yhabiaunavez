@@ -1,227 +1,108 @@
-"use client";
+'use client'
 
-import { useState } from "react";
-import Link from "next/link";
-import { Search, ShoppingCart, Menu, X, Instagram } from "lucide-react";
-import Image from "next/image";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { useCartStore } from "@/lib/store";
-import { CartDrawer } from "./cart-drawer";
-import { Navbar } from "./navbar";
-import { motion, AnimatePresence } from "framer-motion";
+import { useState } from 'react'
+import Link from 'next/link'
+import { ShoppingBag, Search, Heart, Menu, X } from 'lucide-react'
+import { useCartStore } from "@/lib/store"
+import { CartDrawer } from "./cart-drawer"
 
 export function Header() {
-  const [searchOpen, setSearchOpen] = useState(false);
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [searchQuery, setSearchQuery] = useState("");
-  const { getTotalItems, setCartOpen } = useCartStore();
-  const totalItems = getTotalItems();
+  const { getTotalItems, setCartOpen, setSelectedCategory, searchQuery, setSearchQuery } = useCartStore()
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  
+  const totalItems = getTotalItems()
 
-  const navLinks = [
-    { href: "/", label: "Inicio" },
-    { href: "/#catalogo", label: "Catálogo" },
-    { href: "/#contacto", label: "Contacto" },
-  ];
+  const handleCategoryClick = (category: string) => {
+    setSelectedCategory(category);
+    setMobileMenuOpen(false);
+  };
 
   return (
     <>
-      <header className="sticky top-0 z-50 bg-[#e5e5e5] backdrop-blur-md border-b border-border">
-        {/* Desktop Header Layout */}
-        <div className="hidden lg:block shadow-sm">
-          {/* Top Row: Search - Logo - Cart (White Background) */}
-          <div className="bg-gradient-to-r from-[#e5e5e5] via-white to-[#e5e5e5] border-b border-border/20">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-              <div className="grid grid-cols-3 items-center">
-                {/* Left: Search */}
-                {/* Left: Instagram */}
-                <div className="flex items-center">
-                  <Link
-                    href="https://www.instagram.com/yhabiaunavez"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors hover:scale-110 duration-200 ml-15"
-                  >
-                    <Instagram size={32} />
-                    <span className="text-base font-medium uppercase tracking-wide hidden sm:inline">
-                      Seguinos
-                    </span>
-                  </Link>
-                </div>
-
-                {/* Center: Logo */}
-                <div className="flex justify-center">
-                  <Link href="/" className="flex flex-col items-center group">
-                    <div className="relative">
-                      <div className="relative w-[340px] h-[160px]">
-                        <Image
-                          src="/images/yhabiaunavez.jpg"
-                          alt="Yhabiaunavez Logo"
-                          fill
-                          className="object-contain mix-blend-multiply"
-                        />
-                      </div>
-                    </div>
-                  </Link>
-                </div>
-
-                {/* Right: Cart */}
-                <div className="flex justify-end">
-                  <Button
-                    variant="ghost"
-                    onClick={() => setCartOpen(true)}
-                    className="flex items-center gap-2 text-muted-foreground hover:bg-transparent hover:text-primary hover:scale-110 transition-transform duration-200 p-0 mr-15"
-                  >
-                    <ShoppingCart size={32} style={{ width: '32px', height: '32px' }} />
-                    <span className="text-base font-medium uppercase tracking-wide">
-                      Mi Carrito
-                    </span>
-                    {totalItems > 0 && (
-                      <motion.span
-                        initial={{ scale: 0 }}
-                        animate={{ scale: 1 }}
-                        className="ml-1 bg-primary text-primary-foreground text-[10px] font-bold rounded-full h-5 w-5 flex items-center justify-center"
-                      >
-                        {totalItems}
-                      </motion.span>
-                    )}
-                  </Button>
-                </div>
-              </div>
-            </div>
+      <nav className="navbar" style={{ position: 'sticky', top: 0, zIndex: 50, backgroundColor: 'rgba(255, 255, 255, 0.95)', backdropFilter: 'blur(10px)' }}>
+        <div className="container navbar-content" style={{ display: 'flex', alignItems: 'center' }}>
+          
+          {/* Menú Hamburguesa (oculto en desktop) */}
+          <div className="mobile-menu-btn" style={{ display: 'none' }}>
+            <button className="icon-btn" onClick={() => setMobileMenuOpen(!mobileMenuOpen)}>
+              <Menu size={24} />
+            </button>
           </div>
 
-          {/* Bottom Row: Navigation (Teal Background) */}
-          <Navbar />
-        </div>
+          {/* Izquierda: Links de navegación */}
+          <ul className="nav-links" style={{ flex: 1, justifyContent: 'flex-start', margin: 0, padding: 0 }}>
+            <li><Link href="/" onClick={() => handleCategoryClick("Todos")} className="nav-link">Inicio</Link></li>
+            <li><Link href="/#catalogo" onClick={() => handleCategoryClick("Ropa Bebé")} className="nav-link">Bebés</Link></li>
+            <li><Link href="/#catalogo" onClick={() => handleCategoryClick("Ropa Niñx")} className="nav-link">Niños</Link></li>
+            <li><Link href="/#catalogo" onClick={() => handleCategoryClick("Accesorios")} className="nav-link">Accesorios</Link></li>
+          </ul>
 
-        {/* Mobile Header Layout (Unchanged) */}
-        <div className="lg:hidden max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-20">
-            {/* Left section - Mobile Menu & Search Toggle */}
-            <div className="flex items-center flex-1">
-              <button
-                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                className="p-2 -ml-2 mr-2 text-foreground hover:text-primary transition-colors"
-                aria-label="Menu"
-              >
-                {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
-              </button>
-
-              <button
-                onClick={() => setSearchOpen(!searchOpen)}
-                className="p-2 text-foreground hover:text-primary transition-colors"
-                aria-label="Buscar"
-              >
-                <Search size={22} />
-              </button>
+          {/* Derecha: Iconos */}
+          <div className="nav-icons" style={{ flex: 1, justifyContent: 'flex-end', display: 'flex', alignItems: 'center', paddingRight: '40px', gap: '15px' }}>
+            
+            <div style={{ position: 'relative', display: 'flex', alignItems: 'center' }}>
+              <input 
+                type="text" 
+                placeholder="Buscar..." 
+                value={searchQuery}
+                onChange={(e) => {
+                  const isStartingToType = e.target.value.length > 0 && !searchQuery;
+                  setSearchQuery(e.target.value);
+                  if (isStartingToType) {
+                    document.getElementById("catalogo")?.scrollIntoView({ behavior: "smooth" });
+                  }
+                }}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter') {
+                    document.getElementById("catalogo")?.scrollIntoView({ behavior: "smooth" });
+                  }
+                }}
+                style={{
+                  padding: '8px 35px 8px 16px',
+                  borderRadius: '20px',
+                  border: '1px solid var(--color-border)',
+                  outline: 'none',
+                  fontSize: '14px',
+                  width: '180px',
+                  backgroundColor: 'var(--color-surface)',
+                  color: 'var(--color-foreground)'
+                }}
+              />
+              <Search size={18} style={{ position: 'absolute', right: '12px', color: 'var(--color-muted-foreground)' }} />
             </div>
 
-            {/* Center - Logo */}
-            <Link href="/" className="flex flex-col items-center group absolute left-1/2 -translate-x-1/2">
-              <div className="relative">
-                <div className="relative w-16 h-16">
-                  <Image
-                    src="/images/yhabiaunavez.jpg"
-                    alt="Yhabiaunavez Logo"
-                    fill
-                    className="object-contain rounded-full mix-blend-multiply"
-                  />
-                </div>
-              </div>
-            </Link>
-
-            {/* Right section - Cart */}
-            <div className="flex items-center gap-2 flex-1 justify-end">
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={() => setCartOpen(true)}
-                className="relative flex items-center gap-2 text-muted-foreground hover:bg-accent"
-              >
-                <ShoppingCart size={20} />
-                <span className="hidden sm:inline text-sm font-medium">
-                  Mi Carrito
+            <button className="icon-btn" style={{ position: 'relative' }} onClick={() => setCartOpen(true)}>
+              <ShoppingBag size={22} />
+              {totalItems > 0 && (
+                <span style={{
+                  position: 'absolute', top: '-5px', right: '-5px', 
+                  backgroundColor: 'var(--color-primary)', color: 'white', 
+                  fontSize: '10px', fontWeight: 'bold', borderRadius: '50%', 
+                  height: '18px', width: '18px', display: 'flex', 
+                  alignItems: 'center', justifyContent: 'center'
+                }}>
+                  {totalItems}
                 </span>
-                {totalItems > 0 && (
-                  <motion.span
-                    initial={{ scale: 0 }}
-                    animate={{ scale: 1 }}
-                    className="absolute -top-1 -right-1 bg-primary text-primary-foreground text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center"
-                  >
-                    {totalItems}
-                  </motion.span>
-                )}
-              </Button>
-            </div>
+              )}
+            </button>
           </div>
-
-          {/* Mobile search bar */}
-          <AnimatePresence>
-            {searchOpen && (
-              <motion.div
-                initial={{ height: 0, opacity: 0 }}
-                animate={{ height: "auto", opacity: 1 }}
-                exit={{ height: 0, opacity: 0 }}
-                className="overflow-hidden pb-4"
-              >
-                <div className="relative">
-                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                  <Input
-                    type="search"
-                    placeholder="Buscar productos..."
-                    value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
-                    className="pl-10 rounded-full bg-secondary border-transparent"
-                  />
-                </div>
-              </motion.div>
-            )}
-          </AnimatePresence>
         </div>
+      </nav>
 
-        {/* Mobile navigation menu expanded */}
-        <AnimatePresence>
-          {mobileMenuOpen && (
-            <motion.div
-              initial={{ height: 0, opacity: 0 }}
-              animate={{ height: "auto", opacity: 1 }}
-              exit={{ height: 0, opacity: 0 }}
-              className="lg:hidden border-t border-border overflow-hidden"
-            >
-              <nav className="flex flex-col py-4 px-4 gap-2">
-                {navLinks.map((link) => (
-                  <Link
-                    key={link.href}
-                    href={link.href}
-                    onClick={() => setMobileMenuOpen(false)}
-                    className="py-3 px-4 text-foreground hover:bg-accent rounded-xl transition-colors font-medium"
-                  >
-                    {link.label}
-                  </Link>
-                ))}
-                {/* Mobile Extra Links */}
-                <Link
-                  href="/register"
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="py-3 px-4 text-foreground hover:bg-accent rounded-xl transition-colors font-medium"
-                >
-                  Crear Cuenta
-                </Link>
-                <Link
-                  href="/login"
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="py-3 px-4 text-foreground hover:bg-accent rounded-xl transition-colors font-medium"
-                >
-                  Iniciar Sesión
-                </Link>
-              </nav>
-            </motion.div>
-          )}
-        </AnimatePresence>
-      </header>
+      {/* Menú Mobile Desplegable */}
+      {mobileMenuOpen && (
+        <div style={{ position: 'fixed', top: '70px', left: 0, right: 0, backgroundColor: 'white', zIndex: 40, padding: '20px', borderBottom: '1px solid #eee' }}>
+          <ul style={{ display: 'flex', flexDirection: 'column', gap: '15px', listStyle: 'none', margin: 0, padding: 0 }}>
+            <li><Link href="/" onClick={() => handleCategoryClick("Todos")} style={{ textDecoration: 'none', color: '#333', fontSize: '18px' }}>Inicio</Link></li>
+            <li><Link href="/#catalogo" onClick={() => handleCategoryClick("Ropa Bebé")} style={{ textDecoration: 'none', color: '#333', fontSize: '18px' }}>Bebés</Link></li>
+            <li><Link href="/#catalogo" onClick={() => handleCategoryClick("Ropa Niñx")} style={{ textDecoration: 'none', color: '#333', fontSize: '18px' }}>Niños</Link></li>
+            <li><Link href="/#catalogo" onClick={() => handleCategoryClick("Accesorios")} style={{ textDecoration: 'none', color: '#333', fontSize: '18px' }}>Accesorios</Link></li>
+          </ul>
+        </div>
+      )}
 
+      {/* Carrito Lateral */}
       <CartDrawer />
     </>
-  );
+  )
 }
