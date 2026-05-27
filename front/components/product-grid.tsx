@@ -75,25 +75,25 @@ export function ProductGrid() {
         <div className="container">
           <h2 className="section-title">¿Qué estás buscando?</h2>
           <div className="categories-grid">
-            <button onClick={() => { setSelectedCategory("Ropa Bebé"); document.getElementById('catalogo')?.scrollIntoView({ behavior: 'smooth' }); }} className="category-card" style={{display: 'block', width: '100%', textAlign: 'center', border: 'none', background: 'var(--color-background)', cursor: 'pointer'}}>
+            <button onClick={() => { setSelectedCategory("Ropa"); document.getElementById('catalogo')?.scrollIntoView({ behavior: 'smooth' }); }} className="category-card" style={{display: 'block', width: '100%', textAlign: 'center', border: 'none', background: 'var(--color-background)', cursor: 'pointer'}}>
               <div className="category-icon"><Baby size={40} /></div>
-              <h3>Bebés</h3>
-              <p className="text-light" style={{ color: 'var(--color-text-light)' }}>0 a 24 meses</p>
-            </button>
-            <button onClick={() => { setSelectedCategory("Ropa Niñx"); document.getElementById('catalogo')?.scrollIntoView({ behavior: 'smooth' }); }} className="category-card" style={{display: 'block', width: '100%', textAlign: 'center', border: 'none', background: 'var(--color-background)', cursor: 'pointer'}}>
-              <div className="category-icon"><CloudRain size={40} /></div>
-              <h3>Niños</h3>
-              <p className="text-light" style={{ color: 'var(--color-text-light)' }}>2 a 8 años</p>
+              <h3>Ropita para crecer</h3>
+              <p className="text-light" style={{ color: 'var(--color-text-light)' }}>0 a 8 años</p>
             </button>
             <button onClick={() => { setSelectedCategory("Juguetes"); document.getElementById('catalogo')?.scrollIntoView({ behavior: 'smooth' }); }} className="category-card" style={{display: 'block', width: '100%', textAlign: 'center', border: 'none', background: 'var(--color-background)', cursor: 'pointer'}}>
-              <div className="category-icon"><Gift size={40} /></div>
-              <h3>Regalos</h3>
-              <p className="text-light" style={{ color: 'var(--color-text-light)' }}>Packs y sets</p>
+              <div className="category-icon"><CloudRain size={40} /></div>
+              <h3>Compañeros de aventuras</h3>
+              <p className="text-light" style={{ color: 'var(--color-text-light)' }}>Juguetes</p>
             </button>
             <button onClick={() => { setSelectedCategory("Accesorios"); document.getElementById('catalogo')?.scrollIntoView({ behavior: 'smooth' }); }} className="category-card" style={{display: 'block', width: '100%', textAlign: 'center', border: 'none', background: 'var(--color-background)', cursor: 'pointer'}}>
+              <div className="category-icon"><Gift size={40} /></div>
+              <h3>Cositas que acompañan</h3>
+              <p className="text-light" style={{ color: 'var(--color-text-light)' }}>Accesorios</p>
+            </button>
+            <button onClick={() => { setSelectedCategory("Kits de regalo"); document.getElementById('catalogo')?.scrollIntoView({ behavior: 'smooth' }); }} className="category-card" style={{display: 'block', width: '100%', textAlign: 'center', border: 'none', background: 'var(--color-background)', cursor: 'pointer'}}>
               <div className="category-icon"><Package size={40} /></div>
-              <h3>Accesorios</h3>
-              <p className="text-light" style={{ color: 'var(--color-text-light)' }}>Gorritos y más</p>
+              <h3>Primeros capitulos</h3>
+              <p className="text-light" style={{ color: 'var(--color-text-light)' }}>Regalos recien nacidos.</p>
             </button>
           </div>
         </div>

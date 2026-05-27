@@ -25,7 +25,7 @@ export default function Home() {
           <div className="container hero-content">
             <div className="hero-text">
               <h1>Vestimos sus <span style={{ color: 'var(--color-primary)' }}>aventuras</span> mágicas</h1>
-              <p>Descubrí nuestra nueva colección inspirada en la naturaleza. Ropa cómoda, divertida y con mucho color para acompañar cada paso de los más chicos.</p>
+              <p>Pequeñas cosas para jugar, crecer y acompañar cada capítulo de tu cuento.</p>
               <HeroButtons />
             </div>
             <div className="hero-image">

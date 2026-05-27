@@ -76,7 +76,7 @@ export function AboutUsModal() {
                                 className="mb-4"
                             >
                                 <DialogTitle className="text-3xl font-serif text-primary leading-tight">
-                                    Nuestra Historia
+                                    Detrás del cuento
                                 </DialogTitle>
                                 <div className="h-1 w-12 bg-primary rounded-full mt-2" />
                             </motion.div>
@@ -84,17 +84,17 @@ export function AboutUsModal() {
 
                         <div className="space-y-4 text-muted-foreground leading-relaxed text-sm lg:text-base">
                             <p>
-                                ¡Hola! Mi nombre es <span className="text-primary font-semibold">Sabrina</span> (aunque casi todos me dicen Chavi), tengo 33 años y soy la mamá de Renzo.
+                                Trabajamos con pequeñas producciones, diseños propios ilustrados por Luxor y prendas pensadas para durar, pasar de mano en mano y acompañar más de una etapa. ✨
                             </p>
                             <p>
-                                Soy la persona que está detrás de cada detalle de <strong>Yhabiaunavez</strong>. Este proyecto nació allá por el <strong>2013</strong>, primero como una necesidad laboral, pero hoy se transformó en muchísimo más que eso. Todo empezó gracias a mi mamá, que es una grosa total cosiendo y enseñando.
+                                Nos gustan las prendas cómodas, suaves y atemporales. De esas que se usan muchísimo y se guardan con cariño.
                             </p>
-                            <p>
+                            {/* <p>
                                 Después de algunos años compartiendo el camino con una socia, quedé al frente siempre empujando para adelante, con el aguante incondicional de mi familia.
                             </p>
                             <p>
                                 Hoy me dedico a diseñar accesorios para acompañar la mapaternidad y juguetes para los más peques. Mi objetivo es crear cosas útiles, lindas y divertidas. Quiero que te lleves algo <span className="text-primary font-medium italic">verdaderamente único</span>, porque esa es la magia de lo hecho a mano.
-                            </p>
+                            </p> */}
                         </div>
 
                     </div>
