@@ -22,7 +22,7 @@ export function Footer() {
                   src="/images/yhabiaunavez.jpg"
                   alt="Logo"
                   fill
-                  className="object-contain scale-150"
+                  className="object-contain scale-90"
                 />
               </div>
               <span className="font-serif text-xl">Yhabiaunavez</span>
