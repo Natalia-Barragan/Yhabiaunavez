@@ -45,6 +45,31 @@ const nextConfig = {
       },
     ],
   },
+  async headers() {
+    return [
+      {
+        source: '/:path*',
+        headers: [
+          {
+            key: 'X-Content-Type-Options',
+            value: 'nosniff',
+          },
+          {
+            key: 'X-Frame-Options',
+            value: 'SAMEORIGIN',
+          },
+          {
+            key: 'Referrer-Policy',
+            value: 'strict-origin-when-cross-origin',
+          },
+          {
+            key: 'Content-Security-Policy',
+            value: "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://sdk.mercadopago.com https://img.icons8.com https://www.google.com; connect-src 'self' https://yhabiaunavez.onrender.com https://gbeaegtyvxncudslomvi.supabase.co https://api.mercadopago.com http://localhost:3000; img-src 'self' data: blob: https://gbeaegtyvxncudslomvi.supabase.co https://images.unsplash.com https://img.icons8.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; frame-src 'self' https://www.google.com https://sdk.mercadopago.com;",
+          },
+        ],
+      },
+    ];
+  },
 }
 
 export default nextConfig
