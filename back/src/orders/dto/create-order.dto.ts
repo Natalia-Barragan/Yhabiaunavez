@@ -61,4 +61,10 @@ export class CreateOrderDto {
     @IsString()
     @IsOptional()
     paymentMethod?: string;
+
+    @ApiProperty({ example: 950.00, description: 'Costo de envío', required: false })
+    @IsNumber()
+    @IsOptional()
+    @Type(() => Number)
+    shippingCost?: number;
 }

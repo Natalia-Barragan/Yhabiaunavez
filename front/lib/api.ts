@@ -135,7 +135,14 @@ export const api = {
     delete: (id: string) => fetchAPI(`/sizes/${id}`, { method: 'DELETE' }),
   },
   mercadopago: {
-    createPreference: (orderId: string, withInstallments?: boolean) => fetchAPI('/mercadopago/create-preference', { method: 'POST', body: JSON.stringify({ orderId, withInstallments }) }),
+    createPreference: (orderId: string, withInstallments?: boolean, shippingCost?: number) => fetchAPI('/mercadopago/create-preference', { method: 'POST', body: JSON.stringify({ orderId, withInstallments, shippingCost }) }),
     verifyPayment: (paymentId: string) => fetchAPI('/mercadopago/verify', { method: 'POST', body: JSON.stringify({ paymentId }) }),
+  },
+  shipping: {
+    calculate: (postalCodeDestination: string, items: { productId: string; quantity: number }[]) =>
+      fetchAPI('/shipping/calculate', {
+        method: 'POST',
+        body: JSON.stringify({ postalCodeDestination, items }),
+      }),
   }
 };

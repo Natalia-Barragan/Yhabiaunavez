@@ -15,6 +15,7 @@ import { AuthModule } from './auth/auth.module';
 import { SizeModule } from './size/size.module';
 import { PingController } from './ping.controller';
 import { MercadopagoModule } from './mercadopago/mercadopago.module';
+import { ShippingModule } from './shipping/shipping.module';
 
 @Module({
   imports: [
@@ -71,7 +72,9 @@ import { MercadopagoModule } from './mercadopago/mercadopago.module';
     AuthModule,
     SizeModule,
     MercadopagoModule,
+    ShippingModule,
   ],
+
   controllers: [AppController, PingController],
   providers: [AppService],
 })

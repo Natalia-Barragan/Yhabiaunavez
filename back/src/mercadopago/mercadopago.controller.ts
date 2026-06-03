@@ -6,11 +6,15 @@ export class MercadopagoController {
   constructor(private readonly mercadopagoService: MercadopagoService) {}
 
   @Post('create-preference')
-  async createPreference(@Body() body: { orderId: string; withInstallments?: boolean }) {
+  async createPreference(@Body() body: { orderId: string; withInstallments?: boolean; shippingCost?: number }) {
     if (!body.orderId) {
       return { error: 'Falta orderId' };
     }
-    const preference = await this.mercadopagoService.createPreference(body.orderId, body.withInstallments ?? false);
+    const preference = await this.mercadopagoService.createPreference(
+      body.orderId,
+      body.withInstallments ?? false,
+      body.shippingCost ?? 0,
+    );
     return {
       id: preference.id,
       init_point: preference.init_point,

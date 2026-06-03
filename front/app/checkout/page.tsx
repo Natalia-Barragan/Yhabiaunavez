@@ -37,6 +37,11 @@ export default function CheckoutPage() {
     notas: "",
   });
 
+  const [shippingRates, setShippingRates] = useState<any[]>([]);
+  const [selectedRate, setSelectedRate] = useState<any | null>(null);
+  const [loadingShipping, setLoadingShipping] = useState(false);
+  const [shippingError, setShippingError] = useState<string | null>(null);
+
   const INSTALLMENT_RATE = 1.2943;
 
   const formatPrice = (price: number) => {
@@ -47,8 +52,61 @@ export default function CheckoutPage() {
     }).format(price);
   };
 
+  const calculateShipping = async (zipCode: string) => {
+    if (!zipCode || zipCode.trim().length < 4) {
+      setShippingRates([]);
+      setSelectedRate(null);
+      return;
+    }
+
+    setLoadingShipping(true);
+    setShippingError(null);
+    try {
+      const payloadItems = items.map(item => ({
+        productId: item.product.id,
+        quantity: item.quantity
+      }));
+      const res = await api.shipping.calculate(zipCode, payloadItems);
+      if (res && res.rates) {
+        setShippingRates(res.rates);
+        if (res.rates.length > 0) {
+          setSelectedRate(res.rates[0]);
+        } else {
+          setShippingError("No hay tarifas disponibles para este código postal.");
+        }
+      } else {
+        setShippingRates([]);
+        setSelectedRate(null);
+      }
+    } catch (err: any) {
+      console.error("Error al calcular envío:", err);
+      setShippingError("No se pudo calcular el envío. Verificá el código postal.");
+      setShippingRates([]);
+      setSelectedRate(null);
+    } finally {
+      setLoadingShipping(false);
+    }
+  };
+
+  React.useEffect(() => {
+    const zip = formData.codigoPostal.trim();
+    if (zip.length >= 4) {
+      const timer = setTimeout(() => {
+        calculateShipping(zip);
+      }, 600);
+      return () => clearTimeout(timer);
+    } else {
+      setShippingRates([]);
+      setSelectedRate(null);
+      setShippingError(null);
+    }
+  }, [formData.codigoPostal, items]);
+
   const getDisplayTotal = () => {
-    const base = getTotalPrice();
+    let base = getTotalPrice();
+    if (selectedRate) {
+      base += selectedRate.price;
+    }
     if (paymentMethod === "mercadopago" && mpOption === "3-cuotas") {
       return Math.ceil(base * INSTALLMENT_RATE);
     }
@@ -123,6 +181,12 @@ export default function CheckoutPage() {
   const proceedWithOrder = async () => {
     setIsSubmitting(true);
     try {
+      let notes = formData.notas;
+      if (selectedRate) {
+        const typeStr = selectedRate.deliveredType === 'S' ? 'Retiro en Sucursal' : 'Envío a Domicilio';
+        notes = `${notes ? notes + '\n' : ''}[Envío: Correo Argentino ${typeStr} (${selectedRate.productName}) - Costo: ${formatPrice(selectedRate.price)} - Entrega: ${selectedRate.deliveryTimeMin}-${selectedRate.deliveryTimeMax} días]`.trim();
+      }
+
       const customer = await api.customers.create({
         name: `${formData.nombre} ${formData.apellido}`,
         email: formData.email,
@@ -132,7 +196,7 @@ export default function CheckoutPage() {
         state: formData.provincia,
         zipCode: formData.codigoPostal,
         country: formData.pais,
-        notes: formData.notas,
+        notes: notes,
       });
 
       if (!customer?.id) {
@@ -142,6 +206,7 @@ export default function CheckoutPage() {
       const orderData = {
         customerId: customer.id,
         paymentMethod,
+        shippingCost: selectedRate ? selectedRate.price : 0,
         items: items.map(item => ({
           productId: item.product.id,
           quantity: item.quantity,
@@ -155,14 +220,18 @@ export default function CheckoutPage() {
 
       const orderDetails = {
         items: items,
-        total: getTotalPrice(),
+        total: getDisplayTotal(),
         customer: formData,
         orderId,
       };
 
       if (paymentMethod === "mercadopago") {
         const withInstallments = mpOption === "3-cuotas";
-        const mpPreference = await api.mercadopago.createPreference(savedOrder.id, withInstallments);
+        const mpPreference = await api.mercadopago.createPreference(
+          savedOrder.id,
+          withInstallments,
+          selectedRate ? selectedRate.price : 0
+        );
         if (!mpPreference.init_point) {
           throw new Error("No se pudo obtener el link de Mercado Pago");
         }
@@ -177,8 +246,16 @@ export default function CheckoutPage() {
         clearCart();
         
         const metodoPago = paymentMethod === "transferencia" ? "Transferencia Bancaria" : "Cuenta DNI";
-        const total = new Intl.NumberFormat("es-AR", { style: "currency", currency: "ARS", minimumFractionDigits: 0 }).format(getTotalPrice());
-        const mensaje = `Hola! Acabo de hacer mi pedido *${orderId}* y quiero pagar por *${metodoPago}*.\nMi nombre es ${formData.nombre} ${formData.apellido}.\nTotal: ${total}\n¿Me podés enviar los datos para realizar el pago? Gracias!`;
+        const basePrice = getTotalPrice();
+        const shippingPrice = selectedRate ? selectedRate.price : 0;
+        const total = new Intl.NumberFormat("es-AR", { style: "currency", currency: "ARS", minimumFractionDigits: 0 }).format(basePrice + shippingPrice);
+        
+        let mensaje = `Hola! Acabo de hacer mi pedido *${orderId}* y quiero pagar por *${metodoPago}*.\nMi nombre es ${formData.nombre} ${formData.apellido}.\n`;
+        if (selectedRate) {
+          const typeStr = selectedRate.deliveredType === 'S' ? 'Retiro en Sucursal' : 'Envío a Domicilio';
+          mensaje += `Envío: Correo Argentino ${typeStr} (${selectedRate.productName}) - ${formatPrice(selectedRate.price)}\n`;
+        }
+        mensaje += `Total: ${total}\n¿Me podés enviar los datos para realizar el pago? Gracias!`;
         window.location.href = `https://wa.me/542215043666?text=${encodeURIComponent(mensaje)}`;
       }
     } catch (error: any) {
@@ -403,6 +480,76 @@ export default function CheckoutPage() {
                       rows={3}
                       placeholder="Instrucciones especiales para el envío..."
                     />
+                  </div>
+
+                  {/* Opciones de Envío Correo Argentino */}
+                  <div className="mt-6 border-t border-border/50 pt-6">
+                    <h3 className="text-sm font-semibold text-foreground mb-3">
+                      Método de Envío (Correo Argentino)
+                    </h3>
+                    
+                    {loadingShipping && (
+                      <div className="flex items-center gap-2 text-sm text-muted-foreground py-2">
+                        <div className="animate-spin rounded-full h-4 w-4 border-2 border-primary border-t-transparent" />
+                        <span>Calculando tarifas de envío...</span>
+                      </div>
+                    )}
+
+                    {shippingError && (
+                      <div className="text-xs text-destructive bg-destructive/10 border border-destructive/20 rounded-xl p-3">
+                        {shippingError}
+                      </div>
+                    )}
+
+                    {!loadingShipping && !shippingError && shippingRates.length === 0 && (
+                      <p className="text-xs text-muted-foreground">
+                        Ingresá tu código postal para ver las opciones de envío disponibles.
+                      </p>
+                    )}
+
+                    {!loadingShipping && shippingRates.length > 0 && (
+                      <div className="space-y-2">
+                        {shippingRates.map((rate, idx) => {
+                          const isSelected = selectedRate && 
+                            selectedRate.deliveredType === rate.deliveredType && 
+                            selectedRate.productType === rate.productType;
+                          
+                          const typeStr = rate.deliveredType === 'S' ? 'Retiro en Sucursal' : 'Envío a Domicilio';
+                          const timeStr = `Entrega estimada: ${rate.deliveryTimeMin} a ${rate.deliveryTimeMax} días hábiles`;
+
+                          return (
+                            <button
+                              key={idx}
+                              type="button"
+                              onClick={() => setSelectedRate(rate)}
+                              className={`w-full flex items-center justify-between p-3.5 rounded-xl border-2 text-left transition-all duration-200 ${
+                                isSelected
+                                  ? "border-primary bg-primary/5"
+                                  : "border-border/50 bg-secondary/20 hover:border-border"
+                              }`}
+                            >
+                              <div className="flex-1 min-w-0 pr-2">
+                                <p className="font-semibold text-foreground text-sm flex items-center gap-1.5">
+                                  <span>{typeStr}</span>
+                                  <span className="text-[10px] bg-secondary px-1.5 py-0.5 rounded text-muted-foreground font-normal">
+                                    {rate.productName.replace('Correo Argentino ', '')}
+                                  </span>
+                                </p>
+                                <p className="text-xs text-muted-foreground mt-0.5">{timeStr}</p>
+                              </div>
+                              <div className="text-right flex items-center gap-3">
+                                <span className="font-bold text-sm text-foreground">
+                                  {formatPrice(rate.price)}
+                                </span>
+                                <div className={`w-4 h-4 rounded-full border-2 flex items-center justify-center ${isSelected ? "border-primary" : "border-muted-foreground/40"}`}>
+                                  {isSelected && <div className="w-2.5 h-2.5 rounded-full bg-primary" />}
+                                </div>
+                              </div>
+                            </button>
+                          );
+                        })}
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>
@@ -646,7 +793,9 @@ export default function CheckoutPage() {
                 )}
                 <div className="flex justify-between text-sm">
                   <span className="text-muted-foreground">Envío</span>
-                  <span className="text-foreground">A coordinar</span>
+                  <span className="text-foreground font-medium">
+                    {selectedRate ? formatPrice(selectedRate.price) : "A coordinar"}
+                  </span>
                 </div>
                 <div className="flex justify-between text-lg font-semibold pt-3 border-t border-border">
                   <span className="text-foreground">Total</span>

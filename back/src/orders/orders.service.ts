@@ -61,6 +61,10 @@ export class OrdersService {
         orderItems.push(orderItem);
       }
 
+      if (dto.shippingCost) {
+        total += Number(dto.shippingCost);
+      }
+
       const order = this.orderRepo.create({
         customerId: dto.customerId,
         total,

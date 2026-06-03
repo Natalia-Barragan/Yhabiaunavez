@@ -26,7 +26,7 @@ export class MercadopagoService {
     }
   }
 
-  async createPreference(orderId: string, withInstallments = false) {
+  async createPreference(orderId: string, withInstallments = false, shippingCost = 0) {
     this.validateToken();
     try {
       const order = await this.ordersService.findOne(orderId);
@@ -46,6 +46,19 @@ export class MercadopagoService {
           : Math.ceil(Number(item.price)),
         currency_id: 'ARS',
       }));
+
+      if (shippingCost > 0) {
+        items.push({
+          id: 'shipping_cost',
+          title: 'Costo de Envío (Correo Argentino)',
+          quantity: 1,
+          unit_price: withInstallments
+            ? Math.ceil(Number(shippingCost) * INSTALLMENT_RATE)
+            : Math.ceil(Number(shippingCost)),
+          // @ts-ignore
+          currency_id: 'ARS',
+        });
+      }
 
       const envFrontend = this.configService.get<string>('FRONTEND_URL');
       const frontendUrl = (envFrontend && envFrontend.startsWith('http')) ? envFrontend.replace(/\/$/, '') : 'http://localhost:3001';
