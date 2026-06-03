@@ -102,11 +102,11 @@ function SuccessContent() {
               </div>
             ) : paymentStatus === 'pagado' ? (
               <p className="text-[#25D366] font-medium leading-relaxed mb-8">
-                ¡Tu pago fue procesado exitosamente! Nos pondremos en contacto por WhatsApp para coordinar el envío.
+                ¡Tu pago fue procesado exitosamente! Vas a recibir por WhatsApp el número de seguimiento de tu envío.
               </p>
             ) : (
               <p className="text-muted-foreground leading-relaxed mb-8">
-                Hemos recibido tu pedido. Si pagaste a través de Mercado Pago, el estado se actualizará en breve. Contáctanos por WhatsApp para coordinar el envío o despejar dudas.
+                Hemos recibido tu pedido. Si pagaste a través de Mercado Pago, el estado se actualizará en breve. Te enviaremos por WhatsApp el número de seguimiento apenas despachemos tu paquete.
               </p>
             )}
           </motion.div>
@@ -169,10 +169,10 @@ function SuccessContent() {
                 <Package size={20} className="text-primary flex-shrink-0 mt-0.5" />
                 <div>
                   <p className="font-medium text-foreground text-sm">
-                    Preparamos tu pedido
+                    Preparamos tu envío
                   </p>
                   <p className="text-muted-foreground text-xs">
-                    Una vez acreditado el pago, preparamos todo
+                    Una vez despachado, vas a recibir el número de seguimiento por WhatsApp
                   </p>
                 </div>
               </div>
