@@ -80,7 +80,7 @@ export class MercadopagoService {
           excluded_payment_types: [
             { id: 'ticket' }
           ],
-          ...(withInstallments ? { installments: 3 } : {})
+          installments: withInstallments ? 3 : 1
         }
       };
 
