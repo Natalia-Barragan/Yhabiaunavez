@@ -612,6 +612,7 @@ export default function CheckoutPage() {
                     </div>
                   </div>
                 )}
+              </div>
 
               <div className="bg-card rounded-3xl p-6 md:p-8 border border-border/50">
                 <h2 className="text-xl font-semibold text-foreground mb-5">
