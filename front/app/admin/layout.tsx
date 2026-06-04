@@ -146,6 +146,7 @@ export default function AdminLayout({
             </button>
             <Link
               href="/"
+              prefetch={false}
               className="flex items-center gap-3 px-4 py-3 rounded-xl text-sidebar-foreground/70 hover:bg-sidebar-accent hover:text-sidebar-foreground transition-all"
             >
               <ShoppingCart size={20} />
