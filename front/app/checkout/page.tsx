@@ -24,6 +24,7 @@ export default function CheckoutPage() {
   const [pendingChanges, setPendingChanges] = useState<{ field: string; old: string; new: string }[]>([]);
   const [paymentMethod, setPaymentMethod] = useState<"mercadopago" | "transferencia" | "cuenta-dni">("mercadopago");
   const [mpOption, setMpOption] = useState<"1-pago" | "3-cuotas">("1-pago");
+  const [deliveryMethod, setDeliveryMethod] = useState<"showroom" | "correo">("showroom");
   const [formData, setFormData] = useState({
     nombre: "",
     apellido: "",
@@ -104,7 +105,7 @@ export default function CheckoutPage() {
 
   const getDisplayTotal = () => {
     let base = getTotalPrice();
-    if (selectedRate) {
+    if (deliveryMethod === "correo" && selectedRate) {
       base += selectedRate.price;
     }
     if (paymentMethod === "mercadopago" && mpOption === "3-cuotas") {
@@ -125,10 +126,10 @@ export default function CheckoutPage() {
     setIsSubmitting(true);
 
     try {
-      // 1. Verificar si el cliente ya existe y si hay cambios
+      // 1. Verificar si el cliente ya existe y si hay cambios (solo si es envío a domicilio/sucursal)
       const existingCustomer = await api.customers.getByEmail(formData.email).catch(() => null);
 
-      if (existingCustomer) {
+      if (existingCustomer && deliveryMethod === 'correo') {
         const changes: { field: string; old: string; new: string }[] = [];
         const fieldLabels: Record<string, string> = {
           name: "Nombre y Apellido",
@@ -182,20 +183,32 @@ export default function CheckoutPage() {
     setIsSubmitting(true);
     try {
       let notes = formData.notas;
-      if (selectedRate) {
+      let shippingCost = 0;
+
+      if (deliveryMethod === 'showroom') {
+        notes = `${notes ? notes + '\n' : ''}[Retiro en Showroom - Dirección: 18 N° 1373, La Plata - Costo: Gratis]`.trim();
+        shippingCost = 0;
+      } else if (selectedRate) {
         const typeStr = selectedRate.deliveredType === 'S' ? 'Retiro en Sucursal' : 'Envío a Domicilio';
         notes = `${notes ? notes + '\n' : ''}[Envío: Correo Argentino ${typeStr} (${selectedRate.productName}) - Costo: ${formatPrice(selectedRate.price)} - Entrega: ${selectedRate.deliveryTimeMin}-${selectedRate.deliveryTimeMax} días]`.trim();
+        shippingCost = selectedRate.price;
       }
+
+      const finalAddress = deliveryMethod === 'showroom' ? "18 N° 1373" : formData.direccion;
+      const finalCity = deliveryMethod === 'showroom' ? "La Plata" : formData.ciudad;
+      const finalState = deliveryMethod === 'showroom' ? "Buenos Aires" : formData.provincia;
+      const finalZipCode = deliveryMethod === 'showroom' ? "1900" : formData.codigoPostal;
+      const finalCountry = deliveryMethod === 'showroom' ? "Argentina" : formData.pais;
 
       const customer = await api.customers.create({
         name: `${formData.nombre} ${formData.apellido}`,
         email: formData.email,
         phone: formData.telefono,
-        address: formData.direccion,
-        city: formData.ciudad,
-        state: formData.provincia,
-        zipCode: formData.codigoPostal,
-        country: formData.pais,
+        address: finalAddress,
+        city: finalCity,
+        state: finalState,
+        zipCode: finalZipCode,
+        country: finalCountry,
         notes: notes,
       });
 
@@ -206,7 +219,7 @@ export default function CheckoutPage() {
       const orderData = {
         customerId: customer.id,
         paymentMethod,
-        shippingCost: selectedRate ? selectedRate.price : 0,
+        shippingCost: shippingCost,
         items: items.map(item => ({
           productId: item.product.id,
           quantity: item.quantity,
@@ -230,7 +243,7 @@ export default function CheckoutPage() {
         const mpPreference = await api.mercadopago.createPreference(
           savedOrder.id,
           withInstallments,
-          selectedRate ? selectedRate.price : 0
+          shippingCost
         );
         if (!mpPreference.init_point) {
           throw new Error("No se pudo obtener el link de Mercado Pago");
@@ -247,11 +260,13 @@ export default function CheckoutPage() {
         
         const metodoPago = paymentMethod === "transferencia" ? "Transferencia Bancaria" : "Cuenta DNI";
         const basePrice = getTotalPrice();
-        const shippingPrice = selectedRate ? selectedRate.price : 0;
+        const shippingPrice = deliveryMethod === 'showroom' ? 0 : (selectedRate ? selectedRate.price : 0);
         const total = new Intl.NumberFormat("es-AR", { style: "currency", currency: "ARS", minimumFractionDigits: 0 }).format(basePrice + shippingPrice);
         
         let mensaje = `Hola! Acabo de hacer mi pedido *${orderId}* y quiero pagar por *${metodoPago}*.\nMi nombre es ${formData.nombre} ${formData.apellido}.\n`;
-        if (selectedRate) {
+        if (deliveryMethod === 'showroom') {
+          mensaje += `Entrega: Retiro por Showroom (18 N° 1373, La Plata) - Gratis\n`;
+        } else if (selectedRate) {
           const typeStr = selectedRate.deliveredType === 'S' ? 'Retiro en Sucursal' : 'Envío a Domicilio';
           mensaje += `Envío: Correo Argentino ${typeStr} (${selectedRate.productName}) - ${formatPrice(selectedRate.price)}\n`;
         }
@@ -398,161 +413,205 @@ export default function CheckoutPage() {
 
               <div className="bg-card rounded-3xl p-6 md:p-8 border border-border/50">
                 <h2 className="text-xl font-semibold text-foreground mb-6">
-                  Dirección de Envío
+                  Método de Entrega
                 </h2>
 
-                <div className="space-y-4">
-                  <div className="space-y-2">
-                    <Label htmlFor="direccion">Dirección</Label>
-                    <Input
-                      id="direccion"
-                      name="direccion"
-                      value={formData.direccion}
-                      onChange={handleInputChange}
-                      required
-                      className="rounded-xl"
-                      placeholder="Calle y número"
-                    />
-                  </div>
+                <div className="grid grid-cols-2 gap-4 mb-6">
+                  <button
+                    type="button"
+                    onClick={() => setDeliveryMethod("showroom")}
+                    className={`flex flex-col items-center justify-center p-5 rounded-2xl border-2 transition-all duration-200 text-center gap-2 ${
+                      deliveryMethod === "showroom"
+                        ? "border-primary bg-primary/5 font-semibold text-primary"
+                        : "border-border/50 bg-secondary/20 hover:border-border text-muted-foreground"
+                    }`}
+                  >
+                    <Building2 size={24} />
+                    <span className="text-sm">Retiro en Showroom</span>
+                    <span className="text-xs bg-emerald-500/10 text-emerald-600 px-2 py-0.5 rounded-full font-bold">Gratis</span>
+                  </button>
 
-                  <div className="grid sm:grid-cols-2 gap-4">
-                    <div className="space-y-2">
-                      <Label htmlFor="ciudad">Ciudad</Label>
-                      <Input
-                        id="ciudad"
-                        name="ciudad"
-                        value={formData.ciudad}
-                        onChange={handleInputChange}
-                        required
-                        className="rounded-xl"
-                        placeholder="Ciudad"
-                      />
-                    </div>
-                    <div className="space-y-2">
-                      <Label htmlFor="codigoPostal">Código Postal</Label>
-                      <Input
-                        id="codigoPostal"
-                        name="codigoPostal"
-                        value={formData.codigoPostal}
-                        onChange={handleInputChange}
-                        required
-                        className="rounded-xl"
-                        placeholder="1234"
-                      />
-                    </div>
-                  </div>
-
-                  <div className="grid sm:grid-cols-2 gap-4">
-                    <div className="space-y-2">
-                      <Label htmlFor="provincia">Provincia</Label>
-                      <Input
-                        id="provincia"
-                        name="provincia"
-                        value={formData.provincia}
-                        onChange={handleInputChange}
-                        required
-                        className="rounded-xl"
-                        placeholder="Provincia"
-                      />
-                    </div>
-                    <div className="space-y-2">
-                      <Label htmlFor="pais">País</Label>
-                      <Input
-                        id="pais"
-                        name="pais"
-                        value={formData.pais}
-                        onChange={handleInputChange}
-                        required
-                        className="rounded-xl"
-                        placeholder="País"
-                      />
-                    </div>
-                  </div>
-
-                  <div className="space-y-2">
-                    <Label htmlFor="notas">Notas adicionales (opcional)</Label>
-                    <Textarea
-                      id="notas"
-                      name="notas"
-                      value={formData.notas}
-                      onChange={handleInputChange}
-                      className="rounded-xl resize-none"
-                      rows={3}
-                      placeholder="Instrucciones especiales para el envío..."
-                    />
-                  </div>
-
-                  {/* Opciones de Envío Correo Argentino */}
-                  <div className="mt-6 border-t border-border/50 pt-6">
-                    <h3 className="text-sm font-semibold text-foreground mb-3">
-                      Método de Envío (Correo Argentino)
-                    </h3>
-                    
-                    {loadingShipping && (
-                      <div className="flex items-center gap-2 text-sm text-muted-foreground py-2">
-                        <div className="animate-spin rounded-full h-4 w-4 border-2 border-primary border-t-transparent" />
-                        <span>Calculando tarifas de envío...</span>
-                      </div>
-                    )}
-
-                    {shippingError && (
-                      <div className="text-xs text-destructive bg-destructive/10 border border-destructive/20 rounded-xl p-3">
-                        {shippingError}
-                      </div>
-                    )}
-
-                    {!loadingShipping && !shippingError && shippingRates.length === 0 && (
-                      <p className="text-xs text-muted-foreground">
-                        Ingresá tu código postal para ver las opciones de envío disponibles.
-                      </p>
-                    )}
-
-                    {!loadingShipping && shippingRates.length > 0 && (
-                      <div className="space-y-2">
-                        {shippingRates.map((rate, idx) => {
-                          const isSelected = selectedRate && 
-                            selectedRate.deliveredType === rate.deliveredType && 
-                            selectedRate.productType === rate.productType;
-                          
-                          const typeStr = rate.deliveredType === 'S' ? 'Retiro en Sucursal' : 'Envío a Domicilio';
-                          const timeStr = `Entrega estimada: ${rate.deliveryTimeMin} a ${rate.deliveryTimeMax} días hábiles`;
-
-                          return (
-                            <button
-                              key={idx}
-                              type="button"
-                              onClick={() => setSelectedRate(rate)}
-                              className={`w-full flex items-center justify-between p-3.5 rounded-xl border-2 text-left transition-all duration-200 ${
-                                isSelected
-                                  ? "border-primary bg-primary/5"
-                                  : "border-border/50 bg-secondary/20 hover:border-border"
-                              }`}
-                            >
-                              <div className="flex-1 min-w-0 pr-2">
-                                <p className="font-semibold text-foreground text-sm flex items-center gap-1.5">
-                                  <span>{typeStr}</span>
-                                  <span className="text-[10px] bg-secondary px-1.5 py-0.5 rounded text-muted-foreground font-normal">
-                                    {rate.productName.replace('Correo Argentino ', '')}
-                                  </span>
-                                </p>
-                                <p className="text-xs text-muted-foreground mt-0.5">{timeStr}</p>
-                              </div>
-                              <div className="text-right flex items-center gap-3">
-                                <span className="font-bold text-sm text-foreground">
-                                  {formatPrice(rate.price)}
-                                </span>
-                                <div className={`w-4 h-4 rounded-full border-2 flex items-center justify-center ${isSelected ? "border-primary" : "border-muted-foreground/40"}`}>
-                                  {isSelected && <div className="w-2.5 h-2.5 rounded-full bg-primary" />}
-                                </div>
-                              </div>
-                            </button>
-                          );
-                        })}
-                      </div>
-                    )}
-                  </div>
+                  <button
+                    type="button"
+                    onClick={() => setDeliveryMethod("correo")}
+                    className={`flex flex-col items-center justify-center p-5 rounded-2xl border-2 transition-all duration-200 text-center gap-2 ${
+                      deliveryMethod === "correo"
+                        ? "border-primary bg-primary/5 font-semibold text-primary"
+                        : "border-border/50 bg-secondary/20 hover:border-border text-muted-foreground"
+                    }`}
+                  >
+                    <Building2 size={24} />
+                    <span className="text-sm">Envío por Correo</span>
+                    <span className="text-xs bg-primary/10 text-primary px-2 py-0.5 rounded-full font-medium font-bold">Correo Arg.</span>
+                  </button>
                 </div>
-              </div>
+
+                {deliveryMethod === "showroom" ? (
+                  <div className="bg-primary/5 border border-primary/20 rounded-2xl p-5 space-y-3">
+                    <p className="text-sm font-semibold text-foreground flex items-center gap-2">
+                      <Building2 size={16} className="text-primary" />
+                      <span>Dirección del Showroom</span>
+                    </p>
+                    <p className="text-sm font-bold text-foreground bg-card border border-border p-3.5 rounded-xl">
+                      18 N° 1373, La Plata
+                    </p>
+                    <p className="text-xs text-muted-foreground leading-relaxed">
+                      Una vez finalizado el pedido, coordinaremos por WhatsApp el día y horario para retirar tus productos.
+                    </p>
+                  </div>
+                ) : (
+                  <div className="space-y-4">
+                    <div className="space-y-2">
+                      <Label htmlFor="direccion">Dirección</Label>
+                      <Input
+                        id="direccion"
+                        name="direccion"
+                        value={formData.direccion}
+                        onChange={handleInputChange}
+                        required={deliveryMethod === "correo"}
+                        className="rounded-xl"
+                        placeholder="Calle y número"
+                      />
+                    </div>
+
+                    <div className="grid sm:grid-cols-2 gap-4">
+                      <div className="space-y-2">
+                        <Label htmlFor="ciudad">Ciudad</Label>
+                        <Input
+                          id="ciudad"
+                          name="ciudad"
+                          value={formData.ciudad}
+                          onChange={handleInputChange}
+                          required={deliveryMethod === "correo"}
+                          className="rounded-xl"
+                          placeholder="Ciudad"
+                        />
+                      </div>
+                      <div className="space-y-2">
+                        <Label htmlFor="codigoPostal">Código Postal</Label>
+                        <Input
+                          id="codigoPostal"
+                          name="codigoPostal"
+                          value={formData.codigoPostal}
+                          onChange={handleInputChange}
+                          required={deliveryMethod === "correo"}
+                          className="rounded-xl"
+                          placeholder="1234"
+                        />
+                      </div>
+                    </div>
+
+                    <div className="grid sm:grid-cols-2 gap-4">
+                      <div className="space-y-2">
+                        <Label htmlFor="provincia">Provincia</Label>
+                        <Input
+                          id="provincia"
+                          name="provincia"
+                          value={formData.provincia}
+                          onChange={handleInputChange}
+                          required={deliveryMethod === "correo"}
+                          className="rounded-xl"
+                          placeholder="Provincia"
+                        />
+                      </div>
+                      <div className="space-y-2">
+                        <Label htmlFor="pais">País</Label>
+                        <Input
+                          id="pais"
+                          name="pais"
+                          value={formData.pais}
+                          onChange={handleInputChange}
+                          required={deliveryMethod === "correo"}
+                          className="rounded-xl"
+                          placeholder="País"
+                        />
+                      </div>
+                    </div>
+
+                    <div className="space-y-2">
+                      <Label htmlFor="notas">Notas adicionales (opcional)</Label>
+                      <Textarea
+                        id="notas"
+                        name="notas"
+                        value={formData.notas}
+                        onChange={handleInputChange}
+                        className="rounded-xl resize-none"
+                        rows={3}
+                        placeholder="Instrucciones especiales para el envío..."
+                      />
+                    </div>
+
+                    {/* Opciones de Envío Correo Argentino */}
+                    <div className="mt-6 border-t border-border/50 pt-6">
+                      <h3 className="text-sm font-semibold text-foreground mb-3">
+                        Opciones de Envío (Correo Argentino)
+                      </h3>
+                      
+                      {loadingShipping && (
+                        <div className="flex items-center gap-2 text-sm text-muted-foreground py-2">
+                          <div className="animate-spin rounded-full h-4 w-4 border-2 border-primary border-t-transparent" />
+                          <span>Calculando tarifas de envío...</span>
+                        </div>
+                      )}
+
+                      {shippingError && (
+                        <div className="text-xs text-destructive bg-destructive/10 border border-destructive/20 rounded-xl p-3">
+                          {shippingError}
+                        </div>
+                      )}
+
+                      {!loadingShipping && !shippingError && shippingRates.length === 0 && (
+                        <p className="text-xs text-muted-foreground">
+                          Ingresá tu código postal para ver las opciones de envío disponibles.
+                        </p>
+                      )}
+
+                      {!loadingShipping && shippingRates.length > 0 && (
+                        <div className="space-y-2">
+                          {shippingRates.map((rate, idx) => {
+                            const isSelected = selectedRate && 
+                              selectedRate.deliveredType === rate.deliveredType && 
+                              selectedRate.productType === rate.productType;
+                            
+                            const typeStr = rate.deliveredType === 'S' ? 'Retiro en Sucursal' : 'Envío a Domicilio';
+                            const timeStr = `Entrega estimada: ${rate.deliveryTimeMin} a ${rate.deliveryTimeMax} días hábiles`;
+
+                            return (
+                              <button
+                                key={idx}
+                                type="button"
+                                onClick={() => setSelectedRate(rate)}
+                                className={`w-full flex items-center justify-between p-3.5 rounded-xl border-2 text-left transition-all duration-200 ${
+                                  isSelected
+                                    ? "border-primary bg-primary/5"
+                                    : "border-border/50 bg-secondary/20 hover:border-border"
+                                }`}
+                              >
+                                <div className="flex-1 min-w-0 pr-2">
+                                  <p className="font-semibold text-foreground text-sm flex items-center gap-1.5">
+                                    <span>{typeStr}</span>
+                                    <span className="text-[10px] bg-secondary px-1.5 py-0.5 rounded text-muted-foreground font-normal">
+                                      {rate.productName.replace('Correo Argentino ', '')}
+                                    </span>
+                                  </p>
+                                  <p className="text-xs text-muted-foreground mt-0.5">{timeStr}</p>
+                                </div>
+                                <div className="text-right flex items-center gap-3">
+                                  <span className="font-bold text-sm text-foreground">
+                                    {formatPrice(rate.price)}
+                                  </span>
+                                  <div className={`w-4 h-4 rounded-full border-2 flex items-center justify-center ${isSelected ? "border-primary" : "border-muted-foreground/40"}`}>
+                                    {isSelected && <div className="w-2.5 h-2.5 rounded-full bg-primary" />}
+                                  </div>
+                                </div>
+                              </button>
+                            );
+                          })}
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                )}
 
               <div className="bg-card rounded-3xl p-6 md:p-8 border border-border/50">
                 <h2 className="text-xl font-semibold text-foreground mb-5">
@@ -794,7 +853,7 @@ export default function CheckoutPage() {
                 <div className="flex justify-between text-sm">
                   <span className="text-muted-foreground">Envío</span>
                   <span className="text-foreground font-medium">
-                    {selectedRate ? formatPrice(selectedRate.price) : "A coordinar"}
+                    {deliveryMethod === 'showroom' ? "Gratis (Retiro en Showroom)" : (selectedRate ? formatPrice(selectedRate.price) : "A coordinar")}
                   </span>
                 </div>
                 <div className="flex justify-between text-lg font-semibold pt-3 border-t border-border">
