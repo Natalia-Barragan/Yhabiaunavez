@@ -1,6 +1,9 @@
 import { Injectable, Logger, BadRequestException } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 import { CalculateShippingDto } from './dto/calculate-shipping.dto';
+import { Product } from '../products/entities/product.entity';
 
 @Injectable()
 export class ShippingService {
@@ -8,7 +11,11 @@ export class ShippingService {
   private cachedToken: string | null = null;
   private tokenExpiresAt: Date | null = null;
 
-  constructor(private configService: ConfigService) {}
+  constructor(
+    @InjectRepository(Product)
+    private readonly productRepository: Repository<Product>,
+    private configService: ConfigService
+  ) {}
 
   private getEnvConfig() {
     const user = this.configService.get<string>('CORREO_ARGENTINO_USER');
@@ -76,16 +83,25 @@ export class ShippingService {
     if (dto.items && dto.items.length > 0) {
       for (const item of dto.items) {
         quantityTotal += item.quantity;
+        
+        // Buscar el producto en la base de datos para obtener su peso real
+        try {
+          const product = await this.productRepository.findOne({ where: { id: item.productId } });
+          const productWeight = product && product.weight !== undefined ? product.weight : 300;
+          totalWeight += productWeight * item.quantity;
+        } catch (dbError: any) {
+          this.logger.error(`Error al buscar producto ${item.productId} en DB para cotización: ${dbError.message}`);
+          totalWeight += 300 * item.quantity; // Fallback a 300g si hay error
+        }
       }
     } else {
       quantityTotal = 1; // Default
+      totalWeight = 300;
     }
 
-    // Heurística de embalaje para ropa:
-    // - 300g de peso base por prenda (se ingresa en gramos a la API)
+    // Heurística de embalaje para ropa/objetos:
     // - Las prendas se apilan: alto = cantidad * 3cm (mínimo 5cm)
     // - Caja estándar: ancho = 20cm, largo = 25cm
-    totalWeight = quantityTotal * 300; 
     const packageHeight = Math.max(5, quantityTotal * 3);
     const packageWidth = 20;
     const packageLength = 25;

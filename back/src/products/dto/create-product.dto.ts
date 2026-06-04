@@ -78,4 +78,11 @@ export class CreateProductDto {
         return value;
     })
     stockBySize?: Record<string, number>;
+
+    @ApiProperty({ example: 300, description: 'Weight of the product in grams', required: false })
+    @IsInt({ message: 'El peso debe ser un número entero' })
+    @Min(0, { message: 'El peso no puede ser negativo' })
+    @IsOptional()
+    @Type(() => Number)
+    weight?: number;
 }

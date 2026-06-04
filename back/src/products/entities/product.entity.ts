@@ -50,6 +50,10 @@ export class Product {
     @Column('text', { array: true, nullable: true })
     images: string[];
 
+    @ApiProperty({ example: 300, description: 'Product Weight in grams' })
+    @Column({ type: 'int', default: 300 })
+    weight: number;
+
     @CreateDateColumn()
     createdAt: Date;
 

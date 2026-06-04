@@ -44,6 +44,7 @@ export default function NewProductPage() {
     price: "",
     description: "",
     category: "",
+    weight: "300",
   });
 
   const [imageFiles, setImageFiles] = useState<File[]>([]);
@@ -119,6 +120,7 @@ export default function NewProductPage() {
       formDataToSend.append("name", formData.name);
       formDataToSend.append("price", formData.price.toString());
       formDataToSend.append("description", formData.description);
+      formDataToSend.append("weight", formData.weight);
 
       if (formData.category) {
         formDataToSend.append("categoryId", formData.category); // Note: frontend uses 'category' but backend expects 'categoryId' (usually UUID)
@@ -191,7 +193,7 @@ export default function NewProductPage() {
             />
           </div>
 
-          <div className="grid sm:grid-cols-2 gap-4">
+          <div className="grid sm:grid-cols-3 gap-4">
             <div className="space-y-2">
               <Label htmlFor="price">Precio (ARS)</Label>
               <Input
@@ -225,6 +227,20 @@ export default function NewProductPage() {
                   ))}
                 </SelectContent>
               </Select>
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="weight">Peso (gramos)</Label>
+              <Input
+                id="weight"
+                name="weight"
+                type="number"
+                min="0"
+                value={formData.weight}
+                onChange={handleInputChange}
+                required
+                className="rounded-xl"
+                placeholder="300"
+              />
             </div>
           </div>
 

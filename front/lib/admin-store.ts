@@ -62,6 +62,7 @@ const transformProduct = (backendProduct: any, existingCategories: Category[] = 
     categoryId: backendProduct.categoryId || backendProduct.category?.id || "",
     images: backendProduct.images || (backendProduct.image ? [backendProduct.image] : []),
     variants: variants,
+    weight: backendProduct.weight !== undefined ? Number(backendProduct.weight) : 300,
   };
 };
 

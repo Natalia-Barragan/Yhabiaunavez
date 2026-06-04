@@ -51,6 +51,7 @@ export default function EditProductPage({
     price: "",
     description: "",
     category: "",
+    weight: "300",
   });
 
   const [imageFiles, setImageFiles] = useState<File[]>([]);
@@ -68,6 +69,7 @@ export default function EditProductPage({
         price: product.price.toString(),
         description: product.description,
         category: product.categoryId || "",
+        weight: (product.weight ?? 300).toString(),
       });
       setVariants(product.variants || []);
       if (product.images && product.images.length > 0) {
@@ -152,6 +154,7 @@ export default function EditProductPage({
         stock: variants.reduce((acc, v) => acc + Number(v.stock), 0),
         stockBySize: stockBySize,
         existingImages: keptImages,
+        weight: Number.parseInt(formData.weight) || 300,
       };
 
       if (formData.category) {
@@ -235,7 +238,7 @@ export default function EditProductPage({
             />
           </div>
 
-          <div className="grid sm:grid-cols-2 gap-4">
+          <div className="grid sm:grid-cols-3 gap-4">
             <div className="space-y-2">
               <Label htmlFor="price">Precio (ARS)</Label>
               <Input
@@ -268,6 +271,20 @@ export default function EditProductPage({
                   ))}
                 </SelectContent>
               </Select>
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="weight">Peso (gramos)</Label>
+              <Input
+                id="weight"
+                name="weight"
+                type="number"
+                min="0"
+                value={formData.weight}
+                onChange={handleInputChange}
+                required
+                className="rounded-xl"
+                placeholder="300"
+              />
             </div>
           </div>
 
