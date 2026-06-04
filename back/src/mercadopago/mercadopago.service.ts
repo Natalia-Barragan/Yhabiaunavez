@@ -64,8 +64,8 @@ export class MercadopagoService {
       const frontendUrl = (envFrontend && envFrontend.startsWith('http')) ? envFrontend.replace(/\/$/, '') : 'http://localhost:3001';
       
       const successUrl = `${frontendUrl}/checkout/success`;
-      const failureUrl = `${frontendUrl}/checkout/failure`;
-      const pendingUrl = `${frontendUrl}/checkout/pending`;
+      const failureUrl = `${frontendUrl}/checkout`;
+      const pendingUrl = `${frontendUrl}/checkout`;
 
       const body = {
         items,
