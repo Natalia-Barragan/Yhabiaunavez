@@ -73,7 +73,7 @@ export default function SettingsPage() {
                 <Input
                   id="email"
                   type="email"
-                  defaultValue="hola@yhabiaunavez.com"
+                  defaultValue="chavi_87lp@hotmail.com"
                   className="rounded-xl"
                 />
               </div>
