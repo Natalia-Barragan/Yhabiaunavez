@@ -69,9 +69,18 @@ export default function CheckoutPage() {
       }));
       const res = await api.shipping.calculate(zipCode, payloadItems);
       if (res && res.rates) {
-        setShippingRates(res.rates);
-        if (res.rates.length > 0) {
-          setSelectedRate(res.rates[0]);
+        // Filtrar para mostrar solo Retiro en Sucursal Expreso (S, E) y Envío a Domicilio Clásico (D, C)
+        const filtered = res.rates.filter((rate: any) =>
+          (rate.deliveredType === 'S' && rate.productType === 'E') ||
+          (rate.deliveredType === 'D' && rate.productType === 'C')
+        );
+
+        // Ordenar para asegurar que Sucursal ('S') aparezca primero
+        filtered.sort((a: any, b: any) => (a.deliveredType === 'S' ? -1 : 1));
+
+        setShippingRates(filtered);
+        if (filtered.length > 0) {
+          setSelectedRate(filtered[0]);
         } else {
           setShippingError("No hay tarifas disponibles para este código postal.");
         }
